@@ -63,7 +63,15 @@ public class User extends Model{
         return User.find.all();
      }
 
-     public static User authenticate(String email, String password) {
+    public static User authenticate(String email, String password) {
         return find.query().where().eq("email", email).eq("password", password).findUnique();
-     }
+    }
+
+    public static User getUserById(String id){
+         if(id == null){
+             return null;
+         } else {
+        return find.query().where().eq("email", id).findUnique();
+        }
+    }
 }
