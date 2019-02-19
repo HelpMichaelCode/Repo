@@ -1,0 +1,25 @@
+@(userForm: Form[models.users.User], user: models.users.User)
+@import helper._
+
+@main("Register", user) {
+    <p class="lead">Register to BLDPC</p>
+    
+    @form(action=routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
+        @* CSRF attack prevention *@
+        @CSRF.formField
+        
+        @inputText(userForm("email"), '_label -> "Email", 'class -> "form-control")
+        @inputText(userForm("username"), '_label -> "Username", 'class -> "form-control")
+        @inputText(userForm("password"), '_label -> "Password", 'class -> "form-control")
+
+        @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
+        @inputText(userForm("email"), 'label -> "", 'hidden -> "hidden")
+
+        <div class="actions">
+            <input type="submit" value="Sign up" class="btn btn-primary"/>
+            <a href="@routes.LoginController.register()">
+                <button type="button" class="btn btm-warning">Cancel</button>
+            </a>
+        </div>
+    }
+}
