@@ -1,5 +1,5 @@
 package controllers;
-import play.mvc;
+import play.mvc.*;
 
 import play.api.Environment;
 import play.data.*;
@@ -17,8 +17,8 @@ public class LoginController extends Controller{
     private FormFactory formFactory;
 
     @Inject
-    public LoginController(FormFactory f){
-        this.formFactory = f;
+    public LoginController(FormFactory formFactory){
+        this.formFactory = formFactory;
     }
 
     public Result login() {
@@ -26,12 +26,12 @@ public class LoginController extends Controller{
         return ok(login.render(loginForm));
        }
 
-    public Result LoginSubmit(){
+    public Result loginSubmit(){
         Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
 
-        if(LoginForm.hasErrors()){
+        if(loginForm.hasErrors()){
             return badRequest(login.render(loginForm));
-        }else{
+        } else {
             session().clear();
 
             session("email", loginForm.get().getEmail());

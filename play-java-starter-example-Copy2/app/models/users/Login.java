@@ -18,7 +18,7 @@ public class Login{
         this.email = email;
     }
     public String getPassword(){
-        return this.password();
+        return this.password;
     }
     public void setPassword(String password){
         this.password = password;

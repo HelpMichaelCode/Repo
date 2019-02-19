@@ -2,7 +2,6 @@ package models.users;
 
 import java.util.*;
 import javax.persistence.*;
-
 import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
@@ -13,7 +12,7 @@ public class User extends Model{
     private String email;
 
     @Constraints.Required
-    private String role;
+    private String role; //Administrator or regular user
 
     @Constraints.Required
     private String name;
@@ -21,11 +20,22 @@ public class User extends Model{
     @Constraints.Required
     private String password;
 
-    public User(String email, String role, String name, String password){
+    public User(){
+    }
+
+    public User(String email, String role, String username, String password){
         this.email = email;
         this.role = role;
-        this.name = name;
+        this.name = username;
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRole(){
@@ -34,11 +44,11 @@ public class User extends Model{
     public void setRole(String role){
         this.role = role;
     }
-    public String getName(){
-        return this.getName();
+    public String getUsername(){
+        return this.getUsername();
     }
-    public void setName(String name){
-        this.name = name;
+    public void setUsername(String username){
+        this.name = username;
     }
     public String getPassword(){
         return this.password;
@@ -47,9 +57,13 @@ public class User extends Model{
         this.password = password;
     }
 
-    private static Finder<Long, User> find = new Finder(User.class);
+    private static Finder<Long, User> find = new Finder<>(User.class);
 
-    public static User authenticate(String email, String password) {
+    public static final List<User> findAll() {
+        return User.find.all();
+     }
+
+     public static User authenticate(String email, String password) {
         return find.query().where().eq("email", email).eq("password", password).findUnique();
-    }
+     }
 }
