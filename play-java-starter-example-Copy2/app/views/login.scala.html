@@ -2,6 +2,21 @@
 @import helper._
 
 @main("Login") {
+  <style>
+    body{
+    background-color: coral;
+}
+    .form-group{
+        margin: 0 auto;
+        width: 250px;
+        text-align: center;
+    }
+    h3{
+        text-align: center;
+    }
+
+    
+    </style>
 <h3>Sign in</h3>
 <!-- Display login errors if there are any-->
 @if(loginForm.hasGlobalErrors) {
