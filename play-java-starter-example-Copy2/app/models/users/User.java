@@ -11,11 +11,11 @@ public class User extends Model{
     @Id 
     private String email;
 
-    @Constraints.Required
+    // @Constraints.Required
     private String role; //Administrator or regular user
 
     @Constraints.Required
-    private String name;
+    private String username;
 
     @Constraints.Required
     private String password;
@@ -26,7 +26,7 @@ public class User extends Model{
     public User(String email, String role, String username, String password){
         this.email = email;
         this.role = role;
-        this.name = username;
+        this.username = username;
         this.password = password;
     }
 
@@ -48,7 +48,7 @@ public class User extends Model{
         return this.getUsername();
     }
     public void setUsername(String username){
-        this.name = username;
+        this.username = username;
     }
     public String getPassword(){
         return this.password;

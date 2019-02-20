@@ -1,0 +1,51 @@
+@(userForm: Form[models.users.User], user: models.users.User)
+@import helper._
+
+@main("Register", user) {
+    <style>
+        body{
+            background-color: rgb(99, 140, 216);
+        }
+        .form-control{
+            margin: 0 auto;
+            width: 250px;
+            text-align: center;
+        }
+        h3{
+            text-align:center;
+        }
+        .register{
+            text-align: center;
+        }
+        .actions{
+            text-align: center;
+            margin-top: 0em;
+        }
+    </style>
+    
+    <h3>Register to BLDPC</h3>
+    
+    @form(action=routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
+        @* CSRF attack prevention *@
+        @CSRF.formField
+        
+        <div class="register">
+            @inputText(userForm("email"), '_label -> "Email", 'class -> "form-control")
+            @inputText(userForm("username"), '_label -> "Username", 'class -> "form-control")
+            @inputText(userForm("password"), '_label -> "Password", 'class -> "form-control")
+
+            @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
+            @inputText(userForm(""), 'label -> "", 'hidden -> "hidden")
+        </div>
+      
+
+        <div class="actions">
+            
+            <input type="submit" value="Sign up" class="btn btn-primary"/>
+            
+            <input type="button" value="Cancel" class="btn btm-primary" 
+            onclick="window.location.href = '@routes.LoginController.login()';">
+            
+        </div>
+    }
+}
