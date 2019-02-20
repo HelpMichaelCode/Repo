@@ -9,6 +9,7 @@ import play.data.validation.*;
 @Entity
 public class User extends Model{
     @Id 
+    @Constraints.Required
     private String email;
 
     // @Constraints.Required
