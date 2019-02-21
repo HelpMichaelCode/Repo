@@ -22,9 +22,15 @@
             margin-top: 0em;
         }
     </style>
-    
+    <script>
+    function validateform(){
+        var x = document.input[""]
+    }
+    </script>
     <h3>Register to BLDPC</h3>
     
+   
+
     @form(action=routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
         @* CSRF attack prevention *@
         @CSRF.formField
