@@ -4,7 +4,7 @@
 @main("Login", user) {
     <style>
         body {
-            background-color: coral;
+            background-color: rgb(99, 140, 216);
         }
         
         .form-group {
@@ -23,7 +23,7 @@
     @if(loginForm.hasGlobalErrors) {
         <p class="alert alert-warning">
             @for(e <- loginForm.globalErrors) { 
-                @e.message<br />
+                @e.message<br/>
             }
         </p>
     }
@@ -53,6 +53,9 @@
         
         <div class="form-group">
             <input type="submit" value="Sign In" class="btn btn-primary">
+            <input type="button" value="Register" class="btn btn-primary"
+            onclick="window.location.href = '@routes.LoginController.register()';"> 
+                
         </div>
     } @* End of form *@
 } @* End of main *@
