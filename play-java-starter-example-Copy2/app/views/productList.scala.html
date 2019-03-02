@@ -1,0 +1,73 @@
+@(products: List[models.Product], user: models.users.User)
+@main("Product List", user){
+
+@if(flash.containsKey("success")){
+<div class="alert alert-succes">
+    @flash.get("success")
+</div>
+}
+<style>
+
+
+
+</style>
+
+<!-- Insert filters here -->
+
+<div class="col-sm-9">
+    <h4>List of all available products</h4>
+    
+    <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
+        <thead class="thead-dark"> 
+                <tr>
+                    <th  >Image</th>
+                    <th  >ID</th>
+                    <th  >Name</th>
+                    <th  >Description</th>
+                    <th  >In Stock</th>
+                    <th  >Rating</th>
+                    <th  >Price</th>
+                </tr>
+        </thead>
+        <!-- Product row(s) -->
+        <div class = "table">
+                <tbody>
+                        <!-- Product row(s) -->
+            
+                        @* Loop for creating table rows from Product data *@
+                        @for(p<-products) { 
+                            <tr>
+                                <td>@p.getProductID</td>
+                                <td>@p.getProductName</td>
+                                <td>@p.getProductDescription</td>
+                                <td>@p.getProductQty</td>
+                                <td>@p.getOverallRating</td>
+                                <td>&euro; @("%.2f".format(p.getProductPrice))</td>
+                                <!-- update button -->
+                                    <!-- <td>
+                                        <a href="@routes.HomeController.index()" class="button-xs btn-danger">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                    </td> -->
+                                <!-- end of update button -->
+
+                                <td>
+                                    <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+
+                            </tr>
+                            }
+            
+                    </tbody>
+        </div>
+
+       
+    </table>
+     <!--update and delete buttons here-->
+    <input type="button" value="Add Product" class="btn btn-primary"
+    onclick="window.location.href = '@routes.ProductController.addProduct()';">
+
+</div>
+}

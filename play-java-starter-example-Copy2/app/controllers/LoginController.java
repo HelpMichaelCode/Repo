@@ -26,7 +26,7 @@ public class LoginController extends Controller{
         return ok(login.render(loginForm, User.getUserById(session().get("email"))));
        }
 
-    public Result loginSubmit() {
+    public Result loginSubmit() { //THE PASSWORD IS NOT BEING ENCRYPTED BEFORE IT IS SENT THROUGH THE FORM
         Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
 
         if(loginForm.hasErrors()) {
@@ -56,6 +56,7 @@ public class LoginController extends Controller{
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
         if(userForm.hasErrors()) {
             flash("error", "Please fill in all the fields!");
+            //this message is sent only if the user has not filled in all the fields in the registration form
             return badRequest(register.render(userForm, User.getUserById(session().get("email"))));
         } else {
             User newUser = userForm.get();
@@ -65,6 +66,8 @@ public class LoginController extends Controller{
                 return redirect(controllers.routes.LoginController.login());
             } else {
                 flash("error", "Email already in use! Please try again!");
+                //this message is sent only
+                //if the email the user has entered is already in the database
                 return badRequest(register.render(userForm, User.getUserById(session().get("email"))));
             }
         }

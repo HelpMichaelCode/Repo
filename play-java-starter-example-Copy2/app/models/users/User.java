@@ -5,6 +5,9 @@ import javax.persistence.*;
 import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
+import java.io.*;
+
+import java.security.*;
 
 @Entity
 public class User extends Model{
@@ -21,14 +24,35 @@ public class User extends Model{
     @Constraints.Required
     private String password;
 
+    @Constraints.Required//new
+    private String address;
+
+    @Constraints.Required//new
+    private String mobileNumber;
+
+   
+
     public User(){
     }
 
-    public User(String email, String role, String username, String password){
+    public User(String email, String username, String password, String address, String mobileNumber, String role){ //insert new fields
         this.email = email;
         this.role = role;
         this.username = username;
-        this.password = password;
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] b = password.getBytes("UTF-8");
+            b = md.digest(b);
+            String passwordCheckSum = new String(b);
+            this.password = passwordCheckSum;
+            }
+            catch (NoSuchAlgorithmException e) {
+                //unfortunate sequence of events eh?
+            } catch (UnsupportedEncodingException e) {
+                //unfortunate sequence of events eh?
+            }
+        this.address = address;
+        this.mobileNumber = mobileNumber;
     }
 
     public String getEmail() {
@@ -46,7 +70,7 @@ public class User extends Model{
         this.role = role;
     }
     public String getUsername(){
-        return this.getUsername();
+        return username;
     }
     public void setUsername(String username){
         this.username = username;
@@ -55,7 +79,34 @@ public class User extends Model{
         return this.password;
     }
     public void setPassword(String password){
-        this.password = password;
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5"); // gets instance of Message Digest-gets you a hash code (MD5, SHA-1)
+            byte[] b = password.getBytes(); //turns the passed into the method string into a byte array
+            b = md.digest(b); //gets the checksum of the byte array/encrytpts
+            String passwordCheckSum = new String(b); //encrypted byte array is passed into a string object
+            this.password = passwordCheckSum; //assign the attribute the encrypted string
+            }
+            catch (NoSuchAlgorithmException e) {
+                //unfortunate sequence of events eh?
+            // } catch (UnsupportedEncodingException e) {
+            //     //unfortunate sequence of events eh?
+            }
+        }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     private static Finder<Long, User> find = new Finder<>(User.class);
