@@ -1,4 +1,4 @@
-@(products: List[models.Product], user: models.users.User)
+@(products: List[models.Product], categoryList:List[models.Category], user: models.users.User)
 @main("Product List", user){
 
 @if(flash.containsKey("success")){
@@ -13,6 +13,17 @@
 </style>
 
 <!-- Insert filters here -->
+<div class="col-sm-3">
+    <h4>Categories</h4>
+        <ul class="list-group">
+                <a href = "@routes.ProductController.productList(0)" class="list-group-item">All Categories</a>
+            @for(c<-categoryList) {
+                <a href = "@routes.ProductController.productList(c.getCategoryID())" class="list-group-item catheight">@c.getCategoryName
+                    <span class="badge">@c.getProducts.size</span> 
+                </a>
+            }
+        </ul>
+</div>
 
 <div class="col-sm-9">
     <h4>List of all available products</h4>
@@ -23,6 +34,7 @@
                     <th  >Image</th>
                     <th  >ID</th>
                     <th  >Name</th>
+                    <th>Category</th>
                     <th  >Description</th>
                     <th  >In Stock</th>
                     <th  >Rating</th>
@@ -39,6 +51,7 @@
                             <tr>
                                 <td>@p.getProductID</td>
                                 <td>@p.getProductName</td>
+                                <td>@p.getCategory.getCategoryName</td>
                                 <td>@p.getProductDescription</td>
                                 <td>@p.getProductQty</td>
                                 <td>@p.getOverallRating</td>

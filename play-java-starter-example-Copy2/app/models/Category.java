@@ -20,7 +20,7 @@ public class Category extends Model {
    private String categoryName;
 
    // Category contains many products
-   @ManyToMany(cascade=CascadeType.ALL)
+   @OneToMany
    private List<Product> products;
 
    // Default constructor
@@ -63,13 +63,13 @@ public static List<Category> findAll() {
    return Category.find.query().where().orderBy("name asc").findList();
 }
 
-public static LinkedHashMap<Long,String> options() {
-    LinkedHashMap<Long,String> options = new LinkedHashMap<>();
+// public static LinkedHashMap<Long,String> options() {
+//     LinkedHashMap<Long,String> options = new LinkedHashMap<>();
  
-    // Get all the categories from the database and add them to the options hash map
-    for (Category c: Category.findAll()) {
-       options.put(c.getCategoryID(), c.getCategoryName());
-    }
-    return options;
- }
+//     // Get all the categories from the database and add them to the options hash map
+//     for (Category c: Category.findAll()) {
+//        options.put(c.getCategoryID(), c.getCategoryName());
+//     }
+//     return options;
+//  }
 }

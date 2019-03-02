@@ -35,8 +35,8 @@ public class Product extends Model {
     //constant for the restock notification 
     // (i.e., what's the least amount of something that you can have before sending the notification)
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy = "products")
-    private List<Category> categories;
+    @ManyToOne
+    private Category category;
 
     public Product() {
     }
@@ -101,12 +101,12 @@ public class Product extends Model {
         return overallRating;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
     
-    public void setCategories (List<Category> categories) {
-        this.categories = categories;
+    public void setCategory (Category category) {
+        this.category = category;
     }
 
     //end of getters and setters
@@ -158,5 +158,5 @@ public class Product extends Model {
             // flash("error", "This product's quantity is low! Restock as soon as possible!"); //what am i doing?
         }
     }
-
+    
 }

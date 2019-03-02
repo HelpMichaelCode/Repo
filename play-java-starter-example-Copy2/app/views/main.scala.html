@@ -48,7 +48,7 @@ $(document).ready(function() {
                 <a class="nav-item nav-link"  href="@routes.HomeController.index"><li>Home</li></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-item nav-link" href="@routes.ProductController.productList"><li>Pricing</li></a>
+                <a class="nav-item nav-link" href="@routes.ProductController.productList(0)"><li>Pricing</li></a>
             </li>
             <li class="nav-item active">
                 @if(user != null) {
