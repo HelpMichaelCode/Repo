@@ -57,11 +57,10 @@
                                 <td>@p.getOverallRating</td>
                                 <td>&euro; @("%.2f".format(p.getProductPrice))</td>
                                 <!-- update button -->
-                                    <!-- <td>
-                                        <a href="@routes.HomeController.index()" class="button-xs btn-danger">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
-                                    </td> -->
+                                 <td>
+							<a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</a>
                                 <!-- end of update button -->
 
                                 <td>

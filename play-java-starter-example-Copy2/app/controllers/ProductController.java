@@ -55,11 +55,11 @@ public class ProductController extends Controller{
                 flash("success","Item " + newProduct.getProductName() + " was added.");
                 return redirect(controllers.routes.ProductController.productList(0));
             } else {
-                flash("error","Product with ID " + newProduct.getProductID() + " already exists.");
-                return badRequest(addProduct.render(productForm, (User.getUserById(session().get("email")))));
+                   newProduct.update();
+                flash("success", "Item " + newProduct.getProductName() + " was updated.");
+                return redirect(controllers.routes.ProductController.productList(0));
             }
-
-        }
+    }
     }
 
     //returns all the products
@@ -82,4 +82,24 @@ public class ProductController extends Controller{
         flash("Success", "Product has been deleted");
         return redirect(controllers.routes.ProductController.productList(0));
     }
+
+    public Result updateItem(Long id) {
+    Product i;
+    Form<Product> productForm;
+
+    try {
+        // Find the item by id
+        i = Product.find.byId(id);
+
+        // Populate the form object with data from the item found in the database
+        productForm = formFactory.form(Product.class).fill(i);
+    } catch (Exception ex) {
+        return badRequest("error");
+    }
+
+    // Display the "add item" page, to allow the user to update the item
+    return ok(addProduct.render(productForm,(User.getUserById(session().get("email")))));
 }
+
+}
+
