@@ -18,9 +18,11 @@ crossScalaVersions := Seq("2.11.12", "2.12.7")
 
 libraryDependencies += guice
 
-// Test Database
+// Test Database H2
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
+// Image scaling
+libraryDependencies += "org.imgscalr" % "imgscalr-lib" % "4.2"
 
 // Testing libraries for dealing with CompletionStage...
 //libraryDependencies += "org.assertj" % "assertj-core" % "3.11.1" % Test

@@ -21,8 +21,7 @@
 
 <div class="register">
     @helper.form(action=controllers.routes.ProductController.addProductSubmit(), 'class -> "form-horizontal",
-    'role -> "form", 
-    'enctype -> "multipart/form-data") {
+    'role -> "form",'method -> "POST" , 'enctype -> "multipart/form-data") {
 
     @* CSRF attack prevention *@
     @CSRF.formField
@@ -35,6 +34,9 @@
     @inputText(productForm("productDescription"), '_label -> "Descripton", 'class -> "form-control")
     @inputText(productForm("productQty"), '_label -> "In Stock", 'class -> "form-control")
     @inputText(productForm("procductPrice"), '_label -> "Price", 'class -> "form-control")
+
+    <label>Upload image</label>
+    <input class="btn-sm btn-default" type="file" name="upload">
 
     @inputText(productForm("id"), '_label -> "", 'hidden -> "hidden")
 
