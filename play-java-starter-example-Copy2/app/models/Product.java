@@ -38,6 +38,7 @@ public class Product extends Model {
     @ManyToOne
     private Category category;
 
+
     public Product() {
     }
 
@@ -104,15 +105,16 @@ public class Product extends Model {
     public Category getCategory() {
         return category;
     }
-    
-    public void setCategory (Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
+    
 
     //end of getters and setters
 
     //Finder and finder methods
-    public static Finder<Long, Product> find = new Finder<>(Product.class);
+    public static Finder<Long, Product> find = new 
+    Finder<>(Product.class);
 
     public static final List<Product> findAll() {
         return Product.find.all();

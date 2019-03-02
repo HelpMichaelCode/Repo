@@ -1,7 +1,7 @@
 # --- Sample dataset
 
 # --- !Ups
-
+delete from Product;
 insert into user (email,username,password,address,mobile_number,role) values ( 'michael@play.com', 'Michael Admin', '','122 Michaels Lane','0851234567', 'admin' );
 insert into user (email,username,password,address,mobile_number,role) values ( 'pavel@play.com', 'Pavel Admin', '','321 Nitesh Street','0897654321','admin' );
 insert into user (email,username,password,address,mobile_number,role) values ( 'nitesh@play.com', 'Nitesh Customer', '','12 Pavel Court','0123456789','customer' );
@@ -18,6 +18,10 @@ insert into product (product_ID,product_name,product_description,product_price,p
 total_sold,overall_rating) 
 values (103, 'USB', 'This is a test product', 99.99, 16, 4, 2.3);
 
-insert into category (categoryID,categoryName) values (1,'Motherboard');
-insert into category (categoryID,categoryName) values (2,'Graphics card');
-insert into category (categoryID,categoryName) values (3,'CPU');
+
+insert into category (id,name) values ( 1,'Electrical and Electronics' );
+insert into category (id,name) values ( 2,'Books' );
+insert into category (id,name) values ( 3,'Clothes' );
+insert into category (id,name) values ( 4,'Household' );
+insert into category (id,name) values ( 5,'Musical Instruments' );
+insert into category (id,name) values ( 6,'Sports Equipment' );

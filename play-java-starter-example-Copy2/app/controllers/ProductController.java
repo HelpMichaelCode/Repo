@@ -64,18 +64,16 @@ public class ProductController extends Controller{
 
     //returns all the products
     public Result productList(Long cat) {
-
-        List<Product> list = null;
-     
+        List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
 
-        if(cat == 0) {
-            list = Product.findAll();
+        if(cat ==0){
+            itemList = Product.findAll();
         }else {
-            list = Category.find.ref(cat).getProducts();
+            itemList = Category.find.ref(cat).getItems();
 
         }
-        return ok(productList.render(list, categoryList,(User.getUserById(session().get("email")))));
+        return ok(productList.render(itemList, categoryList,(User.getUserById(session().get("email")))));
     }
       
 

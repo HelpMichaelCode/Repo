@@ -18,7 +18,7 @@ GET     /register                   controllers.LoginController.register
 
 GET     /register-submit            controllers.LoginController.registerSubmit
 
-GET      /productList             controllers.ProductController.productList(cat:Long?=0L)
+GET     /productList                     controllers.ProductController.productList(cat:Long?=0L)
 
 GET     /add-product                controllers.ProductController.addProduct
 

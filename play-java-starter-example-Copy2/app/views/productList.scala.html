@@ -1,4 +1,4 @@
-@(products: List[models.Product], categoryList:List[models.Category], user: models.users.User)
+@(products: List[models.Product], categories: List[models.Category], user: models.users.User)
 @main("Product List", user){
 
 @if(flash.containsKey("success")){
@@ -17,9 +17,9 @@
     <h4>Categories</h4>
         <ul class="list-group">
                 <a href = "@routes.ProductController.productList(0)" class="list-group-item">All Categories</a>
-            @for(c<-categoryList) {
-                <a href = "@routes.ProductController.productList(c.getCategoryID())" class="list-group-item catheight">@c.getCategoryName
-                    <span class="badge">@c.getProducts.size</span> 
+            @for(c<-categories) {
+                <a href = "@routes.ProductController.productList(c.getId())" class="list-group-item catheight">@c.getName
+                    <span class="badge">@c.getItems.size</span> 
                 </a>
             }
         </ul>
@@ -51,8 +51,8 @@
                             <tr>
                                 <td>@p.getProductID</td>
                                 <td>@p.getProductName</td>
-                                <td>@p.getCategory.getCategoryName</td>
-                                <td>@p.getProductDescription</td>
+                                <td>@p.getCategory.getName</td>
+                                 <td>@p.getProductDescription</td>
                                 <td>@p.getProductQty</td>
                                 <td>@p.getOverallRating</td>
                                 <td>&euro; @("%.2f".format(p.getProductPrice))</td>
