@@ -16,12 +16,13 @@ GET     /logout                     controllers.LoginController.logout
 
 GET     /register                   controllers.LoginController.register
 
-POST     /register-submit            controllers.LoginController.registerSubmit
+GET     /register-submit            controllers.LoginController.registerSubmit
 
-GET     /product-list               controllers.ProductController.productList
+GET      /productList             controllers.ProductController.productList(cat:Long?=0L)
 
 GET     /add-product                controllers.ProductController.addProduct
 
-POST     /add-product-submit        controllers.ProductController.addProductSubmit
+GET     /add-product-submit         controllers.ProductController.addProductSubmit
 
 GET      /deleteItem/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
+

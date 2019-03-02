@@ -9,12 +9,6 @@ create table category (
   constraint pk_category primary key (category_id)
 );
 
-create table category_product (
-  category_category_id          bigint not null,
-  product_product_id            bigint not null,
-  constraint pk_category_product primary key (category_category_id,product_product_id)
-);
-
 create table product (
   product_id                    bigint auto_increment not null,
   product_name                  varchar(255),
@@ -23,6 +17,7 @@ create table product (
   product_qty                   integer not null,
   total_sold                    integer not null,
   overall_rating                double not null,
+  category_category_id          bigint,
   constraint pk_product primary key (product_id)
 );
 
@@ -36,24 +31,16 @@ create table user (
   constraint pk_user primary key (email)
 );
 
-alter table category_product add constraint fk_category_product_category foreign key (category_category_id) references category (category_id) on delete restrict on update restrict;
-create index ix_category_product_category on category_product (category_category_id);
-
-alter table category_product add constraint fk_category_product_product foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
-create index ix_category_product_product on category_product (product_product_id);
+alter table product add constraint fk_product_category_category_id foreign key (category_category_id) references category (category_id) on delete restrict on update restrict;
+create index ix_product_category_category_id on product (category_category_id);
 
 
 # --- !Downs
 
-alter table category_product drop constraint if exists fk_category_product_category;
-drop index if exists ix_category_product_category;
-
-alter table category_product drop constraint if exists fk_category_product_product;
-drop index if exists ix_category_product_product;
+alter table product drop constraint if exists fk_product_category_category_id;
+drop index if exists ix_product_category_category_id;
 
 drop table if exists category;
-
-drop table if exists category_product;
 
 drop table if exists product;
 

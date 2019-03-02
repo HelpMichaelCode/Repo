@@ -65,7 +65,7 @@ public class ProductController extends Controller{
                 String saveImageMessage = saveFile(newProduct.getProductID(), image);
                 
                 flash("success","Item " + newProduct.getProductName() + " was added.");
-                return redirect(controllers.routes.ProductController.productList());
+                return redirect(controllers.routes.ProductController.productList(0));
             } else {
                 flash("error","Product with ID " + newProduct.getProductID() + " already exists.");
                 return badRequest(addProduct.render(productForm, (User.getUserById(session().get("email")))));
@@ -75,16 +75,28 @@ public class ProductController extends Controller{
     }
 
     //returns all the products
-    public Result productList() {
-        List<Product> list = Product.findAll();
-        return ok(productList.render(list, (User.getUserById(session().get("email"))));
+
+    public Result productList(Long cat) {
+
+        List<Product> list = null;
+     
+        List<Category> categoryList = Category.findAll();
+
+        if(cat == 0) {
+            list = Product.findAll();
+        }else {
+            list = Category.find.ref(cat).getProducts();
+
+        }
+        return ok(productList.render(list, categoryList,(User.getUserById(session().get("email")))));
+
     }
       
 
     public Result deleteItem(Long productID){
         Product.find.ref(productID).delete();
         flash("Success", "Product has been deleted");
-        return redirect(controllers.routes.ProductController.productList());
+        return redirect(controllers.routes.ProductController.productList(0));
     }
 
     public String saveFile(Long productID, FilePart<File> uploaded){
