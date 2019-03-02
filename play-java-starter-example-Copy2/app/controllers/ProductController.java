@@ -3,7 +3,7 @@ package controllers;
 //imports for image upload
 import play.mvc.*;
 import play.mvc.Http.*;
-import play.mvc.Http.MiltipartFormData.FilePart;
+import play.mvc.Http.MultipartFormData.FilePart;
 import java.io.File;
 //imports for image scaling
 import java.io.IOException;
@@ -77,19 +77,16 @@ public class ProductController extends Controller{
     //returns all the products
 
     public Result productList(Long cat) {
-
-        List<Product> list = null;
-     
+        List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
 
-        if(cat == 0) {
-            list = Product.findAll();
+        if(cat == 0){
+            itemList = Product.findAll();
         }else {
-            list = Category.find.ref(cat).getProducts();
+            itemList = Category.find.ref(cat).getItems();
 
         }
-        return ok(productList.render(list, categoryList,(User.getUserById(session().get("email")))));
-
+        return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env));
     }
       
 
@@ -114,7 +111,7 @@ public class ProductController extends Controller{
                 File file = uploaded.getFile();
                 //checking if the directories in the specified path exist, if they do not they are created
                 File directory = new File("public/images/productImages");
-                id(!directory.exists()){
+                if(!directory.exists()){
                     directory.mkdirs();
                 }
                 //saving the image
@@ -124,7 +121,7 @@ public class ProductController extends Controller{
                     try{
                         BufferedImage image = ImageIO.read(newFile);
                         BufferedImage scaledImage = Scalr.resize(image, 120);
-                        if(ImageIO.write(scaledImage, extention, new File("public/images/productImages/", productID + "thumbnail.jpg"))){
+                        if(ImageIO.write(scaledImage, extension, new File("public/images/productImages/", productID + "thumbnail.jpg"))){
                             return "/ file uploaded and thumbnail created.";
                         } else {
                             return "/ file uploaded but thumbnail creation failed.";
@@ -140,5 +137,7 @@ public class ProductController extends Controller{
         } else {
             return "/ no image file.";
         }
+        return "/ this is returned if we f*cked up badly :(";
     }
+
 }
