@@ -67,11 +67,11 @@ public class ProductController extends Controller{
                 flash("success","Item " + newProduct.getProductName() + " was added.");
                 return redirect(controllers.routes.ProductController.productList(0));
             } else {
-                flash("error","Product with ID " + newProduct.getProductID() + " already exists.");
-                return badRequest(addProduct.render(productForm, (User.getUserById(session().get("email")))));
+                   newProduct.update();
+                flash("success", "Item " + newProduct.getProductName() + " was updated.");
+                return redirect(controllers.routes.ProductController.productList(0));
             }
-
-        }
+    }
     }
 
     //returns all the products
@@ -96,6 +96,7 @@ public class ProductController extends Controller{
         return redirect(controllers.routes.ProductController.productList(0));
     }
 
+<<<<<<< HEAD
     public String saveFile(Long productID, FilePart<File> uploaded){
         if(uploaded != null){ //making sure the file doesn't exist
             String mimeType = uploaded.getContentType(); //making sure its an image
@@ -141,3 +142,25 @@ public class ProductController extends Controller{
     }
 
 }
+=======
+    public Result updateItem(Long id) {
+    Product i;
+    Form<Product> productForm;
+
+    try {
+        // Find the item by id
+        i = Product.find.byId(id);
+
+        // Populate the form object with data from the item found in the database
+        productForm = formFactory.form(Product.class).fill(i);
+    } catch (Exception ex) {
+        return badRequest("error");
+    }
+
+    // Display the "add item" page, to allow the user to update the item
+    return ok(addProduct.render(productForm,(User.getUserById(session().get("email")))));
+}
+
+}
+
+>>>>>>> eb77e61e8e9a2eb7979b164484a0244808a1e282

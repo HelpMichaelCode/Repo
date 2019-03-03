@@ -22,6 +22,8 @@ GET     /productList                     controllers.ProductController.productLi
 
 GET     /add-product                controllers.ProductController.addProduct
 
+GET     /updateItem/:id             controllers.ProductController.updateItem(id: Long)
+
 GET     /add-product-submit         controllers.ProductController.addProductSubmit
 
 GET      /deleteItem/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)

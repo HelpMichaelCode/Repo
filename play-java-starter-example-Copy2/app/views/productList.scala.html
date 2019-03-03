@@ -1,29 +1,29 @@
 @(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment)
 @main("Product List", user){
 
-@if(flash.containsKey("success")){
-<div class="alert alert-succes">
-    @flash.get("success")
-</div>
-}
-<!-- Insert filters here -->
-<div class="col-sm-3">
-    <h4>Categories</h4>
+    @if(flash.containsKey("success")){
+    <div class="alert alert-succes">
+        @flash.get("success")
+    </div>
+    }
+    <!-- Insert filters here -->
+    <div class="col-sm-3">
+        <h4>Categories</h4>
         <ul class="list-group">
-                <a href = "@routes.ProductController.productList(0)" class="list-group-item">All Categories</a>
-            @for(c<-categories) {
-                <a href = "@routes.ProductController.productList(c.getId())" class="list-group-item catheight">@c.getName
-                    <span class="badge">@c.getItems.size</span> 
+            <a href="@routes.ProductController.productList(0)" class="list-group-item">All Categories</a>
+            @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId())"
+                class="list-group-item catheight">@c.getName
+                <span class="badge">@c.getItems.size</span>
                 </a>
-            }
+                }
         </ul>
-</div>
+    </div>
 
-<div class="col-sm-9">
-    <h4>List of all available products</h4>
-    
-    <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
-        <thead class="thead-dark"> 
+    <div class="col-sm-9">
+        <h4>List of all available products</h4>
+
+        <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
+            <thead class="thead-dark">
                 <tr>
                     <th>Image</th>
                     <th>ID</th>
@@ -34,52 +34,56 @@
                     <th>Rating</th>
                     <th>Price</th>
                 </tr>
-        </thead>
-        <!-- Product row(s) -->
-        <div class = "table">
+            </thead>
+            <!-- Product row(s) -->
+            <div class="table">
                 <tbody>
-                        <!-- Product row(s) -->
-            
-                        @* Loop for creating table rows from Product data *@
-                        @for(p<-products) { 
-                            <tr>
-                                @if(env.resource("public/images/productImages/" + p.getProductID + "thumbnail.jpg").isDefined){
-                                    <td><img src="/assets/images/productImages/@(p.getProductID + "thumbnail.jpg")"/></td>
-                                } else {
-                                    <td><img src="@routes.Assets.versioned("images/noImage.jpg")"/></td>
-                                }
-                                <td>@p.getProductID</td>
-                                <td>@p.getProductName</td>
-                                <td>@p.getCategory.getName</td>
-                                 <td>@p.getProductDescription</td>
-                                <td>@p.getProductQty</td>
-                                <td>@p.getOverallRating</td>
-                                <td>&euro; @("%.2f".format(p.getProductPrice))</td>
-                                <!-- update button -->
-                                    <td>
-                                        <a href="@routes.HomeController.index()" class="button-xs btn-danger">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
-                                    </td>
-                                <!-- end of update button -->
+                    <!-- Product row(s) -->
 
-                                <td>
-                                    <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </td>
+                    @* Loop for creating table rows from Product data *@
+                    @for(p<-products) { <tr>
+                        @if(env.resource("public/images/productImages/" + p.getProductID + "thumbnail.jpg").isDefined){
+                        <td><img src="/assets/images/productImages/@(p.getProductID + " thumbnail.jpg")" /></td>
+                        } else {
+                        <td><img src="@routes.Assets.versioned(" images/noImage.jpg")"/> </td> } <td>@p.getProductID</td>
+                        <td>@p.getProductName</td>
+                        <td>@p.getCategory.getName</td>
+                        <td>@p.getProductDescription</td>
+                        <td>@p.getProductQty</td>
+                        <td>@p.getOverallRating</td>
+                        <td>&euro; @("%.2f".format(p.getProductPrice))</td>
+                        <!-- update button -->
 
-                            </tr>
-                            }
-            
-                    </tbody>
-        </div>
+                        <td>
+                            <a href="@routes.HomeController.index()" class="button-xs btn-danger">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
 
-       
-    </table>
-     <!--update and delete buttons here-->
-    <input type="button" value="Add Product" class="btn btn-primary"
-    onclick="window.location.href = '@routes.ProductController.addProduct()';">
+                        <td>
+                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                        <!-- end of update button -->
 
-</div>
+                        <td>
+                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+
+                        </tr>
+                        }
+
+                </tbody>
+            </div>
+
+
+        </table>
+        <!--update and delete buttons here-->
+        <input type="button" value="Add Product" class="btn btn-primary"
+            onclick="window.location.href = '@routes.ProductController.addProduct()';">
+
+    </div>
 }
