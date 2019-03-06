@@ -168,18 +168,18 @@ public class ProductController extends Controller{
 
                 File file = uploaded.getFile();
                 //checking if the directories in the specified path exist, if they do not they are created
-                File directory = new File("/assets/images/productImages");
+                File directory = new File("public/images/productImages");
                 if(!directory.exists()){
                     directory.mkdirs();
                 }
                 //saving the image
-                File newFile = new File("/assets/images/productImages/" + productID + "." + extension);
+                File newFile = new File("public/images/productImages/", productID + "." + extension);
                 if(file.renameTo(newFile)){
                    
                     try{
                         BufferedImage image = ImageIO.read(newFile);
-                        BufferedImage scaledImage = Scalr.resize(image, 120);
-                        if(ImageIO.write(scaledImage, extension, new File("/assets/images/productImages/" + productID + "thumbnail.jpg"))){
+                        BufferedImage scaledImage = Scalr.resize(image, 90);
+                        if(ImageIO.write(scaledImage, extension, new File("public/images/productImages", productID + "thumbnail.jpg"))){
                             return "/ file uploaded and thumbnail created.";
                         } else {
                             return "/ file uploaded but thumbnail creation failed.";
