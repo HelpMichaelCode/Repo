@@ -14,10 +14,7 @@ import javax.inject.Inject;
 
 import models.*;
 import models.users.*;
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
+
 public class HomeController extends Controller {
 
     /**
@@ -29,5 +26,15 @@ public class HomeController extends Controller {
     public Result index() {
         return ok(index.render(User.getUserById(session().get("email"))));
     }
+
+    // public Result userList(){
+    //     List<User> userList = null;
+    //     userList = User.findAll();
+
+    //     return ok(userList.render(User.getUserById(session().get("email"))));
+    // }
+    // public Result updateUser(){
+
+    // }
     
 }

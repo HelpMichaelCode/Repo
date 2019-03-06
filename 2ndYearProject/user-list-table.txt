@@ -1,0 +1,41 @@
+@for(u <- user) { 
+                        <tr>
+                            <td>@u.getEmail</td>
+                            <td>@u.getUsername</td>
+                            <td>@u.getAddress</td>
+                            <td>@u.getMobileNumber</td>
+                            <td>@u.getRole</td>
+
+                            <!-- these are displayed only to administrators (this check is just in case a customer gets access to this page) -->
+                            @if((user != null) && (user.getRole().equals("admin"))) {
+                            <!-- update button -->
+                            <td>
+                                <a href="@routes.ProductController.updateUser(u.getEmail)" class="button-xs btn-danger">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
+
+                            <!-- delete button -->
+                            <td>
+                                <a href="@routes.ProductController.deleteUser(u.getEmail)" class="button-xs btn-danger">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </td>
+                            }
+
+                        </tr>
+                        }
+
+___________________________________
+THIS IS AFTER CLOSING TABLE TAG
+___________________________________
+<!-- this is displayed only to administrators -->
+        <!-- @if((user != null) && (user.getRole().equals("admin"))) {
+        <input type="button" value="Add Product" class="btn btn-primary"
+            onclick="window.location.href = '@routes.ProductController.addUser()';">
+        } -->
+
+-----------------------------
+routes
+--------------------
+GET     /user-list                  controllers.HomeController.userList

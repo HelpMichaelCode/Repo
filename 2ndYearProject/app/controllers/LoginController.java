@@ -34,7 +34,7 @@ public class LoginController extends Controller{
         } else {
             session().clear();
             session("email", loginForm.get().getEmail());
-
+            flash("success", "Login successful! Welcome back!");
             return redirect(controllers.routes.HomeController.index());
         }
     }

@@ -19,7 +19,7 @@
 </div>
 }
 
-<div class="register">
+<div class="add-product-form">
     @helper.form(action=controllers.routes.ProductController.addProductSubmit(), 'class -> "form-horizontal",
     'role -> "form",'method -> "POST" , 'enctype -> "multipart/form-data") {
 
@@ -30,7 +30,7 @@
     
     @inputText(productForm("productDescription"), '_label -> "Descripton", 'class -> "form-control")
     @inputText(productForm("productQty"), '_label -> "In Stock", 'class -> "form-control")
-    @inputText(productForm("procductPrice"), '_label -> "Price", 'class -> "form-control")
+    @inputText(productForm("productPrice"), '_label -> "Price", 'class -> "form-control")
     @select(
         productForm("category.id"), options(Category.options), '_label -> "Category", '_default -> "-- Choose a category --",
         '_showConstraints -> false, 'class -> "form-control"
@@ -39,7 +39,7 @@
     <label>Upload image</label>
     <input class="btn-sm btn-default" type="file" name="upload">
 
-    @inputText(productForm("id"), '_label -> "", 'hidden -> "hidden")
+    @inputText(productForm("productID"), '_label -> "", 'hidden -> "hidden")
 
 
 </div>
