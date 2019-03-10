@@ -19,7 +19,7 @@
         </div>
     }
     
-    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form", onsubmit="return checkPass(this)") {
+    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
         @* CSRF attack prevention *@
         @CSRF.formField
         
