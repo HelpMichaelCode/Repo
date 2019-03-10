@@ -4,6 +4,13 @@
   margin-bottom: 3em;
  }
 
+ ::-webkit-scrollbar{
+   width: 12px;
+ }
+ ::-webkit-scrollbar-thumb{
+background:-webkit-gradient(#000 , rgb(121, 182, 53));
+ }
+
  /* END OF HOME PAGE */
 
 /* REGISTER */

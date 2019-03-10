@@ -1,12 +1,13 @@
-@(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment)
+@(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment, keyword: String)
 @main("Product List", user){
 
     
     <div class="col-sm-2">
         <h4>Categories</h4>
         <ul class="list-group">
-            <a href="@routes.ProductController.productList(0)" class="list-group-item">All Categories</a>
-            @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId())"
+            <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
+            @for(c<-categories) { 
+                <a href="@routes.ProductController.productList(c.getId(), "")"
                 class="list-group-item catheight">@c.getName
                 <span class="badge">@c.getItems.size</span>
                 </a>
@@ -36,39 +37,42 @@
                     <!-- Product row(s) -->
 
                     @* Loop for creating table rows from Product data *@
-                    @for(p<-products) { <tr>
-                        @if(env.resource("public/images/productImages/" + p.getProductID + "thumbnail.jpg").isDefined){
-                        <td><img src="/assets/images/productImages/ + @p.getProductID + "thumbnail.jpg")"/></td>
-                        } else {
-                        <td><img src="/assets/images/productImages/noImage.jpg"/></td> 
-                        }
-                        <td>@p.getProductID</td>
-                        <td>@p.getProductName</td>
-                        <td>@p.getCategory.getName</td>
-                        <td>@p.getProductDescription</td>
-                        <td>@p.getProductQty</td>
-                        <td>@p.getOverallRating</td>
-                        <td>&euro; @("%.2f".format(p.getProductPrice))</td>
+                    @for(p<-products) {
+                        @if(p.getProductName.contains(keyword) || p.getProductDescription.contains(keyword)){
+                            <tr>
+                                @if(env.resource("public/images/productImages/" + p.getProductID + "thumbnail.jpg").isDefined){
+                                    <td><img src="/assets/images/productImages/@p.getProductID+thumbnail.jpg"></td>
+                                } else {
+                                    <td><img src="/assets/images/productImages/noImage.jpg"/></td> 
+                                }
+                                <td>@p.getProductID</td>
+                                <td>@p.getProductName</td>
+                                <td>@p.getCategory.getName</td>
+                                <td>@p.getProductDescription</td>
+                                <td>@p.getProductQty</td>
+                                <td>@p.getOverallRating</td>
+                                <td>&euro; @("%.2f".format(p.getProductPrice))</td>
 
-                        <!-- these are displayed only to administrators -->
-                        @if((user != null) && (user.getRole().equals("admin"))) {
-                        <!-- update button -->
-                        <td>
-                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </a>
-                        </td>
+                                <!-- these are displayed only to administrators -->
+                                @if((user != null) && (user.getRole().equals("admin"))) {
+                                <!-- update button -->
+                                <td>
+                                    <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                </td>
 
-                        <!-- delete button -->
-                        <td>
-                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-                        </td>
-                        }
+                                <!-- delete button -->
+                                <td>
+                                    <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                                }
 
-                        </tr>
+                            </tr>
                         }
+                    }
 
                 </tbody>
             </div>

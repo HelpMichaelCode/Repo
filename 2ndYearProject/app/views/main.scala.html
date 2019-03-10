@@ -1,20 +1,21 @@
 @(title: String, user: models.users.User)(content: Html)
+@import helper._
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
+  <title>@title</title>
   <meta charset="utf-8">
 
-  <link rel="shortcut icon" href="@routes.Assets.versioned("/images/logo.ico")">
-  <link rel="stylesheet"
+  <link rel="shortcut icon" href="@routes.Assets.versioned("/images/logo.ico")"> <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/main.css")"> <meta name="viewport"
     content="width=device-width, initial-scale=1">
-  
+
 
 </head>
 
@@ -33,7 +34,7 @@
         <li>Home</li></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-item nav-link" href="@routes.ProductController.productList(0)">
+          <a class="nav-item nav-link" href="@routes.ProductController.productList(0, "")">
         <li>Pricing</li></a>
         </li>
         <li class="nav-item active">
@@ -46,6 +47,12 @@
         </a>
         }
         </li>
+        <!-- SEARCH BAR -->
+        <li class="search-container">
+            <input type="text" id="search">
+            <button onclick="search()">Go</button>
+        </li>
+        <!--SB-->
       </ul>
     </div>
   </nav>
@@ -61,7 +68,7 @@
 </body>
 
 <footer class="py-5 bg-dark">
-    <p class="m-0 text-center text-white">Copyright &copy; Michael, Nitesh & Pavel</p>
+  <p class="m-0 text-center text-white">Copyright &copy; Michael, Nitesh & Pavel</p>
 </footer>
 
 <!-- Scripts -->
@@ -69,18 +76,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
   integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(document).ready(function () {
-
-      $(".fa-search").click(function () {
-        $(".search-box").toggle();
-        $("input[type='text']").focus();
-      });
-
-    });
-
-  </script>
+<script src="/assets/javascripts/main.js"></script>
 
 </html>

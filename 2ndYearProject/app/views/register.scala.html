@@ -19,7 +19,7 @@
         </div>
     }
     
-    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
+    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form", onsubmit="return checkPass(this)") {
         @* CSRF attack prevention *@
         @CSRF.formField
         
@@ -30,8 +30,6 @@
                 @inputText(userForm("email"), '_label -> "",
                 'class -> "input", 'placeholder -> "Email")
             
-            
-           
                 @inputText(userForm("username"), '_label -> "",
                 'class -> "input", 'placeholder -> "Username")
            
