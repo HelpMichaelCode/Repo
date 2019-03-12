@@ -64,7 +64,7 @@ public class ProductController extends Controller{
                 flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
             }
             String saveImageMessage = saveFile(newProduct.getProductID(), image);
-            return redirect(controllers.routes.ProductController.productList(0));
+            return redirect(controllers.routes.ProductController.productList(0, ""));
         }
     }
 
@@ -88,53 +88,14 @@ public class ProductController extends Controller{
         return ok(addProduct.render(productForm,(User.getUserById(session().get("email")))));
     }
 
-
-/*******************************************OLD******************************************* */
-    // public Result addProductSubmit() {
-    //     Form<Product> productForm = formFactory.form(Product.class).bindFromRequest();
-
-    //     if(productForm.hasErrors()){
-    //         return badRequest(addProduct.render(productForm, User.getUserById(session().get("email"))));
-    //     } else {
-    //         Product newProduct = productForm.get();
-    //         MultipartFormData<File> data = request().body().asMultipartFormData();
-    //         // FilePart<File> image = data.getFile("upload");
-
-    //         if(Product.getProductById(newProduct.getProductID()) == null) {
-    //             newProduct.save();
-    //             // flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
-    //             } else {
-    //             newProduct.update();
-    //             // flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
-    //             }
-    //             // String saveImageMessage = saveFile(newProduct.getProductID(), image);
-    //         flash("success", "Item " + newProduct.getProductName() + " has been added/updated successfuly!");
-    //         return redirect(controllers.routes.ProductController.productList(0));
-    //     }
-    // }     
-            //THIS IS/WAS PART OF ADDITEMSUBMIT
-            // if (Product.getProductById(newProduct.getProductID()) == null) {
-            //     MultipartFormData<File> data = request().body().asMultipartFormData();
-            //     FilePart<File> image = data.getFile("upload");
-
-            //     newProduct.save();
-
-            //     String saveImageMessage = saveFile(newProduct.getProductID(), image);
-                
-            //     flash("success","Item " + newProduct.getProductName() + " was added.");
-            //     return redirect(controllers.routes.ProductController.productList(0));
-            // } else {
-            //        newProduct.update();
-            //     flash("success", "Item " + newProduct.getProductName() + " was updated.");
-            //     return redirect(controllers.routes.ProductController.productList(0));
-            // }    
-    /*******************************************OLD******************************************* */
-
     // this method gets all the products from the database and passes them into the productList view, which displays them
 
-    public Result productList(Long cat) {
+    public Result productList(Long cat, String keyword) {
         List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
+        if(keyword == null){
+            keyword = " ";
+        }
 
         if(cat == 0){
             itemList = Product.findAll();
@@ -142,7 +103,7 @@ public class ProductController extends Controller{
             itemList = Category.find.ref(cat).getItems();
 
         }
-        return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env));
+        return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env, keyword));
     }
       
     @Security.Authenticated(Secured.class)
@@ -151,7 +112,7 @@ public class ProductController extends Controller{
     public Result deleteItem(Long productID){
         Product.find.ref(productID).delete();
         flash("Success", "Product has been deleted");
-        return redirect(controllers.routes.ProductController.productList(0));
+        return redirect(controllers.routes.ProductController.productList(0, ""));
     }
 
     public String saveFile(Long productID, FilePart<File> uploaded){
@@ -197,6 +158,39 @@ public class ProductController extends Controller{
         }
         return "/ this should not be returned";
     }
+
+    // public Result search(String keyword){
+    //     List<String> keywords = new ArrayList(Arrays.asList("FIRSTNAME", "LASTNAME", "CURRENCY", "FUND"));
+    //     List<String> dataList = new ArrayList(Arrays.asList("HUSBANDFIRSTNAME", "HUSBANDLASTNAME", "WIFEFIRSTNAME", "SOURCECURRENCY", "CURRENCYRATE"));
+    //     Set<String> targetSet = new HashSet();
+
+    //     String pattern = String.join("|", keywords);
+    //     for (String data : dataList) {
+    //         Matcher matcher = Pattern.compile(pattern).matcher(data);
+    //         if (matcher.find()) {
+    //             targetSet.add(matcher.group());
+    //         }
+    //     }
+
+    //     System.out.println(targetSet);
+    // }
+
+    /*********************************FIRST GO AT SEARCH BAR METHOD *********************************/
+    // public Result search(String keyword) {
+    //     List<Product> itemList = null;
+    //     List<Category> categoryList = Category.findAll();
+    //     // List<String> allItems = new List<>();
+    //     List<Product> filteredItems = null;
+
+    //         itemList = Product.findAll();
+
+    //     for(Product e: itemList){
+    //         if(e.getProductName().contains(keyword) || e.getProductDescription().contains(keyword)){
+    //             filteredItems.add(e);
+    //         }
+    //     }
+    //     return ok(productList.render(filteredItems, categoryList, User.getUserById(session().get("email")), env, keyword));
+    // }
 
 }
 
