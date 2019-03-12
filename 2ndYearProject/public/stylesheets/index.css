@@ -43,3 +43,9 @@ body {
   a {
     color: white;
   }
+  .row{
+    overflow: hidden; 
+}
+
+
+
