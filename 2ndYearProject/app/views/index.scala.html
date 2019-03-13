@@ -1,14 +1,6 @@
-@(user: models.users.User)
+@(products: List[models.Product], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
 
-
-<style>
-  .my-carousel{
-    margin-top: -1.4em;
-    margin-bottom: 2.5em;
-  }
-</style>
- 
     <div id="myCarousel" class="my-carousel carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
@@ -60,113 +52,36 @@
     </div>
   </div>
 
-
+  @for(p<-products) {
   <div class="container">
-    <div class="table-row-equal">
   
+      
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC3.jpg" alt=""></a>
+        <a href="#">
+          @if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
+          <td><img src="/assets/images/productImages/@(p.getProductID + ".jpg")" class="product-image-home"/></td>
+          } else {
+          <td><img src="/assets/images/productImages/noImage.jpg" /></td>
+          }
+        </a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#">Item Two</a>
+            <a href="#">@p.getProductName</a>
           </h4>
-          <h5>$24.99</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-            ipsum dolor sit amet.</p>
+          <h5>@p.getProductPrice</h5>
+          <p class="card-text">@p.getProductDescription</p>
         </div>
         <div class="card-footer">
-          <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+          <small class="text-muted">
+            <!-- &#9733; &#9733; &#9733; &#9733; &#9734; THIS GIVES 4 STARTS -->
+            Rating
+          </small>
         </div>
       </div>
     </div>
-
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC2.png" alt=""></a>
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="#">Item Two</a>
-          </h4>
-          <h5>$24.99</h5>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-            ipsum dolor sit amet.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC2.png" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Item Two</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-              ipsum dolor sit amet.</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-          </div>
-        </div>
-        
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC2.png" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a href="#">Item Two</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-                ipsum dolor sit amet.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-          
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC2.png" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item Two</a>
-                </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-                  ipsum dolor sit amet.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-            
-          </div>
-
-          <div class="col-lg-4 col-md-6 mb-4">
-              <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="/assets/images/productImages/PC3.jpg" alt=""></a>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#">Item Two</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem
-                    ipsum dolor sit amet.</p>
-                </div>
-                <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
+  }
   
-  </div> <!--ROW-->
 
 </div> <!--CONTAINER-->
 }

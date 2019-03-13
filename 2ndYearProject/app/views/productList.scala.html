@@ -1,50 +1,50 @@
 @(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment, keyword: String)
 @main("Product List", user){
 <style>
-    html, body { height:100%; } 
     
 </style>
-    
-    <div class="col-sm-2">
-        <h4>Categories</h4>
-        <ul class="list-group">
-            <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
-            @for(c<-categories) { 
-                <a href="@routes.ProductController.productList(c.getId(), "")"
-                class="list-group-item catheight">@c.getName
-                <span class="badge">@c.getItems.size</span>
-                </a>
-                }
-        </ul>
-    </div>
 
-    <div class="col-sm-10">
-        <h4>List of all available products</h4>
+<div class="col-sm-2">
+    <h4>Categories</h4>
+    <ul class="list-group">
+        <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
+        @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId(), "")"
+            class="list-group-item catheight">@c.getName
+            <span class="badge">@c.getItems.size</span>
+            </a>
+            }
+    </ul>
+</div>
 
-        <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Image</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>In Stock</th>
-                    <th>Rating</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <!-- End of table header -->
-            <div class="table">
-                <tbody>
-                    <!-- Product row(s) -->
+<div class="col-sm-10">
+    <h4>List of all available products</h4>
 
-                    @* Loop for creating table rows from Product data *@
-                    @for(p<-products) { <tr>
-                        @if(env.resource("public/images/productImages/" + p.getProductID + "thumbnail.jpg").isDefined){
-                        <td><img src="/assets/images/productImages/@(p.getProductID + "thumbnail.jpg")"/></td>
+    <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Image</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>In Stock</th>
+                <th>Rating</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <!-- End of table header -->
+        <div class="table">
+            <tbody>
+                <!-- Product row(s) -->
+
+                @* Loop for creating table rows from Product data *@
+                @for(p<-products) {
+                    @if(p.getProductName.contains(keyword) || p.getProductDescription.contains(keyword)){
+                    <tr>
+                        @if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
+                        <td><img src="/assets/images/productImages/@(p.getProductID + ".jpg")" class="product-list-images"/></td>
                         } else {
-                        <td><img src="/assets/images/productImages/noImage.jpg"/></td> 
+                        <td><img src="/assets/images/productImages/noImage.jpg" /></td>
                         }
                         <td>@p.getProductID</td>
                         <td>@p.getProductName</td>
@@ -54,38 +54,36 @@
                         <td>@p.getOverallRating</td>
                         <td>&euro; @("%.2f".format(p.getProductPrice))</td>
 
-                                <!-- these are displayed only to administrators -->
-                                @if((user != null) && (user.getRole().equals("admin"))) {
-                                <!-- update button -->
-                                <td>
-                                    <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </a>
-                                </td>
+                        <!-- these are displayed only to administrators -->
+                        @if((user != null) && (user.getRole().equals("admin"))) {
+                        <!-- update button -->
+                        <td>
+                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
 
-                                <!-- delete button -->
-                                <td>
-                                    <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </td>
-                                }
-
-                            </tr>
+                        <!-- delete button -->
+                        <td>
+                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
                         }
+                    </tr>
                     }
+                }
+            </tbody>
+        </div>
 
-                </tbody>
-            </div>
+
+    </table>
+    <!-- this is displayed only to administrators -->
+    @if((user != null) && (user.getRole().equals("admin"))) {
+    <input type="button" value="Add Product" class="btn btn-primary"
+        onclick="window.location.href = '@routes.ProductController.addProduct()';">
+    }
 
 
-        </table>
-        <!-- this is displayed only to administrators -->
-        @if((user != null) && (user.getRole().equals("admin"))) {
-        <input type="button" value="Add Product" class="btn btn-primary"
-            onclick="window.location.href = '@routes.ProductController.addProduct()';">
-        }
-            
-
-    </div>
+</div>
 }

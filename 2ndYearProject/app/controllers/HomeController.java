@@ -17,6 +17,13 @@ import models.users.*;
 
 public class HomeController extends Controller {
 
+    private Environment env;
+
+    @Inject
+    public HomeController(Environment env){
+        this.env = env;
+    }
+
     /**
      * An action that renders an HTML page with a welcome message.
      * The configuration in the <code>routes</code> file means that
@@ -24,7 +31,8 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
-        return ok(index.render(User.getUserById(session().get("email"))));
+        List<Product> products = Product.findAll();
+        return ok(index.render(products ,User.getUserById(session().get("email")), env));
     }
 
     // public Result userList(){

@@ -140,9 +140,28 @@ body {
 
 footer {
   display: inline-block;
-  position: static;
+  position: fixed;
   bottom: 0;
   margin-bottom: 0em;
   left: 0;
   width: 100%;
+}
+
+.my-carousel{
+  margin-top: -1.4em;
+  margin-bottom: 2.5em;
+}
+
+.product-list-images{
+  width: 100%;
+  height: 5em;
+}
+
+.product-image-home{
+  width: 100%;
+  height: 16em;
+}
+
+body .container{
+  height: 200px;
 }

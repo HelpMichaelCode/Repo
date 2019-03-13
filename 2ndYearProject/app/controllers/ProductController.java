@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.image.*;
 import javax.imageio.*;
-import org.imgscalr.*;
 
 import play.api.Environment;
 import play.data.*;
@@ -94,7 +93,7 @@ public class ProductController extends Controller{
         List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
         if(keyword == null){
-            keyword = " ";
+            keyword = "";
         }
 
         if(cat == 0){
@@ -121,11 +120,12 @@ public class ProductController extends Controller{
             if(mimeType.startsWith("image/")){
                 String fileName = uploaded.getFilename();
                 //exctracting the extension of the image
-                String extension = "";
-                int index = fileName.lastIndexOf('.');
-                if(index >= 0){
-                    extension = fileName.substring(index + 1);
-                }
+                // String extension = "";
+                // we'll go with jpgs only ;)
+                // int index = fileName.lastIndexOf('.');
+                // if(index >= 0){
+                //     extension = fileName.substring(index + 1);
+                // }
 
                 File file = uploaded.getFile();
                 //checking if the directories in the specified path exist, if they do not they are created
@@ -134,19 +134,18 @@ public class ProductController extends Controller{
                     directory.mkdirs();
                 }
                 //saving the image
-                File newFile = new File("public/images/productImages/", productID + "." + extension);
+                File newFile = new File("public/images/productImages/", productID + "."
+                //  + extension);
+                + "jpg");
                 if(file.renameTo(newFile)){
                    
                     try{
                         BufferedImage image = ImageIO.read(newFile);
-                        BufferedImage scaledImage = Scalr.resize(image, 90);
-                        if(ImageIO.write(scaledImage, extension, new File("public/images/productImages", productID + "thumbnail.jpg"))){
-                            return "/ file uploaded and thumbnail created.";
-                        } else {
-                            return "/ file uploaded but thumbnail creation failed.";
-                        }
+                        
+                        return "/ file uploaded";
+                        
                     } catch (IOException e) {
-                        return "/ file uploaded but thumbnail creation failed.";
+                        return "/ file uploaded.";
                     }
 
                 } else {
