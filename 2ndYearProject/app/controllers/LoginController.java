@@ -28,7 +28,6 @@ public class LoginController extends Controller{
 
     public Result loginSubmit() { //THE PASSWORD IS NOT BEING ENCRYPTED BEFORE IT IS SENT THROUGH THE FORM
         Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
-
         if(loginForm.hasErrors()) {
             return badRequest(login.render(loginForm, User.getUserById(session().get("email"))));
         } else {
@@ -61,12 +60,16 @@ public class LoginController extends Controller{
         } else {
             User newUser = userForm.get();
             if(User.getUserById(newUser.getEmail()) == null) {
-                newUser.save(); //Add user to DB if email is not already in use.
-                flash("success", "Thank you for registering!");
-                return redirect(controllers.routes.LoginController.login());
+                if(newUser.emailCheck()){ //user is registered only if email is in the right format
+                    newUser.save(); //Add user to DB if email is in the right format and is not already in use.
+                    flash("success", "Thank you for registering!");
+                    return redirect(controllers.routes.LoginController.login());
+                } else {
+                    flash
+                    return badRequest(register.render(userForm, User.getUserById(session().get("email")))); //bad format
+                }
             } else {
                 flash("error", "Email already in use! Please try again!");
-                //this message is sent only
                 //if the email the user has entered is already in the database
                 return badRequest(register.render(userForm, User.getUserById(session().get("email"))));
             }

@@ -7,6 +7,9 @@ import play.data.format.*;
 import play.data.validation.*;
 import java.io.*;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import java.security.*;
 
 @Entity
@@ -125,5 +128,15 @@ public class User extends Model{
          } else {
         return find.query().where().eq("email", id).findUnique();
         }
+    }
+
+    public boolean emailCheck(){
+        boolean result = false;
+        Pattern pattern = Pattern.compile("^.+@.+\\..+$");
+        Matcher matcher = pattern.matcher(email);
+        if(matcher.find()){
+            result = true;
+        }
+        return result;
     }
 }
