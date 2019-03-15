@@ -65,7 +65,7 @@ public class LoginController extends Controller{
                     flash("success", "Thank you for registering!");
                     return redirect(controllers.routes.LoginController.login());
                 } else {
-                    flash
+                    flash("error", "Email already in use! Please try again!");
                     return badRequest(register.render(userForm, User.getUserById(session().get("email")))); //bad format
                 }
             } else {

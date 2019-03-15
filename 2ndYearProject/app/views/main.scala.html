@@ -5,23 +5,274 @@
 <html lang="en">
 
 <head>
+    
 
   <title>@title</title>
   <meta charset="utf-8">
-
-  <link rel="shortcut icon" href="@routes.Assets.versioned("/images/logo.ico")"> <link rel="stylesheet"
+ <link rel="shortcut icon" href="@routes.Assets.versioned("/images/logo.ico")"> <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/main.css")"> <meta name="viewport"
     content="width=device-width, initial-scale=1">
-    
+
+     <style>
+/* SEARCH */
+
+
+.Search {
+ position: absolute;
+ top: 98%;
+ left: 51%;
+ transform: translate(-50%, -50%);
+ background: #2f3640;
+ height: 30px;
+ border-radius: 40px;
+ padding: 1em;
+ margin-top:3em;
+}
+
+.Search:hover > .Text {
+ width: 200px;
+ padding: 0 0px;
+}
+
+.Search:hover > button {
+ background: white;
+ color: black;
+}
+
+button {
+
+ color: #e84118;
+ float: right;
+ width: 7em;
+ height: 4em;
+ border-radius: 40%;
+ background: lime;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ transition: 0.4s;
+ color: white;
+ cursor: pointer;
+}
+
+button > i {
+ font-size: 70px;
+}
+
+.Text {
+ border: none;
+ background: none;
+ outline: none;
+ float: left;
+ padding: 0;
+ color: white;
+ font-size: 2em;
+ transition: 0.4s;
+ line-height: 0em;
+ width: 0;
+ font-weight: bold;
+}
+/* END SEARCH */
+  
+
+    .checkbox{
+      display: none;
+
+    }
+    .nav-toggle-btn{
+      position: fixed;  
+      width: 5rem;
+      height: 5rem;
+      background: radial-gradient(white,orange);
+
+      top: 0.3em;
+      right: 3rem;
+      border-radius: 50%;
+      z-index: 2000;
+      box-shadow: 0 1rem 3rem rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .overlay{
+      height: 4rem;
+      width: 4rem;
+      border-radius: 50%;
+      position: fixed;
+      top: 0.3em;
+      right: 3.5rem;
+      background: radial-gradient(white,orange);
+      z-index: 1000;
+      transition: transform 0.8s cubic-bezier(0.86, -0 , 0.07, 1);
+    }
+
+    .main-nav{
+      position:fixed;
+      height: 100vh;
+      top: 0;
+      left: -20%;
+      z-index: 1500;
+      opacity: 0;
+      width: 0;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .nav-list{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      list-style: none;
+      text-align: center;
+      width: 100%;
+    }
+    .nav-items{
+      margin: 1em;
+    }
+
+    .nav-links:link,
+    .nav-links:visited{
+      display:inline-block;
+      font-size:2em;
+      font-weight: 10em;
+      padding: 1em 2em;
+      color: black;
+      text-decoration: none;
+      text-transform: uppercase;
+      background-size: 220%;
+      transition:all 0.4s;
+    }
+  .nav-links:hover,
+  .nav-links:active{
+    color:green;
+    transform: translateY(-1em);
+  }
+.nav-links:hover::before,
+.nav-links:hober::after{
+  opacity: 1;
+  width: 1em;
+} 
+
+.nav-links::before,
+.nav-links::after{
+  transition: all 0.3s ease;
+  opacity: 0;
+  border-top: 2px solid black;
+  content: " ";
+  display: block;
+  position: relative;
+  z-index: -1;
+  margin: auto;
+  width: 0;
+
+}
+
+
+.checkbox:checked ~ .overlay{
+  transform: scale(80);
+}
+.checkbox:checked ~ .main-nav{
+  opacity: 1;
+  width: 150%;
+
+}
+.nav-icon-bar{
+  position: relative;
+  margin-top: 1.7em;
+}
+
+.nav-icon-bar,
+.nav-icon-bar::before,
+.nav-icon-bar::after{
+  width:3rem;
+  height: 2px;
+  background-color: #333;
+  display: inline-block;
+}
+
+.nav-icon-bar::before,
+.nav-icon-bar::after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  transition: all 0.2s;
+}
+
+ .nav-icon-bar::before{
+  top: -0.8rem;
+
+}
+
+
+.nav-icon-bar::after{
+  top: 0.8rem;
+}
+
+.nav-toggle-btn:hover .nav-icon-bar::before {
+  top: -1em;
+}
+
+.nav-toggle-btn:hover .nav-icon-bar::after{
+top: 1em;
+}
+
+
+.checkbox:checked + .nav-toggle-btn .nav-icon-bar{
+  background-color: transparent;
+}
+
+.checkbox:checked + .nav-toggle-btn .nav-icon-bar::before{
+  top:0;
+  transform: rotate(135deg);
+}
+.checkbox:checked + .nav-toggle-btn .nav-icon-bar::after{
+  top: 0;
+  transform: rotate(-135deg);
+} 
+
+
+    </style>
 
 </head>
 
 <header>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<input type="checkbox" class="checkbox" id = "nav-toggle">
+<label for="nav-toggle" class="nav-toggle-btn">
+    <span class="nav-icon-bar"></span>
+</label>
+<div class="overlay"></div>
+<nav class="main-nav">
+<ul class="nav-list">
+<li class="nav-items"><img src="/assets/images/productImages/logo.png"></li>
+  <li class="nav-items"><a href="@routes.HomeController.index"class="nav-links">Home</a></li>
+  <li class="nav-items"><a href="@routes.ProductController.productList(0,"") "class="nav-links">Pricing</a></li>
+  @if(user != null) {
+  <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
+  }else {<li class="nav-items"><a href="@routes.LoginController.login()"class="nav-links">Log In</a></li>
+  }
+<li class="Search">
+    
+   <input type="text" id="search" name="" class="Text" placeholder=""/>
+   
+    <button onclick="search()">SEARCH</button>
+   
+   
+  
+  </li>
+  <!-- <li class="search-container">
+      <input type="text" id="search">
+      <button onclick="search()">Go</button>
+  </li> -->
+</ul>
+
+</nav>
+
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="@routes.HomeController.index">BLCPC</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,16 +297,16 @@
           <li>Log In</li>
         </a>
         }
-        </li>
+        </li> -->
         <!-- SEARCH BAR -->
-        <li class="search-container">
-            <input type="text" id="search">
-            <button onclick="search()">Go</button>
-        </li>
+        
         <!--SB-->
-      </ul>
+      <!-- </ul>
     </div>
-  </nav>
+  </nav> -->
+
+
+
 </header>
 
 <body>
@@ -66,10 +317,6 @@
   }
   @content
 </body>
-
-<footer class="py-5 bg-dark">
-  <p class="m-0 text-center text-white">Copyright &copy; Michael, Nitesh & Pavel</p>
-</footer>
 
 <!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
