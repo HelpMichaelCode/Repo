@@ -1,0 +1,29 @@
+@(product: models.Product, categories: List[models.Category], user: models.users.User, env: play.api.Environment)
+@main("Product", user) {
+
+    <div class="product-container">
+        <div class="product-title-div">@product.getProductName</div> <!-- row 1 -->
+
+        <div class="product-image-div">
+            @if(env.resource("public/images/productImages/" + product.getProductID + ".jpg").isDefined){
+            <td><img src="/assets/images/productImages/@(product.getProductID + ".jpg")" class="product-image-solo" /></td>
+            } else {
+            <td><img src="/assets/images/productImages/noImage.jpg" /></td>
+            }
+        </div> <!-- row 2 and 3 -->
+
+        <div class="product-description-div">@product.getProductDescription</div> <!-- row 2 -->
+        <div class="add-to-cart">Add to cart</div> <!-- row 3 -->
+        <div class="qty-and-price">
+
+                &euro; @product.getProductPrice
+            <div class="product-price-solo">
+                Dropdown for quantity
+            </div>
+            
+
+        </div> <!-- row 3 -->
+
+    </div>
+
+}

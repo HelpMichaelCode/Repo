@@ -158,23 +158,8 @@ public class ProductController extends Controller{
         return "/ this should not be returned";
     }
 
-    // public Result search(String keyword){
-    //     List<String> keywords = new ArrayList(Arrays.asList("FIRSTNAME", "LASTNAME", "CURRENCY", "FUND"));
-    //     List<String> dataList = new ArrayList(Arrays.asList("HUSBANDFIRSTNAME", "HUSBANDLASTNAME", "WIFEFIRSTNAME", "SOURCECURRENCY", "CURRENCYRATE"));
-    //     Set<String> targetSet = new HashSet();
 
-    //     String pattern = String.join("|", keywords);
-    //     for (String data : dataList) {
-    //         Matcher matcher = Pattern.compile(pattern).matcher(data);
-    //         if (matcher.find()) {
-    //             targetSet.add(matcher.group());
-    //         }
-    //     }
-
-    //     System.out.println(targetSet);
-    // }
-
-    /*********************************FIRST GO AT SEARCH BAR METHOD *********************************/
+    /********************************* THIS IS NOW DONE IN JAVASCRIPT *********************************/
     // public Result search(String keyword) {
     //     List<Product> itemList = null;
     //     List<Category> categoryList = Category.findAll();
@@ -190,6 +175,17 @@ public class ProductController extends Controller{
     //     }
     //     return ok(productList.render(filteredItems, categoryList, User.getUserById(session().get("email")), env, keyword));
     // }
+
+    public Result displayProduct(String productName){
+
+        for(Product e: Product.findAll()){
+            if(e.getProductName().equals(productName)){
+                return ok(product.render(e, Category.findAll(), User.getUserById(session().get("email")), env));
+            }
+        }
+
+        return redirect(controllers.routes.ProductController.productList(0, ""));    
+    }
 
 }
 

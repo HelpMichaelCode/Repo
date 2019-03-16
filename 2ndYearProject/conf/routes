@@ -24,8 +24,7 @@ POST    /register-submit            controllers.LoginController.registerSubmit
 
 GET     /product-list               controllers.ProductController.productList(category:Long?=0L, keyword: String)
 
-#   First try on search bar
-#   GET     /search/:keyword            controllers.ProductController.search(keyword: String)
+GET     /product/:productName      controllers.ProductController.displayProduct(productName: String)
 
 GET     /add-product                controllers.ProductController.addProduct
 
