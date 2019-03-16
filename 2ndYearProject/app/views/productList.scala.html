@@ -27,7 +27,7 @@
                     <th>ID</th>
                 }
                 <th>Name</th>
-                <th>Category</th>
+                <!-- <th>Category</th> -->
                 <th>Description</th>
                 @if((user != null) && (user.getRole().equals("admin"))) {
                     <th>In Stock</th>
@@ -54,7 +54,7 @@
                             <td>@p.getProductID</td>
                         }
                         <td>@p.getProductName</td>
-                        <td>@p.getCategory.getName</td>
+                        <!-- <td>@p.getCategory.getName</td> -->
                         <td>@p.getProductDescription</td>
                         @if((user != null) && (user.getRole().equals("admin"))) {
                             <td>@p.getProductQty</td>

@@ -1,17 +1,10 @@
-/* HOME PAGE */
-
-.mySlider{
-  margin-bottom: 3em;
- }
-
- ::-webkit-scrollbar{
-   width: 12px;
- }
- ::-webkit-scrollbar-thumb{
-background:-webkit-gradient(#000 , rgb(121, 182, 53));
- }
-
- /* END OF HOME PAGE */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-image: url(https://i.stack.imgur.com/p9mUO.jpg); background-repeat: repeat;
+  color: white;
+}
 
 /* REGISTER */
 .box{
@@ -76,7 +69,7 @@ background:-webkit-gradient(#000 , rgb(121, 182, 53));
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color:white;
 }
 
 .login-box h1 {
@@ -203,10 +196,7 @@ footer {
   width: 100%;
 }
 
-.my-carousel{
-  margin-top: -1.4em;
-  margin-bottom: 2.5em;
-}
+
 
 .product-list-images{
   width: 100%;
@@ -218,6 +208,10 @@ footer {
   height: 16em;
 }
 
-body .container{
-  height: 200px;
+
+/*PriceList table*/
+.table{
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
 }
