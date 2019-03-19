@@ -83,7 +83,7 @@ public class ProductController extends Controller{
             return badRequest("error"); //redirect to add/update item with user's session
         }
 
-        // Display the "add item" page, to allow the user to update the item
+        // Display the "add product" page, to allow the user to update the item
         return ok(addProduct.render(productForm,(User.getUserById(session().get("email")))));
     }
 
@@ -152,10 +152,8 @@ public class ProductController extends Controller{
                     return "/ file upload failed.";
                 }
             }
-        } else {
-            return "/ no image file.";
         }
-        return "/ this should not be returned";
+       	return "/ no image file.";
     }
 
 
