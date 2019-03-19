@@ -33,3 +33,12 @@ GET     /updateItem/:id             controllers.ProductController.updateItem(id:
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 
 GET     /deleteItem/:ProductID      controllers.ProductController.deleteItem(ProductID: Long)
+
+# Shopping
+GET     /showBasket                 controllers.ShoppingCtrl.showBasket()
+GET     /addToBasket/:id            controllers.ShoppingCtrl.addToBasket(id: Long)
+GET     /addOne/:itemId             controllers.ShoppingCtrl.addOne(itemId: Long)
+GET     /removeOne/:itemId          controllers.ShoppingCtrl.removeOne(itemId: Long)
+GET     /emptyBasket                controllers.ShoppingCtrl.emptyBasket()
+GET     /placeOrder                 controllers.ShoppingCtrl.placeOrder()
+GET     /viewOrder/:id              controllers.ShoppingCtrl.viewOrder(id: Long)

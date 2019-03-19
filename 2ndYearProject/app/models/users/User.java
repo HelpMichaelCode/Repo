@@ -1,5 +1,6 @@
 package models.users;
 
+import models.shopping.*;
 import java.util.*;
 import javax.persistence.*;
 import io.ebean.*;
@@ -33,7 +34,13 @@ public class User extends Model{
     @Constraints.Required//new
     private String mobileNumber;
 
-   
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
+    private Basket basket;
+
+@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<ShopOrder> orders;
+
+
 
     public User(){
     }
@@ -57,6 +64,22 @@ public class User extends Model{
         this.address = address;
         this.mobileNumber = mobileNumber;
     }
+
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
+
+    public List<ShopOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<ShopOrder> orders) {
+        this.orders = orders;
+}
 
     public String getEmail() {
         return email;

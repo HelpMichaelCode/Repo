@@ -2762,3 +2762,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/mic
 	at org.h2.mvstore.FileStore.open(FileStore.java:173)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:350)
 	... 104 more
+2019-03-19 23:17:32 jdbc[156]: exception
+org.h2.jdbc.JdbcSQLException: Table "PRODUCT" not found; SQL statement:
+delete from Product [42102-197]

@@ -78,6 +78,12 @@
                             </a>
                         </td>
                         }
+                        <!--SHOPPING CART ICON  HERE-->
+                        @if((user != null) && (user.getRole().equals("customer"))){
+                            <td><a href="@routes.ShoppingCtrl.addToBasket(p.getProductID)" 
+                            class="btn btn-default btn-xs"><span 
+                            class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                        }
                     </tr>
                     }
                 }
