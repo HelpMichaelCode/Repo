@@ -53,6 +53,10 @@ public class ShoppingCtrl extends Controller {
         // Add product to the basket and save
         user.getBasket().addProductOnSale(product);
         user.update();
+
+        //update stock
+        product.decrementStock();
+        product.update();
         
         // Show the basket contents     
         return ok(basket.render(user));
@@ -102,14 +106,24 @@ public class ShoppingCtrl extends Controller {
 
     // Add an item to the basket
     @Transactional
-    public Result addOne(Long productId) {
+    public Result addOne(Long productId, Long pid) {
         
         // Get the order item
         OrderItem product = OrderItem.find.byId(productId);
+        
+        Product ios = Product.find.byId(pid);
+        if(ios.getProductQty()>0){
+
         // Increment quantity
         product.increaseQty();
         // Save
+
         product.update();
+        ios.decrementStock();
+        ios.update();
+        }else{
+            flash("error","Sorry,no more of these product available");
+        } 
         // Show updated basket
         return redirect(routes.ShoppingCtrl.showBasket());
     }
@@ -124,14 +138,16 @@ public class ShoppingCtrl extends Controller {
     }
 
     @Transactional
-    public Result removeOne(Long productId) {
+    public Result removeOne(Long productId,Long pid) {
         
         // Get the order item
         OrderItem product = OrderItem.find.byId(productId);
+        Product ios = Product.find.byId(pid);
         // Get user
         User u = (User)User.getUserById(session().get("email"));
+        
         // Call basket remove item method
-        u.getBasket().removeItem(product);
+        u.getBasket().removeItem(product,ios);
         u.getBasket().update();
         // back to basket
         return ok(basket.render(u));

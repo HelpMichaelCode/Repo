@@ -102,7 +102,7 @@ public class Basket extends Model {
 
    
 
-    public void removeItem(OrderItem product) {
+    public void removeItem(OrderItem product, Product ios) {
 
         // Using an iterator ensures 'safe' removal of list objects
         // Removal of list items is unreliable as index can change if an item is added or removed elsewhere
@@ -114,11 +114,15 @@ public class Basket extends Model {
                 // If more than one of these items in the basket then decrement
                 if (i.getQuantity() > 1 ) {
                     i.decreaseQty();
+                    ios.incrementStock();
+                    ios.update();
                 }
                 // If only one left, remove this item from the basket (via the iterator)
                 else {
                     // delete object from db
                     i.delete();
+                    ios.incrementStock();
+                    ios.update();
                     // remove object from list
                     iter.remove();
                     break;
@@ -126,9 +130,15 @@ public class Basket extends Model {
             }
        }
     }
-
-    public void removeAllProducts(){
-        for(OrderItem i: this.basketItems){
+    public void removeAllProducts() {
+        for(OrderItem i: this.basketItems) {
+            Product ios = Product.find.byId(i.getProduct().getProductID());
+            if(ios.getProductID() == i.getProduct().getProductID())
+            {
+                int quantity = i.getQuantity();
+                ios.incrementStock(quantity);
+                ios.update();
+            } 
             i.delete();
         }
         this.basketItems = null;

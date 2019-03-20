@@ -130,17 +130,15 @@ public class Product extends Model {
     //End of finder methods
 
 
-    public void purchase(int quantity) {
-        if (productQty<quantity) {
-            //Display error message
-            // flash("error", "Oops! We don't have the selected quantity of this product in stock. We'll restock soon.");
-        } else {
-            productQty -= quantity;
-            totalSold += quantity;
-            checkQty();
-            //Display message to inform the user that action is completed successful
-            // flash("success", "Update was successful!");
-        }
+    public void decrementStock(){
+        productQty-=1;
+    }
+    
+    public void incrementStock(){
+        productQty+=1;
+    }
+    public void incrementStock(int q){
+        productQty+=q;
     }
 
     public void restock(int quantity){

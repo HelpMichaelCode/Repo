@@ -41,8 +41,8 @@
                         <td>&euro; @("%.2f".format(i.getPrice))</td>
                         <td>&euro; @("%.2f".format(i.getItemTotal))</td>
                         <td>@i.getQuantity()</td>
-                        <td><a href="@routes.ShoppingCtrl.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
-                        <td><a href="@routes.ShoppingCtrl.addOne(i.getId)"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
+                        <td><a href="@routes.ShoppingCtrl.removeOne(i.getId,i.getProduct.getProductID())"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
+                        <td><a href="@routes.ShoppingCtrl.addOne(i.getId,i.getProduct.getProductID())"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
                     </tr>
                     }<!-- End of For loop -->
               }
