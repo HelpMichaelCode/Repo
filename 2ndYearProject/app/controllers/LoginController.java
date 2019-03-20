@@ -26,7 +26,7 @@ public class LoginController extends Controller{
         return ok(login.render(loginForm, User.getUserById(session().get("email"))));
        }
 
-    public Result loginSubmit() { //THE PASSWORD IS NOT BEING ENCRYPTED BEFORE IT IS SENT THROUGH THE FORM
+    public Result loginSubmit() { //I believe the password is in plain text when the form is sent
         Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
         if(loginForm.hasErrors()) {
             return badRequest(login.render(loginForm, User.getUserById(session().get("email"))));
@@ -46,35 +46,47 @@ public class LoginController extends Controller{
     }
 
     public Result register() {
-        Form<User> userForm = formFactory.form(User.class);
+        Form<PasswordCheck> userForm = formFactory.form(PasswordCheck.class);
         
         return ok(register.render(userForm, User.getUserById(session().get("email"))));
     }
 
     public Result registerSubmit() {
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+        Form<PasswordCheck> passwordForm = formFactory.form(PasswordCheck.class).bindFromRequest();
+
         if(userForm.hasErrors()) {
             flash("error", "Please fill in all the fields!");
             //this message is sent only if the user has not filled in all the fields in the registration form
-            return badRequest(register.render(userForm, User.getUserById(session().get("email"))));
+
+            return badRequest(register.render(passwordForm, User.getUserById(session().get("email"))));
+
         } else {
             User newUser = userForm.get();
+            PasswordCheck pc = passwordForm.get();
+            
+            if(!(pc.getPassword2().equals(newUser.getPassword()))){
+                flash("error", "Passwords do not match.");
+
+                return badRequest(register.render(passwordForm, User.getUserById(session().get("email"))));
+            }
             if(User.getUserById(newUser.getEmail()) == null) {
                 if(newUser.emailCheck()){ //user is registered only if email is in the right format
                     newUser.save(); //Add user to DB if email is in the right format and is not already in use.
                     flash("success", "Thank you for registering!");
+
                     return redirect(controllers.routes.LoginController.login());
                 } else {
                     flash("error", "Wrong email format! Please try again!");
-                    return badRequest(register.render(userForm, User.getUserById(session().get("email")))); //bad format
+
+                    return badRequest(register.render(passwordForm, User.getUserById(session().get("email")))); //bad format
                 }
             } else {
                 flash("error", "Email already in use! Please try again!");
                 //if the email the user has entered is already in the database
-                return badRequest(register.render(userForm, User.getUserById(session().get("email"))));
+
+                return badRequest(register.render(passwordForm, User.getUserById(session().get("email"))));
             }
         }
     }
-       
-}
-
+}      

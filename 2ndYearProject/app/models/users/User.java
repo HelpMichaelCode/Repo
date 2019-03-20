@@ -35,12 +35,10 @@ public class User extends Model{
     private String mobileNumber;
 
     @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
-    private Basket basket;
+    private ShoppingCart shoppingCart;
 
-@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<ShopOrder> orders;
-
-
 
     public User(){
     }
@@ -65,12 +63,12 @@ public class User extends Model{
         this.mobileNumber = mobileNumber;
     }
 
-    public Basket getBasket() {
-        return basket;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     public List<ShopOrder> getOrders() {
@@ -113,9 +111,9 @@ public class User extends Model{
             this.password = passwordCheckSum; //assign the attribute the encrypted string
             }
             catch (NoSuchAlgorithmException e) {
-                //unfortunate sequence of events eh?
+                //unfortunate sequence of events
             // } catch (UnsupportedEncodingException e) {
-            //     //unfortunate sequence of events eh?
+            // //     //unfortunate sequence of events
             }
         }
 

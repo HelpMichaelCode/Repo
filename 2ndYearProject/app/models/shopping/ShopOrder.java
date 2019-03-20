@@ -21,7 +21,7 @@ public class ShopOrder extends Model {
     
     
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
-    private List<OrderItem> products;
+    private List<OrderLine> products;
     
     @ManyToOne
     private User user;
@@ -35,11 +35,11 @@ public class ShopOrder extends Model {
     public static Finder<Long,ShopOrder> find = new Finder<Long,ShopOrder>(ShopOrder.class);
 
     //Find all Products in the database
-    public List<OrderItem> getProducts() {
+    public List<OrderLine> getProducts() {
         return products;
     }
 
-    public void setProducts(List<OrderItem> products) {
+    public void setProducts(List<OrderLine> products) {
         this.products = products;
     }
 
@@ -72,8 +72,8 @@ public class ShopOrder extends Model {
         
         double total = 0;
         
-        for (OrderItem i: products) {
-            total += i.getItemTotal();
+        for (OrderLine i: products) {
+            total += i.getLineTotal();
         }
         return total;
     }

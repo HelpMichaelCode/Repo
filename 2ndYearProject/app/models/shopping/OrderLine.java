@@ -11,7 +11,7 @@ import models.*;
 import models.users.*;
 
 @Entity
-public class OrderItem extends Model {
+public class OrderLine extends Model {
 
     @Id
     private Long id;
@@ -22,7 +22,7 @@ public class OrderItem extends Model {
     private ShopOrder order;
     
     @ManyToOne
-    private  Basket basket;
+    private  ShoppingCart cart;
     
     // Unidirection mapping - Many order items can have one product
     // Product not interested in this
@@ -30,10 +30,10 @@ public class OrderItem extends Model {
     private Product products;
 
 
-    public OrderItem(){
+    public OrderLine(){
     }
 
-    public OrderItem(Product p){
+    public OrderLine(Product p){
         products = p;
         quantity = 1;
         price = p.getProductPrice();
@@ -47,7 +47,7 @@ public class OrderItem extends Model {
         quantity--;
     }
 
-    public double getItemTotal(){
+    public double getLineTotal(){
         return this.price * this.quantity;
     }
 
@@ -75,10 +75,10 @@ public class OrderItem extends Model {
         this.price = price;
     }
 
-    public static Finder<Long, OrderItem> find = new Finder<Long, OrderItem>(OrderItem.class);
+    public static Finder<Long, OrderLine> find = new Finder<Long, OrderLine>(OrderLine.class);
 
-    public static List<OrderItem> findAll(){
-        return OrderItem.find.all();
+    public static List<OrderLine> findAll(){
+        return OrderLine.find.all();
     }
 
 
@@ -90,12 +90,12 @@ public class OrderItem extends Model {
         this.order = order;
     }
 
-    public Basket getBasket() {
-        return basket;
+    public ShoppingCart getCart() {
+        return cart;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public void setCart(ShoppingCart cart) {
+        this.cart = cart;
     }
 
     public Product getProduct() {

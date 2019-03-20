@@ -19,7 +19,7 @@
 <div class="col-sm-10">
     <h4>List of all available products</h4>
 
-    <table class="table table-bordered table-condensed" style="border: 1px solid #337ab7;">
+    <table class="table table-bordered table-condensed">
         <thead class="thead-dark">
             <tr>
                 <th>Image</th>
@@ -80,9 +80,8 @@
                         }
                         <!--SHOPPING CART ICON  HERE-->
                         @if((user != null) && (user.getRole().equals("customer"))){
-                            <td><a href="@routes.ShoppingCtrl.addToBasket(p.getProductID)" 
-                            class="btn btn-default btn-xs"><span 
-                            class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                            <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
+                            class="btn btn-default">Add to cart</a></td>
                         }
                     </tr>
                     }

@@ -1,4 +1,4 @@
-@(userForm: Form[models.users.User], user: models.users.User)
+@(userForm: Form[models.users.PasswordCheck], user: models.users.User)
 @import helper._
 
 @main("Register", user) {
@@ -19,7 +19,7 @@
         </div>
     }
     
-    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form") {
+    @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST") {
         @* CSRF attack prevention *@
         @CSRF.formField
         
@@ -36,7 +36,7 @@
                 @inputPassword(userForm("password"), '_label -> "",
                 'class -> "input", 'placeholder -> "Password")
            
-                @inputPassword(userForm("password"), '_label -> "",
+                @inputPassword(userForm("password2"), '_label -> "",
                 'class -> "input", 'placeholder -> "Confirm Password")
          
                 @inputText(userForm("address"), '_label -> "",

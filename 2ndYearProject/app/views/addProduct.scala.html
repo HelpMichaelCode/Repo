@@ -21,7 +21,7 @@
 
 <div class="add-product-form">
     @helper.form(action=controllers.routes.ProductController.addProductSubmit(), 'class -> "form-horizontal",
-    'role -> "form",'method -> "POST" , 'enctype -> "multipart/form-data") {
+    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
 
     @* CSRF attack prevention *@
     @CSRF.formField

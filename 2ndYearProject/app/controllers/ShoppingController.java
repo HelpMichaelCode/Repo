@@ -17,13 +17,13 @@ import models.shopping.*;
 // Authorise user (check if user is a customer)
 @With(CheckIfUser.class)
 
-public class ShoppingCtrl extends Controller {
+public class ShoppingController extends Controller {
 
     private FormFactory formFactory;
     private Environment env;
 
     @Inject
-    public ShoppingCtrl(Environment e, FormFactory f) {
+    public ShoppingController(Environment e, FormFactory f) {
         this.env = e;
         this.formFactory = f;
     }
@@ -35,32 +35,32 @@ public class ShoppingCtrl extends Controller {
     }
 
     @Transactional
-    public Result addToBasket(Long id) {
+    public Result addToCart(Long id) {
         
         // Find the item on sale
         Product product = Product.find.byId(id);
         
-        // Get basket for logged in user
-        User user = (User)User.getUserById(session().get("email"));
+        // Get cart for logged in user
+        User user = User.getUserById(session().get("email"));
         
-        // Check if item in basket
-        if (user.getBasket() == null) {
-            // If no basket, create one
-            user.setBasket(new Basket());
-            user.getBasket().setUser(user);
+        // Check if item in cart
+        if (user.getShoppingCart() == null) {
+            // If no cart, create one
+            user.setShoppingCart(new ShoppingCart());
+            user.getShoppingCart().setUser(user);
             user.update();
         }
-        // Add product to the basket and save
-        user.getBasket().addProductOnSale(product);
+        // Add product to the cart and save
+        user.getShoppingCart().addProductToCart(product);
         user.update();
         
-        // Show the basket contents     
+        // Show the cart contents     
         return ok(basket.render(user));
     }
 
     @Transactional
     public Result placeOrder() {
-        User u = (User)User.getUserById(session().get("email"));
+        User u = User.getUserById(session().get("email"));
         
         // Create an order instance
         ShopOrder order = new ShopOrder();
@@ -68,18 +68,18 @@ public class ShoppingCtrl extends Controller {
         // Associate order with customer
         order.setUser(u);
         
-        // Copy basket to order
-        order.setProducts(u.getBasket().getBasketItems());
+        // Copy cart to order
+        order.setProducts(u.getShoppingCart().getCartItems());
         
         // Save the order now to generate a new id for this order
         order.save();
        
-       // Move items from basket to order
-        for (OrderItem i: order.getProducts()) {
+       // Move items from cart to order
+        for (OrderLine i: order.getProducts()) {
             // Associate with order
             i.setOrder(order);
-            // Remove from basket
-            i.setBasket(null);
+            // Remove from cart
+            i.setCart(null);
             // update item
             i.update();
         }
@@ -88,16 +88,16 @@ public class ShoppingCtrl extends Controller {
         order.update();
         
         // Clear and update the shopping basket
-        u.getBasket().setBasketItems(null);
-        u.getBasket().update();
+        u.getShoppingCart().setCartItems(null);
+        u.getShoppingCart().update();
         
         // Show order confirmed view
         return ok(orderconfirmed.render(u, order));
     }
 
     @Transactional
-    public Result showBasket() {
-        return ok(basket.render((User)User.getUserById(session().get("email"))));
+    public Result showCart() {
+        return ok(basket.render(User.getUserById(session().get("email"))));
     }
 
     // Add an item to the basket
@@ -105,20 +105,20 @@ public class ShoppingCtrl extends Controller {
     public Result addOne(Long productId) {
         
         // Get the order item
-        OrderItem product = OrderItem.find.byId(productId);
+        OrderLine product = OrderLine.find.byId(productId);
         // Increment quantity
         product.increaseQty();
         // Save
         product.update();
-        // Show updated basket
-        return redirect(routes.ShoppingCtrl.showBasket());
+        // Show updated cart
+        return redirect(routes.ShoppingController.showCart());
     }
 
     @Transactional
-    public Result emptyBasket(){
-        User u = (User)User.getUserById(session().get("email"));
-        u.getBasket().removeAllProducts();
-        u.getBasket().update();
+    public Result emptyCart(){
+        User u = User.getUserById(session().get("email"));
+        u.getShoppingCart().removeAllProducts();
+        u.getShoppingCart().update();
         
         return ok(basket.render(u));
     }
@@ -127,12 +127,12 @@ public class ShoppingCtrl extends Controller {
     public Result removeOne(Long productId) {
         
         // Get the order item
-        OrderItem product = OrderItem.find.byId(productId);
+        OrderLine product = OrderLine.find.byId(productId);
         // Get user
-        User u = (User)User.getUserById(session().get("email"));
+        User u = User.getUserById(session().get("email"));
         // Call basket remove item method
-        u.getBasket().removeItem(product);
-        u.getBasket().update();
+        u.getShoppingCart().removeItem(product);
+        u.getShoppingCart().update();
         // back to basket
         return ok(basket.render(u));
     }

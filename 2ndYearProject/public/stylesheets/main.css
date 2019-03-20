@@ -118,6 +118,13 @@ body {
   margin: 12px 0;
 }
 
+.btn {
+  margin-right: 0;
+}
+
+.add-to-cart{
+}
+
 .btn:hover {
   background-color: #4caf50;
   color: white;
