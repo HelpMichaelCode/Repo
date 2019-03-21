@@ -2765,3 +2765,336 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/mic
 2019-03-19 23:17:32 jdbc[156]: exception
 org.h2.jdbc.JdbcSQLException: Table "PRODUCT" not found; SQL statement:
 delete from Product [42102-197]
+2019-03-21 15:14:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM CATEGORY "; expected "identifier"; SQL statement:
+delete * from category [42001-197]
+2019-03-21 15:14:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM PRODUCT "; expected "identifier"; SQL statement:
+delete * from product [42001-197]
+2019-03-21 15:15:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM PRODUCT "; expected "identifier"; SQL statement:
+delete * from product [42001-197]
+2019-03-21 15:15:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM PRODUCT "; expected "identifier"; SQL statement:
+delete * from product [42001-197]
+2019-03-21 15:17:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "DELETE *[*] FROM ORDER_LINE "; expected "identifier"; SQL statement:
+delete * from ORDER_LINE [42001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media, the latest news headlines and gripping box sets with \r\nthe HP Stream Laptop. ... (286)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media, the latest news headlines and gripping box sets with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('At the core of the MSI GF62 8RC is an 8th generation Intel\u00ae Core\u2122 i5 processor, which \r\nprovides all t... (270)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
+provides all the power you need to run your favourite games. You''ll also be able to 
+run all of your most-used programs and software – perfect for switching between work 
+and play.', 
+959.99, 7, 0, 0, 6) [22001-197]
+2019-03-21 15:17:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO CATEGORY (ID,NAME) VALUES ( 3,'Gaming PCs' )
+INSERT[*] INTO CATEGORY (ID,NAME) VALUES ( 4,'Workstations' ) "; SQL statement:
+insert into category (id,name) values ( 3,'Gaming PCs' )
+insert into category (id,name) values ( 4,'Workstations' ) [42000-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO CATEGORY (ID,NAME) VALUES ( 3,'Gaming PCs' )
+INSERT[*] INTO CATEGORY (ID,NAME) VALUES ( 4,'Workstations' ) "; SQL statement:
+insert into category (id,name) values ( 3,'Gaming PCs' )
+insert into category (id,name) values ( 4,'Workstations' ) [42000-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media, the latest news headlines and gripping box sets with \r\nthe HP Stream Laptop. ... (286)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media, the latest news headlines and gripping box sets with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:18:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('At the core of the MSI GF62 8RC is an 8th generation Intel\u00ae Core\u2122 i5 processor, which \r\nprovides all t... (270)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
+provides all the power you need to run your favourite games. You''ll also be able to 
+run all of your most-used programs and software – perfect for switching between work 
+and play.', 
+959.99, 7, 0, 0, 6) [22001-197]
+2019-03-21 15:19:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:19:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:19:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:19:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media, the latest news headlines and gripping box sets with \r\nthe HP Stream Laptop. ... (286)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media, the latest news headlines and gripping box sets with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:19:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('At the core of the MSI GF62 8RC is an 8th generation Intel\u00ae Core\u2122 i5 processor, which \r\nprovides all t... (270)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
+provides all the power you need to run your favourite games. You''ll also be able to 
+run all of your most-used programs and software – perfect for switching between work 
+and play.', 
+959.99, 7, 0, 0, 6) [22001-197]
+2019-03-21 15:22:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PRODUCT" not found; SQL statement:
+select t0.product_id, t0.product_name, t0.product_description, t0.product_price, t0.product_qty, t0.total_sold, t0.overall_rating, t0.category_id from product t0 [42102-197]
+2019-03-21 15:23:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "[*]#           
+
+ALTER TABLE ORDER_LINE DROP CONSTRAINT IF EXISTS FK_ORDER_LINE_ORDER_ID "; SQL statement:
+# --- !Downs
+
+alter table order_line drop constraint if exists fk_order_line_order_id [42000-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO CATEGORY (ID,NAME) VALUES ( 3,'Gaming PCs' )
+INSERT[*] INTO CATEGORY (ID,NAME) VALUES ( 4,'Workstations' ) "; SQL statement:
+insert into category (id,name) values ( 3,'Gaming PCs' )
+insert into category (id,name) values ( 4,'Workstations' ) [42000-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media, the latest news headlines and gripping box sets with \r\nthe HP Stream Laptop. ... (286)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media, the latest news headlines and gripping box sets with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:23:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('At the core of the MSI GF62 8RC is an 8th generation Intel\u00ae Core\u2122 i5 processor, which \r\nprovides all t... (270)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
+provides all the power you need to run your favourite games. You''ll also be able to 
+run all of your most-used programs and software – perfect for switching between work 
+and play.', 
+959.99, 7, 0, 0, 6) [22001-197]
+2019-03-21 15:24:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO CATEGORY (ID,NAME) VALUES ( 3,'Gaming PCs' )
+INSERT[*] INTO CATEGORY (ID,NAME) VALUES ( 4,'Workstations' ) "; SQL statement:
+insert into category (id,name) values ( 3,'Gaming PCs' )
+insert into category (id,name) values ( 4,'Workstations' ) [42000-197]
+2019-03-21 15:24:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:24:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:24:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:24:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media, the latest news headlines and gripping box sets with \r\nthe HP Stream Laptop. ... (286)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media, the latest news headlines and gripping box sets with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:24:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('At the core of the MSI GF62 8RC is an 8th generation Intel\u00ae Core\u2122 i5 processor, which \r\nprovides all t... (270)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
+provides all the power you need to run your favourite games. You''ll also be able to 
+run all of your most-used programs and software – perfect for switching between work 
+and play.', 
+959.99, 7, 0, 0, 6) [22001-197]
+2019-03-21 15:26:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Stay up to date with social media and the latest news headlines with \r\nthe HP Stream Laptop. Powered by an Intel... (267)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+'Stay up to date with social media and the latest news headlines with 
+the HP Stream Laptop. Powered by an Intel® Celeron™ processor, your laptop is able to 
+handle your everyday routine from ordering groceries online, to writing a letter or chatting 
+with friends.',
+219.99, 10, 0, 0, 5) [22001-197]
+2019-03-21 15:28:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('With a HyperThreaded Intel\u00ae Core\u2122 i7 processor, you can rely on fast performance to get your tasks done ... (348)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
+lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
+work projects. The 8th gen i7 can handle the most demanding tasks simultaneously, without tripping you up on the way.',
+1679.99, 5, 0, 0, 2) [22001-197]
+2019-03-21 15:28:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Take on your favourite games with the Predator Orion 3000 Intel\u00ae Core\u2122 i5+ GTX 1050 Ti Gaming PC. \r\nWi... (269)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+'Take on your favourite games with the Predator Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC. 
+With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
+as well as the classic games that helped you hone your skills.',
+969.99, 5, 0, 0, 3) [22001-197]
+2019-03-21 15:28:57 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]
+2019-03-21 15:30:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "PRODUCT_DESCRIPTION VARCHAR(255)": "STRINGDECODE('Powered by Intel\u00ae Xeon\u00ae processors and NVIDIA\u00ae Quadro\u00ae graphics, this dual-processor \r\nworks... (276)"; SQL statement:
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, category_id) 
+values (104, 'ThinkStation P720 Tower Dual Intel® Platinum NVIDIA® Quadro® GP100',
+'Powered by Intel® Xeon® processors and NVIDIA® Quadro® graphics, this dual-processor 
+workstation is a tough performer. Ideal for professionals with heavy data-processing 
+needs, the P720 offers fast processing, massive storage options, and parallel-processing 
+capability.',
+2019.99, 5, 0, 0, 4) [22001-197]

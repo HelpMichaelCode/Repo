@@ -1,8 +1,7 @@
 @(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment, keyword: String)
 @main("Product List", user){
-<style>
+
     
-</style>
 
 <div class="col-sm-2">
     <h4>Categories</h4>
@@ -30,10 +29,12 @@
                 <!-- <th>Category</th> -->
                 <th>Description</th>
                 @if((user != null) && (user.getRole().equals("admin"))) {
-                    <th>In Stock</th>
+                    <th>Stock</th>
                 }
                 <th>Rating</th>
                 <th>Price</th>
+                @if((user != null) && (user.getRole().equals("customer"))){
+                <th>Buy</th>}
             </tr>
         </thead>
         <!-- End of table header -->
@@ -56,7 +57,7 @@
                         <td>@p.getProductName</td>
                         <!-- <td>@p.getCategory.getName</td> -->
                         <td>@p.getProductDescription</td>
-                        @if((user != null) && (user.getRole().equals("admin"))) {
+                        @if((user != null) && (user.getRole().equals("customer"))) {
                             <td>@p.getProductQty</td>
                         }
                         <td>@p.getOverallRating</td>
@@ -80,8 +81,13 @@
                         }
                         <!--SHOPPING CART ICON  HERE-->
                         @if((user != null) && (user.getRole().equals("customer"))){
+                            @if(p.getProductQty() > 0){
                             <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
-                            class="btn btn-default">Add to cart</a></td>
+                            class="btn btn-default btn-xs"><span 
+                            class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                            }else{
+                                <td><img src="/assets/images/nostock.jpg"/></td>
+                            }
                         }
                     </tr>
                     }

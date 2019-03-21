@@ -1,11 +1,8 @@
 @(user: models.users.User)
-
-
 @import play.api.Play.current
 @import models.shopping._
 @import models._
 
-<!-- Pass page title and user on to main -->
 @main("Shopping Basket", user) {
 
 
@@ -18,13 +15,19 @@
         </div>
         }
 
+        @if(flash.containsKey("error")) {
+            <div class="alert alert-danger">
+                @flash.get("error")
+            </div>
+        }
+
         <table class="table table-bordered table-hover table-condensed">
             <thead>
                 <!-- The header row-->
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Item Price</th>
+                    <th>Price</th>
                     <th>Total</th>
                     <th>Quantity</th>
                     <th>dec.</th>

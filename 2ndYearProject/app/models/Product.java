@@ -31,13 +31,15 @@ public class Product extends Model {
     // @Constraints.Required
     private double overallRating;
 
-    private static final int QTY_LOW = 10; //new
+    private static final int QTY_LOW = 5; //new
     //constant for the restock notification 
     // (i.e., what's the least amount of something that you can have before sending the notification)
 
     @ManyToOne
     private Category category;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     public Product() {
     }
@@ -97,9 +99,17 @@ public class Product extends Model {
     public int getTotalSold() {
         return totalSold;
     }
+
+    public void setTotalSold(int totalSold){
+        this.totalSold = totalSold;
+    }
     
     public double getOverallRating() {
         return overallRating;
+    }
+
+    public void setOverallRating(double rating){
+        this.overallRating = rating;
     }
 
     public Category getCategory() {
@@ -108,13 +118,20 @@ public class Product extends Model {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public List<Review> getReviews(){
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews){
+        this.reviews = reviews;
+    }
     
 
     //end of getters and setters
 
     //Finder and finder methods
-    public static Finder<Long, Product> find = new 
-    Finder<>(Product.class);
+    public static Finder<Long, Product> find = new Finder<>(Product.class);
 
     public static final List<Product> findAll() {
         return Product.find.all();
@@ -130,17 +147,12 @@ public class Product extends Model {
     //End of finder methods
 
 
-    public void purchase(int quantity) {
-        if (productQty<quantity) {
-            //Display error message
-            // flash("error", "Oops! We don't have the selected quantity of this product in stock. We'll restock soon.");
-        } else {
-            productQty -= quantity;
-            totalSold += quantity;
-            checkQty();
-            //Display message to inform the user that action is completed successful
-            // flash("success", "Update was successful!");
-        }
+    public void decrementStock(){
+        productQty--;
+    }
+    
+    public void incrementStock(){
+        productQty++;
     }
 
     public void restock(int quantity){
@@ -154,7 +166,7 @@ public class Product extends Model {
         }
     }
 
-    public void checkQty(){
+    public void checkLowQty(){
         if(productQty<=QTY_LOW){
             //Display error
             // flash("error", "This product's quantity is low! Restock as soon as possible!"); //what am i doing?

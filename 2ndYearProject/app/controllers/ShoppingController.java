@@ -53,6 +53,10 @@ public class ShoppingController extends Controller {
         // Add product to the cart and save
         user.getShoppingCart().addProductToCart(product);
         user.update();
+
+        //update stock
+        product.decrementStock();
+        product.update();
         
         // Show the cart contents     
         return ok(basket.render(user));
@@ -102,15 +106,25 @@ public class ShoppingController extends Controller {
 
     // Add an item to the basket
     @Transactional
-    public Result addOne(Long productId) {
+    public Result addOne(Long orderLineId) {
         
-        // Get the order item
-        OrderLine product = OrderLine.find.byId(productId);
-        // Increment quantity
-        product.increaseQty();
-        // Save
-        product.update();
-        // Show updated cart
+        // Get the order line
+        OrderLine orderLine = OrderLine.find.byId(orderLineId);
+        Product p = Product.find.byId(orderLine.getProduct().getProductID());
+        
+        if(p.getProductQty() > 0){
+
+            // Increment quantity
+            orderLine.increaseQty();
+
+            // Update table
+            orderLine.update();
+            p.decrementStock();
+            p.update();
+        } else {
+            flash("error","Oops, it seems we do not have any more of those in stock.");
+        } 
+        // Show updated basket
         return redirect(routes.ShoppingController.showCart());
     }
 
@@ -124,14 +138,16 @@ public class ShoppingController extends Controller {
     }
 
     @Transactional
-    public Result removeOne(Long productId) {
+    public Result removeOne(Long orderLineId) {
         
         // Get the order item
-        OrderLine product = OrderLine.find.byId(productId);
+        OrderLine orderLine = OrderLine.find.byId(orderLineId);
+        Product ios = Product.find.byId(orderLine.getProduct().getProductID());
         // Get user
         User u = User.getUserById(session().get("email"));
+        
         // Call basket remove item method
-        u.getShoppingCart().removeItem(product);
+        u.getShoppingCart().removeItem(orderLine);
         u.getShoppingCart().update();
         // back to basket
         return ok(basket.render(u));
