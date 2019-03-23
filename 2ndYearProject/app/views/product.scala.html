@@ -1,5 +1,21 @@
-@(product: models.Product, categories: List[models.Category], user: models.users.User, env: play.api.Environment)
+@(product: models.Product, reviewForm: Form[models.Review], productForm: Form[models.Product], user: models.users.User, env: play.api.Environment)
+@import helper._
+
 @main("Product", user) {
+
+    @if(reviewForm.hasGlobalErrors) {
+        <p class="alert alert-warning">
+            @for(e <- reviewForm.globalErrors) {
+                 @e.message<br />
+            }
+        </p>
+        }
+        
+        @if(flash.containsKey("error")) {
+        <div class="alert alert-danger">
+            @flash.get("error")
+        </div>
+        }
 
     <div class="product-container">
         <div class="product-title-div">@product.getProductName</div> <!-- row 1 -->
@@ -24,6 +40,40 @@
 
         </div> <!-- row 3 -->
 
+        
+
+    </div>
+    <div class="solo-product-back-btn">
+        <p class="text-right">
+            <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary">
+            Back</a> <!-- css is in main.css/individual product/solo-product-back-btn -->
+        </p>
+    </div>
+
+    <div class="add-review-form">
+        <h4>You already have this product or recently pruchased it? Please leave your feedback to inform others.</h4>
+        @helper.form(action=controllers.routes.ProductController.addReviewSubmit(), 'class -> "form-horizontal",
+            'role -> "form", 'method -> "POST") {
+
+            @CSRF.formField
+
+            @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", 'label -> "")
+            @inputText(reviewForm("rating"), 'label -> "", 'placeholder -> "Rate - 1 to 5", 'class -> "form-control")
+
+            @inputText(reviewForm("id"), 'label -> "", 'hidden -> "hidden")
+
+            @inputText(productForm("productID").copy(value=Some(product.getProductID.toString)), '_label -> "", 'hidden -> "hidden")
+            @inputText(productForm("productName").copy(value=Some(product.getProductName)), '_label -> "", 'hidden -> "hidden")
+            @inputText(productForm("productDescription").copy(value=Some(product.getProductDescription)), '_label -> "", 'hidden -> "hidden")
+            @inputText(productForm("productQty").copy(value=Some(product.getProductQty.toString)), '_label -> "", 'hidden -> "hidden")
+            @inputText(productForm("productPrice").copy(value=Some(product.getProductPrice.toString)), '_label -> "", 'hidden -> "hidden")
+        
+            <div class="actions">
+
+                <input type="submit" value="Place review" class="btn btn-primary" />
+                
+            </div>
+        }
     </div>
 
 }

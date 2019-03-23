@@ -42,3 +42,5 @@ GET     /remove-one/:itemId         controllers.ShoppingController.removeOne(ite
 GET     /empty-cart                 controllers.ShoppingController.emptyCart()
 GET     /place-order                controllers.ShoppingController.placeOrder()
 GET     /view-order/:id             controllers.ShoppingController.viewOrder(id: Long)
+
+POST    /post-review                controllers.ProductController.addReviewSubmit

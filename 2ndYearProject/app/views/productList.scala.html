@@ -4,7 +4,7 @@
     
 
 <div class="col-sm-2">
-    <h4>Categories</h4>
+    <h2>Categories</h2>
     <ul class="list-group">
         <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
         @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId(), "")"
@@ -16,12 +16,12 @@
 </div>
 
 <div class="col-sm-10">
-    <h4>List of all available products</h4>
+    <h2>List of all available products</h2>
 
     <table class="table table-bordered table-condensed">
         <thead class="thead-dark">
             <tr>
-                <th>Image</th>
+                <th class="product-list-image-col">Image</th>
                 @if((user != null) && (user.getRole().equals("admin"))) {
                     <th>ID</th>
                 }

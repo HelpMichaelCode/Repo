@@ -6,13 +6,12 @@
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning">
-    @for(e
-    <- productForm.globalErrors) { @e.message<br />
+    @for(e <- productForm.globalErrors) {
+        @e.message<br />
     }
 </p>
 }
 
-@* Display error message from flash *@
 @if(flash.containsKey("error")) {
 <div class="alert alert-danger">
     @flash.get("error")
@@ -26,11 +25,11 @@
     @* CSRF attack prevention *@
     @CSRF.formField
 
-    @inputText(productForm("productName"),'_label -> "Prod Name", 'class -> "form-control")
+    @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control")
     
-    @inputText(productForm("productDescription"), '_label -> "Descripton", 'class -> "form-control")
-    @inputText(productForm("productQty"), '_label -> "In Stock", 'class -> "form-control")
-    @inputText(productForm("productPrice"), '_label -> "Price", 'class -> "form-control")
+    @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "")
+    @inputText(productForm("productQty"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control")
+    @inputText(productForm("productPrice"), '_label -> "", 'placeholder -> "Price", 'class -> "form-control")
     @select(
         productForm("category.id"), options(Category.options), '_label -> "Category", '_default -> "-- Choose a category --",
         '_showConstraints -> false, 'class -> "form-control"

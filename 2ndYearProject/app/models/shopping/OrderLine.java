@@ -27,14 +27,14 @@ public class OrderLine extends Model {
     // Unidirection mapping - Many order items can have one product
     // Product not interested in this
     @ManyToOne
-    private Product products;
+    private Product product;
 
 
     public OrderLine(){
     }
 
     public OrderLine(Product p){
-        products = p;
+        product = p;
         quantity = 1;
         price = p.getProductPrice();
     }
@@ -99,10 +99,10 @@ public class OrderLine extends Model {
     }
 
     public Product getProduct() {
-        return products;
+        return product;
     }
 
-    public void setProduct(Product products) {
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

@@ -6,6 +6,9 @@ import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 
+import models.*;
+import models.users.*;
+
 @Entity
 public class Review extends Model {
     
@@ -17,6 +20,12 @@ public class Review extends Model {
 
     @Constraints.Required
     private double rating;
+
+    @ManyToOne
+    private User user; //username of the user who posted the review
+
+    @ManyToOne
+    private Product product;
 
     public Review(){
     }
@@ -50,6 +59,34 @@ public class Review extends Model {
     public void setRating(double rating){
         this.rating = rating;
     }
+
+    public Product getProduct(){
+        return product;
+    }
+
+    public void setProduct(Product p){
+        this.product = p;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User u){
+        this.user = u;
+    }
     
-    
+    public static Finder<Long, Review> find = new Finder<>(Review.class);
+
+    public static final List<Review> findAll() {
+        return Review.find.all();
+    }
+
+    public  Review getReviewbyId(Long id){
+        if(id == null){
+            return null;
+        } else {
+            return find.query().where().eq("id", id).findUnique();
+        }
+    }
 }

@@ -15,7 +15,7 @@
 --   price                         double not null,
 --   order_id                      bigint,
 --   cart_id                       bigint,
---   products_product_id           bigint,
+--   product_product_id            bigint,
 --   constraint pk_order_line primary key (id)
 -- );
 
@@ -33,9 +33,10 @@
 
 -- create table review (
 --   id                            bigint auto_increment not null,
---   product_product_id            bigint not null,
 --   body                          varchar(255),
 --   rating                        double not null,
+--   user_email                    varchar(255),
+--   product_product_id            bigint,
 --   constraint pk_review primary key (id)
 -- );
 
@@ -69,11 +70,14 @@
 -- alter table order_line add constraint fk_order_line_cart_id foreign key (cart_id) references shopping_cart (id) on delete restrict on update restrict;
 -- create index ix_order_line_cart_id on order_line (cart_id);
 
--- alter table order_line add constraint fk_order_line_products_product_id foreign key (products_product_id) references product (product_id) on delete restrict on update restrict;
--- create index ix_order_line_products_product_id on order_line (products_product_id);
+-- alter table order_line add constraint fk_order_line_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
+-- create index ix_order_line_product_product_id on order_line (product_product_id);
 
 -- alter table product add constraint fk_product_category_id foreign key (category_id) references category (id) on delete restrict on update restrict;
 -- create index ix_product_category_id on product (category_id);
+
+-- alter table review add constraint fk_review_user_email foreign key (user_email) references user (email) on delete restrict on update restrict;
+-- create index ix_review_user_email on review (user_email);
 
 -- alter table review add constraint fk_review_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
 -- create index ix_review_product_product_id on review (product_product_id);
@@ -92,11 +96,14 @@
 -- alter table order_line drop constraint if exists fk_order_line_cart_id;
 -- drop index if exists ix_order_line_cart_id;
 
--- alter table order_line drop constraint if exists fk_order_line_products_product_id;
--- drop index if exists ix_order_line_products_product_id;
+-- alter table order_line drop constraint if exists fk_order_line_product_product_id;
+-- drop index if exists ix_order_line_product_product_id;
 
 -- alter table product drop constraint if exists fk_product_category_id;
 -- drop index if exists ix_product_category_id;
+
+-- alter table review drop constraint if exists fk_review_user_email;
+-- drop index if exists ix_review_user_email;
 
 -- alter table review drop constraint if exists fk_review_product_product_id;
 -- drop index if exists ix_review_product_product_id;

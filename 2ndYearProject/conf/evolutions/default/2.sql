@@ -115,3 +115,6 @@
 -- You''ll be able to add and remove cables whenever you need - not only will your case 
 -- be less cluttered, but it will also let air circulate easily to move heat away quickly.', 
 -- 189.99, 6, 0, 0, 12);
+
+-- insert into review (id, body, rating, user_email, product_product_id) 
+-- values (400, "Great laptop! Definitely worth buying.", 4.8, "pavel@play.com", 106);

@@ -38,7 +38,7 @@ public class Product extends Model {
     @ManyToOne
     private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public Product() {
@@ -141,7 +141,7 @@ public class Product extends Model {
         if(id <= 0){
             return null;
         } else {
-            return find.query().where().eq("email", id).findUnique();
+            return find.query().where().eq("product_id", id).findUnique();
         }
     }
     //End of finder methods

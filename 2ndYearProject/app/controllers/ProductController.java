@@ -176,13 +176,44 @@ public class ProductController extends Controller{
 
     public Result displayProduct(String productName){
 
+        Form<Review> reviewForm = formFactory.form(Review.class);
+        Form<Product> prodForm = formFactory.form(Product.class);
+        
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
-                return ok(product.render(e, Category.findAll(), User.getUserById(session().get("email")), env));
+                return ok(product.render(e, reviewForm, prodForm, User.getUserById(session().get("email")), env));
             }
         }
 
         return redirect(controllers.routes.ProductController.productList(0, ""));    
+    }
+
+    // @Transactional
+    @Security.Authenticated(Secured.class)
+    public Result addReviewSubmit(){
+        Form<Review> reviewForm = formFactory.form(Review.class).bindFromRequest();
+        Form<Product> productForm = formFactory.form(Product.class).bindFromRequest();
+
+        if(reviewForm.hasErrors()){
+            flash("error", "Please fill in all the fields!");
+            return badRequest(product.render(reviewForm.get().getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+        } else {
+            Review newReview = reviewForm.get();
+            Product productObj = productForm.get();
+            newReview.setUser(User.getUserById(session().get("email")));
+            newReview.setProduct(productObj);
+            
+            if(newReview.getReviewbyId(newReview.getId()) == null){
+                newReview.save();
+                flash("success", "Thank you for you feedback!");
+
+                    // Calculate the overall rating of the product
+                return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+            } else {
+                flash("error", "We ran into a problem processing your review, please try again later.");
+                return badRequest(product.render(newReview.getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+            }
+        }
     }
 
 }

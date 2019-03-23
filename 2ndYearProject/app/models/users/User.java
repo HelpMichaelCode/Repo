@@ -145,9 +145,9 @@ public class User extends Model{
 
     public static User getUserById(String id){
          if(id == null){
-             return null;
+            return null;
          } else {
-        return find.query().where().eq("email", id).findUnique();
+            return find.query().where().eq("email", id).findUnique();
         }
     }
 
