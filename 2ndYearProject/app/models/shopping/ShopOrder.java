@@ -29,7 +29,7 @@ public class ShopOrder extends Model {
 
     // Default constructor
     public  ShopOrder() {
-        orderDate = new Date();
+        orderDate = Calendar.getInstance();
     }
     	
     public static Finder<Long,ShopOrder> find = new Finder<Long,ShopOrder>(ShopOrder.class);
@@ -77,4 +77,14 @@ public class ShopOrder extends Model {
         }
         return total;
     }
+
+    
+    public String getOrderDateString() {
+        if(orderDate == null) {
+            return "No Date Availible";
+        }
+        String s = new SimpleDateFormat("dd-MMM-yyyy").format(orderDate.getTime());
+        return s;
+    }
+
 }

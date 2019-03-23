@@ -29,7 +29,7 @@ public class ShoppingController extends Controller {
     }
     // View an individual order
     @Transactional
-    public Result viewOrder(long id) {
+    public Result viewOrder() {
         ShopOrder order = ShopOrder.find.byId(id);
         return ok(orderconfirmed.render((User)User.getUserById(session().get("email")), order));
     }
