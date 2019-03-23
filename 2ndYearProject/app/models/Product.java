@@ -31,6 +31,10 @@ public class Product extends Model {
     // @Constraints.Required
     private double overallRating;
 
+    private double summedRating;
+
+    private int countRating;
+
     private static final int QTY_LOW = 5; //new
     //constant for the restock notification 
     // (i.e., what's the least amount of something that you can have before sending the notification)
@@ -53,6 +57,8 @@ public class Product extends Model {
         this.productQty = productQty;
         this.totalSold = 0;
         this.overallRating = 0;
+        this.summedRating = 0;
+        this.countRating = 0;
     }
 
     //Accessors and mutators / getters and setters
@@ -174,7 +180,9 @@ public class Product extends Model {
     }
 
     public void calculateRating(double rating){
-        
+        summedRating += rating;
+        countRating++;
+        overallRating = summedRating / countRating;
     }
     
 }

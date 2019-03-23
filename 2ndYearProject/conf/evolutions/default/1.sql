@@ -27,6 +27,8 @@
 --   product_qty                   integer not null,
 --   total_sold                    integer not null,
 --   overall_rating                double not null,
+--   summed_rating                 double,
+--   count_rating                  integer,
 --   category_id                   bigint,
 --   constraint pk_product primary key (product_id)
 -- );

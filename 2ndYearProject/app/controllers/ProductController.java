@@ -56,8 +56,13 @@ public class ProductController extends Controller{
         } else {
             Product newProduct = newProductForm.get();
             if (newProduct.getProductID() == null) {
-                newProduct.save();
-                flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
+                if(newProduct.getCategory().getId() == null){
+                    flash("error", "Please select a category first.");
+                    return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email"))));
+                } else {
+                    newProduct.save();
+                    flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
+                }
             } else {
                 newProduct.update();
                 flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
