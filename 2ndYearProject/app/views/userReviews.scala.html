@@ -1,0 +1,57 @@
+@(reviews: List[models.Review], email: String, user: models.users.User)
+@main("Product List", user){
+    @if((user != null) && (user.getRole().equals("admin"))) {
+        @if(reviews.isEmpty){
+            <p>User hasn't reviewed any products</p>
+        } else {
+        <div class="col-sm-10">
+            <h2>List of all reviews from 
+                    @for(r<-reviews) {
+                        @if(r.getUser.getEmail == email){
+                            @r.getUser.getUsername
+                        }
+                    }
+                    <!-- gets the username for the provided email -->
+            </h2>
+
+            <table class="table table-bordered table-condensed">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                        <th>Product name</th>
+                        <th>Review ID</th>
+                        <th>Delete review</th>
+                    </tr>
+                </thead>
+                <!-- End of table header -->
+                <div class="table">
+                    <tbody>
+                        <!-- Review row(s) -->
+
+                        @for(r<-reviews) {
+                            @if(r.getUser.getEmail == email){
+                                <tr>
+                                    <td>@r.getUser.getUsername</td>
+                                    <td>@r.getBody</td>
+                                    <td>@("%.2f".format(r.getRating))</td>
+                                    <td>@r.getProduct.getProductName</td>                        
+                                    <td>@r.getId</td>
+                                    
+                                    <!-- delete button -->
+                                    <td>
+                                        <a href="@routes.ProductController.deleteReview(r.getId)" class="button-xs btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </div>
+            </table>
+        </div>
+        }
+    }
+}

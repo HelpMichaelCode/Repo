@@ -177,7 +177,7 @@ background: #DFC2F2;
 	position: relative;
 	overflow: hidden;
 	height: 100%;
-	float: right;
+	/* float: right; */
 	width: 50%;
 	display: inline-block;
 }
@@ -234,28 +234,13 @@ background: #DFC2F2;
 <div class="slider">
   <img class="mySlides" src="/assets/images/productImages/gs65.png" >
   <img class="mySlides" src="/assets/images/productImages/Acer.jpg" >
-  <img class="mySlides" src="/assets/images/productImages/gs65.png" >
+  <!-- <img class="mySlides" src="/assets/images/productImages/gs65.png" > -->
 </div>
 
-<script>
-var myIndex = 0;
-carousel();
 
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}    
-  x[myIndex-1].style.display = "block";  
-  setTimeout(carousel, 2000); // Change image every 2 seconds
-}
-</script>
 <div class ="color"></div>
-<div class="container">
-<!-- @for(p<-products){
+<!--<div class="container">
+ @for(p<-products){
 
 <div class="card">
   <img src="/assets/images/productImages/172.jpg" >

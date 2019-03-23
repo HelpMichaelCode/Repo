@@ -6,6 +6,14 @@ body {
   color: white;
 }
 
+body textarea{
+  color: rgb(20, 20, 20);
+}
+
+.dark-font{
+  color: rgb(20, 20, 20);
+}
+
 /* REGISTER */
 .box{
   width: 40%;
@@ -188,9 +196,42 @@ tr[data-href]{
 
 .solo-product-back-btn{
   float:left;
-  width: 8%;
-  margin-top: 15%;
+  width: 9%;
+  margin-left: 3%;
+  margin-top: 9%;
 }
+
+.solo-product-back-btn a{
+  width: 100%;
+}
+
+.hide{
+  display: none;
+}
+
+.reviews{
+  display: inline-block;
+  width: 95%;
+  margin-left: 3%;
+  margin-top: 2em;
+}
+
+.add-review-form{
+  float: left;
+  width: 30%;
+}
+
+.product-reviews{
+  width: 60%;
+  float: right;
+  text-align: left;
+  padding-left: 20%;
+}
+
+.review-body p{
+  font-size: 120%;
+}
+
 /* END OF INDIVIDUAL PRODUCT */
 body {
   margin: 0;
@@ -214,7 +255,7 @@ footer {
 
 .product-list-images{
   width: 100%;
-  height: 7em;
+  height: 8em;
 }
 
 .product-image-home{

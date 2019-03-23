@@ -17,11 +17,11 @@ $('tr[data-href]').on("click", function() {
   document.location = $(this).data('href');
 });
 
-
+var myIndex = 0;
 carousel();
 
 function carousel() {
-  var myIndex = 0;
+  
   var i;
   var x = document.getElementsByClassName("mySlides");
   for (i = 0; i < x.length; i++) {
@@ -30,7 +30,7 @@ function carousel() {
   myIndex++;
   if (myIndex > x.length) {myIndex = 1}    
   x[myIndex-1].style.display = "block";  
-  setTimeout(carousel, 2000); // Change image every 2 seconds
+  setTimeout(carousel, 4000); // Change image every 2 seconds
 }
 
 function displayCart() {

@@ -172,5 +172,9 @@ public class Product extends Model {
             // flash("error", "This product's quantity is low! Restock as soon as possible!"); //what am i doing?
         }
     }
+
+    public void calculateRating(double rating){
+        
+    }
     
 }

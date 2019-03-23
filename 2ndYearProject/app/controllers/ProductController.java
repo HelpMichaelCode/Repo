@@ -181,7 +181,7 @@ public class ProductController extends Controller{
         
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
-                return ok(product.render(e, reviewForm, prodForm, User.getUserById(session().get("email")), env));
+                return ok(product.render(e, Review.findAll(), reviewForm, prodForm, User.getUserById(session().get("email")), env));
             }
         }
 
@@ -196,24 +196,47 @@ public class ProductController extends Controller{
 
         if(reviewForm.hasErrors()){
             flash("error", "Please fill in all the fields!");
-            return badRequest(product.render(reviewForm.get().getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+            return badRequest(product.render(reviewForm.get().getProduct(), Review.findAll(), reviewForm, productForm, User.getUserById(session().get("email")), env));
         } else {
             Review newReview = reviewForm.get();
             Product productObj = productForm.get();
             newReview.setUser(User.getUserById(session().get("email")));
             newReview.setProduct(productObj);
+            productObj.calculateRating(newReview.getRating());
             
             if(newReview.getReviewbyId(newReview.getId()) == null){
                 newReview.save();
+                productObj.update();
                 flash("success", "Thank you for you feedback!");
 
                     // Calculate the overall rating of the product
                 return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
             } else {
                 flash("error", "We ran into a problem processing your review, please try again later.");
-                return badRequest(product.render(newReview.getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+                return badRequest(product.render(newReview.getProduct(), Review.findAll(), reviewForm, productForm, User.getUserById(session().get("email")), env));
             }
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    @Transactional
+    public Result deleteReview(Long id){
+        try{
+            Review.find.ref(id).delete();
+            flash("success", "Review has been deleted.");
+        } catch (Exception ex) {
+            flash("error", "Could not delete review.");
+        }
+        
+        return redirect(controllers.routes.ProductController.userReviews(Review.find.ref(id).getUser().getEmail()));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result userReviews(String email){
+        List<Review> reviews = Review.findAll();
+        return ok(userReviews.render(reviews, email, User.getUserById(session().get("email"))));
     }
 
 }
