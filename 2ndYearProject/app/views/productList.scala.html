@@ -1,26 +1,31 @@
 @(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment, keyword: String)
 @main("Product List", user){
 
-    
-
-<div class="col-sm-2">
+<div class="cats">
     <h2>Categories</h2>
     <ul class="list-group">
         <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
         @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId(), "")"
-            class="list-group-item catheight">@c.getName
+            class="list-group-item">@c.getName
             <span class="badge">@c.getItems.size</span>
             </a>
             }
     </ul>
+    @if(user != null && user.getRole.equals("customer")){
+        <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart" 
+            class="btn btn-default btn-lg">View cart</a></div>
+    }
 </div>
 
-<div class="col-sm-10">
+<div class="product-list">
     <h2>List of all available products</h2>
 
     <table class="table table-bordered table-condensed">
         <thead class="thead-dark">
             <tr>
+                @if(user.getRole.equals("admin")){
+                    <th class="low-stock-col">Low</th>
+                }
                 <th class="product-list-image-col">Image</th>
                 @if((user != null) && (user.getRole().equals("admin"))) {
                     <th>ID</th>
@@ -34,7 +39,11 @@
                 <th>Rating</th>
                 <th>Price</th>
                 @if((user != null) && (user.getRole().equals("customer"))){
-                <th>Buy</th>}
+                    <th>Buy</th>
+                }
+                @if((user != null) && (user.getRole().equals("admin"))){
+                    <th colspan="2">Actions</th>
+                }
             </tr>
         </thead>
         <!-- End of table header -->
@@ -44,12 +53,17 @@
 
                 @* Loop for creating table rows from Product data *@
                 @for(p<-products) {
-                    @if(p.getProductName.contains(keyword) || p.getProductDescription.contains(keyword)){
+                    @if(p.getProductName.toLowerCase.contains(keyword) || p.getProductDescription.toLowerCase.contains(keyword)){
                     <tr data-href="http://localhost:9000/product/@p.getProductName">
+                        @if(p.checkLowQty && user.getRole.equals("admin")){
+                            <td><img src="/assets/images/lowstock.png" class="low-stock"/></td>
+                        } else if(!(p.checkLowQty) && user.getRole.equals("admin")){
+                            <td></td>
+                        }
                         @if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
                         <td><img src="/assets/images/productImages/@(p.getProductID + ".jpg")" class="product-list-images"/></td>
                         } else {
-                        <td><img src="/assets/images/productImages/noImage.jpg" /></td>
+                        <td><img src="/assets/images/productImages/noImage.jpg"/></td>
                         }
                         @if((user != null) && (user.getRole().equals("admin"))) {
                             <td>@p.getProductID</td>
@@ -57,7 +71,7 @@
                         <td>@p.getProductName</td>
                         <!-- <td>@p.getCategory.getName</td> -->
                         <td>@p.getProductDescription</td>
-                        @if((user != null) && (user.getRole().equals("customer"))) {
+                        @if((user != null) && (user.getRole().equals("admin"))) {
                             <td>@p.getProductQty</td>
                         }
                         <td>@p.getOverallRating</td>
@@ -67,24 +81,23 @@
                         @if((user != null) && (user.getRole().equals("admin"))) {
                         <!-- update button -->
                         <td>
-                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-xs btn-danger">
+                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-lg btn-danger">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                         </td>
 
                         <!-- delete button -->
                         <td>
-                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-xs btn-danger">
+                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-lg btn-danger" onclick="confirmDel()">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </td>
                         }
-                        <!--SHOPPING CART ICON  HERE-->
                         @if((user != null) && (user.getRole().equals("customer"))){
                             @if(p.getProductQty() > 0){
-                            <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
-                            class="btn btn-default btn-xs"><span 
-                            class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                                <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
+                                class="btn btn-default btn-lg" onclick="confirmDel()"><span 
+                                class="glyphicon glyphicon-shopping-cart"></span></a></td>
                             }else{
                                 <td><img src="/assets/images/nostock.jpg"/></td>
                             }

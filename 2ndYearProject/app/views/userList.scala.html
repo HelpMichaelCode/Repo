@@ -1,6 +1,5 @@
-@(user: models.users.User)
-@main("User List", user){
-<!-- CANNOT USE A LIST OF USERS??? -->
+@(list: List[models.users.User], user: models.users.User)
+@main("Users list", user){
         
     <div class="col-sm-10">
         <h4>List of all users</h4>
@@ -13,6 +12,9 @@
                     <th>Address</th>
                     <th>Mobile number</th>
                     <th>Role</th>
+                    @if((user != null) && (user.getRole().equals("admin"))){
+                        <th colspan="2">Actions</th>
+                    }
                 </tr>
             </thead>
             <!-- End of table header -->
@@ -20,7 +22,33 @@
                 <tbody>
                     <!-- User row(s) -->
 
-                    <!-- SEE TEXT DOCUMENT CALLED USER-LIST-TABLE -->
+                    @for(u <- list) { 
+                        <tr>
+                            <td>@u.getEmail</td>
+                            <td>@u.getUsername</td>
+                            <td>@u.getAddress</td>
+                            <td>@u.getMobileNumber</td>
+                            <td>@u.getRole</td>
+
+                            <!-- these are displayed only to administrators (this check is just in case a customer gets access to this page) -->
+                            @if((user != null) && (user.getRole().equals("admin"))) {
+                            <!-- update button -->
+                            <td>
+                                <a href="@routes.LoginController.updateUser(u.getEmail)" class="button-md btn-danger">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
+
+                            <!-- delete button -->
+                            <td>
+                                <a href="@routes.LoginController.deleteUser(u.getEmail)" class="button-lg btn-danger" onclick="confirmDel()">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </td>
+                            }
+
+                        </tr>
+                        }
 
                 </tbody>
             </div>

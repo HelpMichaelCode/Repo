@@ -20,6 +20,9 @@
                 @flash.get("error")
             </div>
         }
+        <h2>@user.getUsername
+            's shopping cart
+        </h2>
 
         <table class="table table-bordered table-hover table-condensed">
             <thead>
@@ -37,61 +40,58 @@
             <tbody>
                 @if(user.getShoppingCart() != null) {
                 <!-- Start of For loop - For each p in products add a row -->
-                @for(i <- user.getShoppingCart().getCartItems()) { <tr data-href="http://localhost:9000/product/@i.getProduct.getProductName">
-                    <td>@i.getProduct.getProductName</td>
-                    <td>@i.getProduct.getProductDescription()</td>
-                    <td>&euro; @("%.2f".format(i.getPrice))</td>
-                    <td>&euro; @("%.2f".format(i.getLineTotal))</td>
-                    <td>@i.getQuantity()</td>
-                    <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span
-                                class="glyphicon glyphicon-minus-sign"></span></a></td>
-                    <td><a href="@routes.ShoppingController.addOne(i.getId)"><span
-                                class="glyphicon glyphicon-plus-sign"></span></a></td>
+                @for(i <- user.getShoppingCart().getCartItems()) { 
+                    @if(i.getProduct.getProductQty == 0){
+                        <td colspan="7">@i.getProduct.getProductName
+                            has been sold out</td>
+                    } else {
+                    <tr data-href="http://localhost:9000/product/@i.getProduct.getProductName">
+                        <td>@i.getProduct.getProductName</td>
+                        <td>@i.getProduct.getProductDescription()</td>
+                        <td>&euro; @("%.2f".format(i.getPrice))</td>
+                        <td>&euro; @("%.2f".format(i.getLineTotal))</td>
+                        <td>@i.getQuantity()</td>
+                        <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span
+                                    class="glyphicon glyphicon-minus-sign"></span></a></td>
+                        <td><a href="@routes.ShoppingController.addOne(i.getId)"><span
+                                    class="glyphicon glyphicon-plus-sign"></span></a></td>
                     </tr>
                     }
+                }
                     <!-- End of For loop -->
-                    }
+                }
             </tbody>
         </table>
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-11">
                 <p class="text-right"><strong>Basket Total: &euro;
                         @("%.2f".format(user.getShoppingCart.getCartTotal))</strong></p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <p class="text-right">
-                    <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-sm">
+                    <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-lg">
                         Continue shopping</a>
                 </p>
             </div>
             <div class="col-md-4">
                 <p class="text-right">
-                    <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-sm"
+                    <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-lg"
                         onclick="return confirmDel();">
                         <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
                 </p>
             </div>
             <div class="col-md-4">
                 <p class="text-right">
-                    <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-sm">
+                    <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-lg">
                         <span class="glyphicon glyphicon-euro"></span> Place Order</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // JavaScript function returns true if user clicks yes, otherwise, false
-    function confirmDel() {
-        return confirm('Are you sure?');
-    }
-
-
-</script>
 }

@@ -47,3 +47,12 @@ POST    /post-review                controllers.ProductController.addReviewSubmi
 
 GET     /cancelOrder/:id            controllers.ShoppingController.cancelOrder(id: Long)
 GET     /viewOrders                 controllers.ShoppingController.viewOrders()
+GET     /delete-review/:id/:email          controllers.ProductController.deleteReview(id: Long, email: String)
+
+GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
+
+GET     /update-user/:email         controllers.LoginController.updateUser(email: String)
+
+GET     /delete-user/:email         controllers.LoginController.deleteUser(email: String)
+
+GET     /user-list                  controllers.LoginController.userList

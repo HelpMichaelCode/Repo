@@ -1,8 +1,8 @@
-@(productForm: Form[models.Product], user: models.users.User)
+@(productForm: Form[models.Product], user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product", user) {
-<h3>Add a product to BLDPC</h3>
+<h3>@heading</h3>
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning">

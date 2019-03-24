@@ -11,7 +11,8 @@ public class PasswordCheck extends User {
 
     }
 
-    public PasswordCheck(String email, String username, String password1, String address, String mobileNumber, String role, String password2) {
+    public PasswordCheck(String email, String username, String password1,
+     String address, String mobileNumber, String role, String password2) {
         super(email, username, password1, address, mobileNumber, role);
         try{
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -25,7 +26,11 @@ public class PasswordCheck extends User {
             } catch (UnsupportedEncodingException e) {
                 //unfortunate sequence of events eh?
             }
-        
+    }
+
+    public PasswordCheck(User u){
+        super(u.getEmail(), u.getUsername(), u.getPassword(), u.getAddress(),
+        u.getMobileNumber(), u.getRole());
     }
 
     public String getPassword2(){

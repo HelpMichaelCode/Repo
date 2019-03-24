@@ -39,9 +39,14 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addProduct() {
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
         Form<Product> productForm = formFactory.form(Product.class);
         
-        return ok(addProduct.render(productForm, User.getUserById(session().get("email"))));
+        return ok(addProduct.render(productForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -52,12 +57,18 @@ public class ProductController extends Controller{
         FilePart<File> image = data.getFile("upload");
 
         if(newProductForm.hasErrors()){
-            return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email"))));
+            flash("error", "Fill in all the fields.");
+            return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
         } else {
             Product newProduct = newProductForm.get();
             if (newProduct.getProductID() == null) {
-                newProduct.save();
-                flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
+                if(newProduct.getCategory().getId() == null){
+                    flash("error", "Please select a category first.");
+                    return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
+                } else {
+                    newProduct.save();
+                    flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
+                }
             } else {
                 newProduct.update();
                 flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
@@ -70,6 +81,13 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result updateItem(Long id) {
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
+
         Product p;
         Form<Product> productForm;
 
@@ -80,16 +98,24 @@ public class ProductController extends Controller{
             // Populate the form object with data from the item found in the database
             productForm = formFactory.form(Product.class).fill(p);
         } catch (Exception ex) {
-            return badRequest("error"); //redirect to add/update item with user's session
+            return badRequest(productList.render(Product.findAll(), Category.findAll(), User.getUserById(session().get("email")), env, ""));
+            //redirect to add/update item with user's session
         }
 
         // Display the "add product" page, to allow the user to update the item
-        return ok(addProduct.render(productForm,(User.getUserById(session().get("email")))));
+        return ok(addProduct.render(productForm,(User.getUserById(session().get("email"))), "Update product "+p.getProductName()));
     }
 
     // this method gets all the products from the database and passes them into the productList view, which displays them
 
     public Result productList(Long cat, String keyword) {
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
+
         List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
         if(keyword == null){
@@ -109,8 +135,14 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     @Transactional
     public Result deleteItem(Long productID){
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
         Product.find.ref(productID).delete();
-        flash("Success", "Product has been deleted");
+        flash("success", "Product has been deleted");
         return redirect(controllers.routes.ProductController.productList(0, ""));
     }
 
@@ -175,16 +207,17 @@ public class ProductController extends Controller{
     // }
 
     public Result displayProduct(String productName){
-
         Form<Review> reviewForm = formFactory.form(Review.class);
         Form<Product> prodForm = formFactory.form(Product.class);
+        List<Review> filtered = new ArrayList<>();
         
+
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
-                return ok(product.render(e, reviewForm, prodForm, User.getUserById(session().get("email")), env));
+                return ok(product.render(e, Review.findAll(), filtered, reviewForm, prodForm, User.getUserById(session().get("email")), env));       
             }
         }
-
+        
         return redirect(controllers.routes.ProductController.productList(0, ""));    
     }
 
@@ -193,27 +226,47 @@ public class ProductController extends Controller{
     public Result addReviewSubmit(){
         Form<Review> reviewForm = formFactory.form(Review.class).bindFromRequest();
         Form<Product> productForm = formFactory.form(Product.class).bindFromRequest();
+        List<Review> filtered = new ArrayList<>();
 
         if(reviewForm.hasErrors()){
             flash("error", "Please fill in all the fields!");
-            return badRequest(product.render(reviewForm.get().getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+            return badRequest(product.render(reviewForm.get().getProduct(), Review.findAll(), filtered, reviewForm, productForm, User.getUserById(session().get("email")), env));
         } else {
             Review newReview = reviewForm.get();
-            Product productObj = productForm.get();
+            Product temp = productForm.get();
+            Product productObj = Product.getProductById(temp.getProductID());
             newReview.setUser(User.getUserById(session().get("email")));
             newReview.setProduct(productObj);
+            productObj.calculateRating(newReview.getRating());
             
             if(newReview.getReviewbyId(newReview.getId()) == null){
                 newReview.save();
+                productObj.update();
                 flash("success", "Thank you for you feedback!");
 
                     // Calculate the overall rating of the product
                 return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
             } else {
                 flash("error", "We ran into a problem processing your review, please try again later.");
-                return badRequest(product.render(newReview.getProduct(), reviewForm, productForm, User.getUserById(session().get("email")), env));
+                return badRequest(product.render(newReview.getProduct(), Review.findAll(), filtered, reviewForm, productForm, User.getUserById(session().get("email")), env));
             }
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    @Transactional
+    public Result deleteReview(Long id, String email){
+        Review.find.ref(id).delete();
+        flash("Success", "Review has been deleted");
+        return redirect(controllers.routes.ProductController.userReviews(email)); 
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result userReviews(String email){
+        List<Review> reviews = Review.findAll();
+        return ok(userReviews.render(reviews, email, User.getUserById(session().get("email"))));
     }
 
 }
