@@ -8,6 +8,8 @@ import views.html.*;
 import play.db.ebean.Transactional;
 import play.api.Environment;
 
+import java.util.List;
+
 // Import models
 import models.*;
 import models.users.*;
@@ -54,9 +56,9 @@ public class ShoppingController extends Controller {
         user.getShoppingCart().addProductToCart(product);
         user.update();
 
-        //update stock
-        product.decrementStock();
-        product.update();
+        // //update stock
+        // product.decrementStock();
+        // product.update();
         
         // notify user that item was added to their cart
         flash("success", "Product " + product.getProductName() + " was added to cart.");
@@ -70,6 +72,21 @@ public class ShoppingController extends Controller {
         // Create an order instance
         ShopOrder order = new ShopOrder();
         
+        List<OrderLine> orderLines = u.getShoppingCart().getCartItems();
+
+        for(OrderLine i: orderLines){
+            if(i.getProduct().getProductQty() < i.getQuantity()){
+                i.setQuantity(i.getProduct().getProductQty());
+                i.update();
+                // i.getProduct().update();
+                flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have.");
+                return ok(basket.render(User.getUserById(session().get("email"))));
+            }
+        }
+
+        // for(OrderLine i: orderLines){
+        //     if(i.get)
+        // }
         // Associate order with customer
         order.setUser(u);
         
@@ -80,13 +97,15 @@ public class ShoppingController extends Controller {
         order.save();
        
        // Move items from cart to order
-        for (OrderLine i: order.getProducts()) {
+        for (OrderLine orderLine: order.getProducts()) {
             // Associate with order
-            i.setOrder(order);
+            orderLine.setOrder(order);
             // Remove from cart
-            i.setCart(null);
+            orderLine.getProduct().purchase(orderLine.getQuantity());
+            orderLine.getProduct().update();
+            orderLine.setCart(null);
             // update item
-            i.update();
+            orderLine.update();
         }
         
         // Update the order
@@ -111,21 +130,42 @@ public class ShoppingController extends Controller {
         
         // Get the order line
         OrderLine orderLine = OrderLine.find.byId(orderLineId);
-        Product p = Product.find.byId(orderLine.getProduct().getProductID());
+        Product p = Product.getProductById(orderLine.getProduct().getProductID());
         
-        if(p.getProductQty() > 0){
-
+        if(p.getProductQty() < orderLine.getQuantity()){
+            orderLine.setQuantity(p.getProductQty());
+            orderLine.update();
+            flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have.");
+            
+        } else if(p.getProductQty() > 0){
             // Increment quantity
             orderLine.increaseQty();
 
             // Update table
             orderLine.update();
-            p.decrementStock();
-            p.update();
+            // p.decrementStock();
+            // p.update();
         } else {
             flash("error","Oops, it seems we do not have any more of those in stock.");
         } 
         // Show updated basket
+        return redirect(routes.ShoppingController.showCart());
+    }
+
+    @Transactional
+    public Result removeOne(Long orderLineId) {
+        
+        // Get the order item
+        OrderLine orderLine = OrderLine.find.byId(orderLineId);
+        Product p = Product.getProductById(orderLine.getProduct().getProductID());
+        // Get user
+        User u = User.getUserById(session().get("email"));
+        
+        // Call basket remove item method
+        u.getShoppingCart().removeItem(orderLine);
+        u.getShoppingCart().update();
+        // p.incrementStock();
+        // p.update();
         return redirect(routes.ShoppingController.showCart());
     }
 
@@ -138,22 +178,4 @@ public class ShoppingController extends Controller {
         return ok(basket.render(u));
     }
 
-    @Transactional
-    public Result removeOne(Long orderLineId) {
-        
-        // Get the order item
-        OrderLine orderLine = OrderLine.find.byId(orderLineId);
-        Product ios = Product.find.byId(orderLine.getProduct().getProductID());
-        // Get user
-        User u = User.getUserById(session().get("email"));
-        
-        // Call basket remove item method
-        u.getShoppingCart().removeItem(orderLine);
-        u.getShoppingCart().update();
-        // back to basket
-        return ok(basket.render(u));
-    }
-
-  
-    
 }

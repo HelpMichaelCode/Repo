@@ -231,9 +231,16 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     @Transactional
-    public Result deleteReview(Long id){
+    public Result deleteReview(Long id, String email){
+        Review r = null;
+        for(Review e: Review.findAll()){
+            if(e.getId() == id && e.getUser().getEmail().equals(email)){
+                r = e;
+                break;
+            }
+        }
         try{
-            Review.find.ref(id).delete();
+            r.delete();
             flash("success", "Review has been deleted.");
         } catch (Exception ex) {
             flash("error", "Could not delete review.");

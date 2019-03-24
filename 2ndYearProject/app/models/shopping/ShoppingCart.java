@@ -113,15 +113,15 @@ public class ShoppingCart extends Model {
                 // If more than one of these items in the basket then decrement
                 if (i.getQuantity() > 1 ) {
                     i.decreaseQty();
-                    i.getProduct().incrementStock();
-                    i.getProduct().update();
+                    // i.getProduct().incrementStock();
+                    // i.getProduct().update();
                 }
                 // If only one left, remove this item from the basket (via the iterator)
                 else {
                     // delete object from db
                     i.delete();
-                    i.getProduct().incrementStock();
-                    i.getProduct().update();
+                    // i.getProduct().incrementStock();
+                    // i.getProduct().update();
                     // remove object from list
                     iter.remove();
                     break;
@@ -131,12 +131,11 @@ public class ShoppingCart extends Model {
     }
     public void removeAllProducts() {
         for(OrderLine i: this.cartItems) {
-            Product p = Product.find.byId(i.getProduct().getProductID());
-            if(p.getProductID() == i.getProduct().getProductID())
-            {
+            Product p = Product.getProductById(i.getProduct().getProductID());
+            if(p.getProductID() == i.getProduct().getProductID()){
                 int quantity = i.getQuantity();
-                p.restock(quantity);
-                p.update();
+                // p.restock(quantity);
+                // p.update();
             } 
             i.delete();
         }

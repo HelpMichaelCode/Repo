@@ -45,7 +45,7 @@ GET     /view-order/:id             controllers.ShoppingController.viewOrder(id:
 
 POST    /post-review                controllers.ProductController.addReviewSubmit
 
-GET     /delete-review/:id          controllers.ProductController.deleteReview(id: Long)
+GET     /delete-review/:id/:email          controllers.ProductController.deleteReview(id: Long, email: String)
 
 GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
 

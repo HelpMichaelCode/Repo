@@ -163,7 +163,7 @@ public class Product extends Model {
 
     public void restock(int quantity){
         if(quantity>100){
-            //Displaye error message
+            //Display error message
             // flash("error", "You cannot add more than 100 items of one type!");
         } else {
             productQty += quantity;
@@ -172,11 +172,22 @@ public class Product extends Model {
         }
     }
 
-    public void checkLowQty(){
+    public void purchase(int quantity){
+        if(productQty < quantity){
+            //Display error message
+        } else {
+            productQty -= quantity;
+            totalSold+=quantity;
+        }
+    }
+
+    public boolean checkLowQty(){
         if(productQty<=QTY_LOW){
             //Display error
             // flash("error", "This product's quantity is low! Restock as soon as possible!"); //what am i doing?
+            
         }
+        return false;
     }
 
     public void calculateRating(double rating){
