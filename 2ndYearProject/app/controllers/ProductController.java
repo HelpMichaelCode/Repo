@@ -39,6 +39,11 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addProduct() {
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
         Form<Product> productForm = formFactory.form(Product.class);
         
         return ok(addProduct.render(productForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
@@ -76,6 +81,13 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result updateItem(Long id) {
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
+
         Product p;
         Form<Product> productForm;
 
@@ -97,6 +109,13 @@ public class ProductController extends Controller{
     // this method gets all the products from the database and passes them into the productList view, which displays them
 
     public Result productList(Long cat, String keyword) {
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
+
         List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
         if(keyword == null){
@@ -116,8 +135,14 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     @Transactional
     public Result deleteItem(Long productID){
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
         Product.find.ref(productID).delete();
-        flash("Success", "Product has been deleted");
+        flash("success", "Product has been deleted");
         return redirect(controllers.routes.ProductController.productList(0, ""));
     }
 
@@ -232,21 +257,9 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     @Transactional
     public Result deleteReview(Long id, String email){
-        Review r = null;
-        for(Review e: Review.findAll()){
-            if(e.getId() == id && e.getUser().getEmail().equals(email)){
-                r = e;
-                break;
-            }
-        }
-        try{
-            r.delete();
-            flash("success", "Review has been deleted.");
-        } catch (Exception ex) {
-            flash("error", "Could not delete review.");
-        }
-        
-        return redirect(controllers.routes.ProductController.userReviews(Review.find.ref(id).getUser().getEmail()));
+        Review.find.ref(id).delete();
+        flash("Success", "Review has been deleted");
+        return redirect(controllers.routes.ProductController.userReviews(email)); 
     }
 
     @Security.Authenticated(Secured.class)

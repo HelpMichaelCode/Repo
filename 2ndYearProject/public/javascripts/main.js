@@ -39,5 +39,5 @@ function showCart() {
 }
 
 function confirmDel() {
-  return confirm('Are you sure?');
+    confirm("Are you sure you want to delete?");
 }

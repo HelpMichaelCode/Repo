@@ -106,6 +106,10 @@ public class LoginController extends Controller{
     @With(Administrator.class)
     public Result userList(){
         List<User> users = User.findAll();
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
         if(users.size()>0){
             return ok(userList.render(users,  User.getUserById(session().get("email"))));
         } else {
@@ -120,6 +124,12 @@ public class LoginController extends Controller{
         User temp = null;
         PasswordCheck user;
         Form<PasswordCheck> userForm;
+
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+
         try {
             temp = User.getUserById(email);
             user = new PasswordCheck(temp);

@@ -183,9 +183,7 @@ public class Product extends Model {
 
     public boolean checkLowQty(){
         if(productQty<=QTY_LOW){
-            //Display error
-            // flash("error", "This product's quantity is low! Restock as soon as possible!"); //what am i doing?
-            
+            return true;
         }
         return false;
     }
@@ -194,6 +192,16 @@ public class Product extends Model {
         summedRating += rating;
         countRating++;
         overallRating = summedRating / countRating;
+    }
+
+    public static List<Long> getLowQty(){
+        List<Long> lowQtyProd = new ArrayList<>();
+        for(Product e: Product.findAll()){
+            if(e.checkLowQty()){
+                lowQtyProd.add(e.getProductID());
+            }
+        }
+        return lowQtyProd;
     }
     
 }

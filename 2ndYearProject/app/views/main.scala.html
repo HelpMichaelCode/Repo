@@ -255,6 +255,7 @@ top: 1em;
   }
   @if(user != null && user.getRole.equals("admin")){
     <li class="nav-items"><a href="@routes.LoginController.userList()" class="nav-links">Users</a></li>
+    <li class="nav-items"><a href="#" class="nav-links">Stats</a></li>
   }
   @if(user != null) {
   <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
@@ -320,6 +321,11 @@ top: 1em;
   <div class="alert alert-succes">
     @flash.get("success")
   </div>
+}
+  @if(flash.containsKey("warning") && user.getRole.equals("admin")){
+    <div class="alert alert-warning">
+      @flash.get("warning")
+    </div>
   }
   <div class="content">
     @content

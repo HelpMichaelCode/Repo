@@ -286,6 +286,27 @@ footer {
   background-image: linear-gradient(#4caf50, darkblue);
 }
 
+.low-stock-col{
+  width: 6%;
+}
+
+.low-stock{
+  width: 100%;
+  height: 6em;
+}
+
+.cats{
+  margin-left: 1.3%;
+  width: 10%;
+  float: left;
+}
+
+.product-list{
+  margin-right: 1.3%;
+  width: 86%;
+  float: right;
+}
+
 
 /*PriceList table*/
 .table{

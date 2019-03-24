@@ -73,15 +73,21 @@ public class ShoppingController extends Controller {
         ShopOrder order = new ShopOrder();
         
         List<OrderLine> orderLines = u.getShoppingCart().getCartItems();
-
+        boolean flag = false;
         for(OrderLine i: orderLines){
+            
             if(i.getProduct().getProductQty() < i.getQuantity()){
                 i.setQuantity(i.getProduct().getProductQty());
                 i.update();
+                flag = true;
                 // i.getProduct().update();
-                flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have.");
-                return ok(basket.render(User.getUserById(session().get("email"))));
             }
+        }
+
+        if(flag){
+            flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have."); 
+            // executes if item quantity is updated on line 81
+            return ok(basket.render(User.getUserById(session().get("email"))));
         }
 
         // for(OrderLine i: orderLines){
