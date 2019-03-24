@@ -58,8 +58,9 @@ public class ShoppingController extends Controller {
         product.decrementStock();
         product.update();
         
-        // Show the cart contents     
-        return ok(basket.render(user));
+        // notify user that item was added to their cart
+        flash("success", "Product " + product.getProductName() + " was added to cart.");
+        return redirect(routes.ProductController.productList(0, ""));
     }
 
     @Transactional

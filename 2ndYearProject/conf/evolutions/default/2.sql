@@ -29,7 +29,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD ',
+-- values (101, 'PC SPECIALIST Vortex Fusion Extreme II Intel® Core™ i7 RTX 2070 Gaming PC – 2 TB HDD & 256 GB SSD',
 -- 'With a HyperThreaded Intel® Core™ i7 processor, you can rely on fast performance to get your tasks done with no 
 -- lag. Play your favourite FPS game while streaming it to Twitch, edit your latest YouTube video and finish updating 
 -- work projects.',
@@ -37,7 +37,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (103, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+-- values (102, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
 -- 'Take on your favourite games with this gaming PC. 
 -- With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
 -- as well as the classic games that helped you hone your skills.',
@@ -45,7 +45,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (104, 'ThinkStation P720 Tower Dual Intel® Xeon® NVIDIA® Quadro® GP100',
+-- values (103, 'ThinkStation P720 Tower Dual Intel® Xeon® NVIDIA® Quadro® GP100',
 -- 'This dual-processor 
 -- workstation is a tough performer. Ideal for professionals with heavy data-processing 
 -- needs, the P720 offers fast processing, massive storage options, and parallel-processing 
@@ -54,7 +54,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (105, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
+-- values (104, 'HP Stream 11-ak0500sa 11.6" Intel® Celeron™ Laptop - 32 GB eMMC',
 -- 'Stay up to date with social media and the latest news headlines with 
 -- the HP Stream Laptop. Powered by Intel® Celeron™, your laptop is able to 
 -- handle your tasks from ordering groceries online, to writing a letter or chatting 
@@ -63,14 +63,14 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (106, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
+-- values (105, 'MSI GF62 8RC 15.6" Intel® Core™ i5 GTX 1050 Gaming Laptop - 1 TB HDD',
 -- 'At the core of the MSI GF62 8RC is an 8th generation Intel® Core™ i5 processor, which 
 -- provides all the power you need to run your favourite games.', 
 -- 959.99, 7, 0, 0, 0, 0, 6);
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (107, 'Intel Core™ i7-9700K Unlocked Processor - OEM',
+-- values (106, 'Intel Core™ i7-9700K Unlocked Processor - OEM',
 -- 'Overclock easily with the i7-9700K CPU, which has been unlocked so you can tweak the specs 
 -- that matter to you. By unlocking your processor you can boost the performance speed 
 -- so that everything runs faster when it matters.', 
@@ -78,7 +78,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (108, 'ASUS ROG STRIX B450-F GAMING AM4 Motherboard',
+-- values (107, 'ASUS ROG STRIX B450-F GAMING AM4 Motherboard',
 -- 'Don''t waste time fussing with the little things when it comes to completing your PC 
 -- build. The ASUS B450-F motherboard is designed for easy DIY – the I/O Shield comes pre-mounted, 
 -- and you can snap all of your components into place.', 
@@ -86,7 +86,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id)  
--- values (109, 'CORSAIR DDR3 1600 MHz PC RAM - 8 GB',
+-- values (108, 'CORSAIR DDR3 1600 MHz PC RAM - 8 GB',
 -- 'For everyday use, the 1600 MHz Corsair CMV8GX3M1A1600C11 memory card allows for 
 -- faster processing, helping you send emails, load videos and transfer files with greater 
 -- efficiency.', 
@@ -94,7 +94,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id)  
--- values (110, 'MSI GeForce RTX 2080 Ti 11 GB GAMING X TRIO Turing Graphics Card',
+-- values (109, 'MSI GeForce RTX 2080 Ti 11 GB GAMING X TRIO Turing Graphics Card',
 -- 'Powered by the Turing architecture, RTX GPUs are up to 6 times as fast as previous 
 -- graphics cards, so you''ll have the power to run any game, get incredible frame rates 
 -- and render amazing imagery in next to no time.', 
@@ -102,7 +102,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (111, 'WD Mainstream 3.5” Internal Hard Drive - 3 TB',
+-- values (110, 'WD Mainstream 3.5” Internal Hard Drive - 3 TB',
 -- 'You can expect long-term reliability thanks to No Touch Ramp Load technology. 
 -- This ensures the recording head never actually touches the disk media, significantly 
 -- reducing wear and providing better protection when mobile.', 
@@ -110,7 +110,7 @@
 
 -- insert into product (product_ID,product_name,product_description,product_price,product_qty,
 -- total_sold,overall_rating, summed_rating, count_rating, category_id) 
--- values (112, 'EVGA SuperNOVA G1+ Gold Modular ATX PSU - 1000 W',
+-- values (111, 'EVGA SuperNOVA G1+ Gold Modular ATX PSU - 1000 W',
 -- 'Keep your case neat and tidy with the fully modular SuperNOVA G1+ Gold ATX PSU. 
 -- You''ll be able to add and remove cables whenever you need - not only will your case 
 -- be less cluttered, but it will also let air circulate easily to move heat away quickly.', 

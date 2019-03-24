@@ -20,6 +20,9 @@
                 @flash.get("error")
             </div>
         }
+        <h2>@user.getUsername
+            's shopping cart
+        </h2>
 
         <table class="table table-bordered table-hover table-condensed">
             <thead>
@@ -65,33 +68,24 @@
         <div class="row">
             <div class="col-md-4">
                 <p class="text-right">
-                    <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-sm">
+                    <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-lg">
                         Continue shopping</a>
                 </p>
             </div>
             <div class="col-md-4">
                 <p class="text-right">
-                    <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-sm"
+                    <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-lg"
                         onclick="return confirmDel();">
                         <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
                 </p>
             </div>
             <div class="col-md-4">
                 <p class="text-right">
-                    <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-sm">
+                    <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-lg">
                         <span class="glyphicon glyphicon-euro"></span> Place Order</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // JavaScript function returns true if user clicks yes, otherwise, false
-    function confirmDel() {
-        return confirm('Are you sure?');
-    }
-
-
-</script>
 }

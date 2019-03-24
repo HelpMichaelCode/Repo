@@ -1,4 +1,4 @@
-@(product: models.Product, reviews: List[models.Review], reviewForm: Form[models.Review], productForm: Form[models.Product], user: models.users.User, env: play.api.Environment)
+@(product: models.Product, reviews: List[models.Review], filtered: List[models.Review], reviewForm: Form[models.Review], productForm: Form[models.Product], user: models.users.User, env: play.api.Environment)
 @import helper._
 
 @main("Product", user) {
@@ -29,7 +29,21 @@
         </div> <!-- row 2 and 3 -->
 
         <div class="product-description-div">@product.getProductDescription</div> <!-- row 2 -->
-        <div class="add-to-cart">Add to cart</div> <!-- row 3 -->
+        <div class="add-to-cart">
+                @if((user != null) && (user.getRole().equals("customer"))){
+                    @if(product.getProductQty() > 0){
+                        <td><a href="@routes.ShoppingController.addToCart(product.getProductID)" 
+                        class="btn btn-default btn-lg"><span 
+                        class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                    }else{
+                        <td><img src="/assets/images/nostock.jpg"/></td>
+                    }
+                } else {
+                    <td><a href="@routes.ProductController.updateItem(product.getProductID)" 
+                        class="btn btn-default btn-lg"><span 
+                        class="glyphicon glyphicon-pencil"></span></a></td>
+                }
+        </div> <!-- row 3 -->
         <div class="qty-and-price">
 
                 <p>&euro; @product.getProductPrice</p>
@@ -74,24 +88,28 @@
         }
     </div>
     <div class="product-reviews">
-        @if(reviews.isEmpty){
-            <p>This product does not have any reviews</p>
-        } else {
-        <div class="col-sm-10">
-            <h2>Customer reviews</h2>
-                @for(r<-reviews) {
-                    @if(r.getProduct.getProductName == product.getProductName){
+        @for(r<-reviews) {
+            @if(r.getProduct.getProductName == product.getProductName){
+                @filtered.add(r)
+            }
+        }
+        @for(f <- filtered){
+            @if(filtered.isEmpty){
+                <p>This product does not have any reviews</p>
+            } else {
+                <div class="col-sm-10">
+                    <h2>Customer reviews</h2>
+                
                         @if((user != null) && (user.getRole().equals("admin"))) {
-                            <div class="review-username"><a href="@routes.ProductController.userReviews(r.getUser.getEmail)">
-                                    <h3>@r.getUser.getUsername</h3></a></div>
+                            <div class="review-username"><a href="@routes.ProductController.userReviews(f.getUser.getEmail)">
+                            <h3>@f.getUser.getUsername</h3></a></div>
                         } else {
-                            <div class="review-username"><h3>@r.getUser.getUsername</h3></div>
+                            <div class="review-username"><h3>@f.getUser.getUsername</h3></div>
                         }
-                        <div class="review-rating">Rated: @r.getRating</div>
-                        <div class="review-body"><p>@r.getBody</p></div>
-                    }
-                }
-        </div>
+                        <div class="review-rating">Rated: @f.getRating</div>
+                        <div class="review-body"><p>@f.getBody</p></div>
+                </div>
+            }
         }
     </div>
             

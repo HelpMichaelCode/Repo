@@ -249,7 +249,13 @@ top: 1em;
 <ul class="nav-list">
 <li class="nav-items"><img src="/assets/images/productImages/logo.png"></li>
   <li class="nav-items"><a href="@routes.HomeController.index"class="nav-links">Home</a></li>
-  <li class="nav-items"><a href="@routes.ProductController.productList(0,"") "class="nav-links">Pricing</a></li>
+  <li class="nav-items"><a href="@routes.ProductController.productList(0,"")" class="nav-links">Pricing</a></li>
+  @if(user != null && user.getRole.equals("customer")){
+    <li class="nav-items"><a href="@routes.ShoppingController.showCart" class="nav-links">My cart</a></li>
+  }
+  @if(user != null && user.getRole.equals("admin")){
+    <li class="nav-items"><a href="@routes.LoginController.userList()" class="nav-links">Users</a></li>
+  }
   @if(user != null) {
   <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
   }else {<li class="nav-items"><a href="@routes.LoginController.login()"class="nav-links">Log In</a></li>
@@ -315,7 +321,9 @@ top: 1em;
     @flash.get("success")
   </div>
   }
-  @content
+  <div class="content">
+    @content
+  </div>
 </body>
 
 <!-- Scripts -->

@@ -1,6 +1,7 @@
 // search button
 function search(){
-  var keyword = document.getElementById("search").value;
+  var word = document.getElementById("search").value;
+  var keyword = word.toLowerCase();
   window.location.href = "http://localhost:9000/product-list?keyword=" + keyword;
 }
 
@@ -33,6 +34,10 @@ function carousel() {
   setTimeout(carousel, 4000); // Change image every 2 seconds
 }
 
-function displayCart() {
+function showCart() {
   window.location.href = "http://localhost:9000/show-cart";
+}
+
+function confirmDel() {
+  return confirm('Are you sure?');
 }

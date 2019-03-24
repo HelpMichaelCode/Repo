@@ -1,12 +1,11 @@
-@(userForm: Form[models.users.PasswordCheck], user: models.users.User)
+@(userForm: Form[models.users.PasswordCheck], user: models.users.User, heading: String)
 @import helper._
 
 @main("Register", user) {
   
     @if(userForm.hasGlobalErrors) {
         <p class="alert alert-warning">
-            @for(e
-            <- userForm.globalErrors) { @e.message<br/> 
+            @for(e <- userForm.globalErrors) { @e.message<br/> 
             }
             <!-- Make  -->
         </p>
@@ -25,25 +24,25 @@
         
    <div class="box">
 
-       <h1>Register</h1>
+       <h1>@heading</h1>
 
                 @inputText(userForm("email"), '_label -> "",
-                'class -> "input", 'placeholder -> "Email")
+                'class -> "input", 'placeholder -> "Email", '_showConstraints -> false)
             
                 @inputText(userForm("username"), '_label -> "",
-                'class -> "input", 'placeholder -> "Username")
+                'class -> "input", 'placeholder -> "Username", '_showConstraints -> false)
            
                 @inputPassword(userForm("password"), '_label -> "",
-                'class -> "input", 'placeholder -> "Password")
+                'class -> "input", 'placeholder -> "Password", '_showConstraints -> false)
            
                 @inputPassword(userForm("password2"), '_label -> "",
-                'class -> "input", 'placeholder -> "Confirm Password")
+                'class -> "input", 'placeholder -> "Confirm Password", '_showConstraints -> false)
          
                 @inputText(userForm("address"), '_label -> "",
-                'class -> "input", 'placeholder -> "Address")
+                'class -> "input", 'placeholder -> "Address", '_showConstraints -> false)
     
                 @inputText(userForm("mobileNumber"), '_label -> "",
-                'class -> "input", 'placeholder -> "Mobile Number")
+                'class -> "input", 'placeholder -> "Mobile Number", '_showConstraints -> false)
             
                 @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
        
