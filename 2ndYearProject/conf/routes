@@ -41,10 +41,12 @@ GET     /add-one/:itemId            controllers.ShoppingController.addOne(itemId
 GET     /remove-one/:itemId         controllers.ShoppingController.removeOne(itemId: Long)
 GET     /empty-cart                 controllers.ShoppingController.emptyCart()
 GET     /place-order                controllers.ShoppingController.placeOrder()
-GET     /view-order/:id             controllers.ShoppingController.viewOrder(id: Long)
 
 POST    /post-review                controllers.ProductController.addReviewSubmit
 
+
+GET     /cancelOrder/:id            controllers.ShoppingController.cancelOrder(id: Long)
+GET     /viewOrders                 controllers.ShoppingController.viewOrders()
 GET     /delete-review/:id/:email          controllers.ProductController.deleteReview(id: Long, email: String)
 
 GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)

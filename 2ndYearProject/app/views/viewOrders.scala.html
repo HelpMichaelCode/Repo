@@ -1,0 +1,67 @@
+@(user: models.users.User)
+
+
+@import play.api.Play.current
+@import models.shopping._
+@import models._
+
+<!-- Pass page title and user on to main -->
+@main("View Order history", user) {
+
+
+	<!-- <div class="col-md-12">
+	
+			  </div> -->
+		 
+
+		
+               
+                    <!-- Start of For loop - For each p in products add a row -->
+                    @for(o <- user.getOrders()) {
+
+                        <p>Order Number: @o.getId()</p>
+                        <p>Order Date: @o.getOrderDateString()</p>
+                        <table class="table table-bordered table-hover table-condensed">
+                        
+                            <thead>
+                            <!-- The header row-->
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        @for(i <- o.getProducts()) {
+
+                        <tr>
+                        <td>@i.getId</td>
+                        <td>@i.getProduct.getProductName()</td>
+                        <td>@i.getQuantity()</td>
+                        <td>&euro; @("%.2f".format(i.getPrice()))</td>
+                        <td>&euro; @("%.2f".format(i.getLineTotal))</td>
+                        
+                    </tr>
+                    }<!-- End of For loop -->
+                    
+			</tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-right"><strong>Order Total: &euro; @("%.2f".format(o.getOrderTotal))</strong></p>
+            </div>  
+        </div>
+        <p>
+            <a href="@routes.ShoppingController.cancelOrder(o.getId())">
+              <button class="btn btn-primary">Cancel Order</button>
+            </a>
+          </p>
+         }<!-- End of For loop -->
+       
+        </div>
+
+
+
+}

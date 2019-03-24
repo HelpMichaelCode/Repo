@@ -24,16 +24,16 @@ public class ShoppingCart extends Model {
     @Id
     private Long id;
 
-    public ShoppingCart(){
-    }
-
-
     @OneToMany(mappedBy = "cart", cascade = CascadeType.PERSIST)
     private List<OrderLine> cartItems;
     
     @OneToOne
     private User user;
     
+
+    public ShoppingCart(){
+    }
+
     public static Finder<Long, ShoppingCart> find = new Finder<Long, ShoppingCart>(ShoppingCart.class);
 
     public static List<ShoppingCart> findAll(){

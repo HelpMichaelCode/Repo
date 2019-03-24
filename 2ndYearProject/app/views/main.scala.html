@@ -257,11 +257,14 @@ top: 1em;
     <li class="nav-items"><a href="@routes.LoginController.userList()" class="nav-links">Users</a></li>
     <li class="nav-items"><a href="#" class="nav-links">Stats</a></li>
   }
-  @if(user != null) {
+  @if(user != null || user.getRole == null) {
     <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
   }else {
     <li class="nav-items"><a href="@routes.LoginController.login()"class="nav-links">Log In</a></li>
   }
+  <li class="nav-items">
+    <a href="@routes.ShoppingController.viewOrders" class="nav-links">View Orders</a>
+</li>
 <li class="Search">
     
    <input type="text" id="search" name="" class="Text" placeholder=""/>

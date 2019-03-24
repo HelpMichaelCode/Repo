@@ -14,6 +14,7 @@ import java.util.List;
 import models.*;
 import models.users.*;
 import models.shopping.*;
+import java.util.Calendar;
 
 @Security.Authenticated(Secured.class)
 // Authorise user (check if user is a customer)
@@ -184,4 +185,43 @@ public class ShoppingController extends Controller {
         return ok(basket.render(u));
     }
 
+    @Transactional
+    public Result viewOrders() { 
+               
+        return ok(viewOrders.render(User.getUserById(session().get("email"))));
+    }
+    @Transactional
+    public Result cancelOrder(Long orderId){
+        ShopOrder order = ShopOrder.find.byId(orderId);
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        
+        c1=order.getOrderDate();
+        if(compareDates(c1,c2)){
+           // order.removeAllItems(orderId);
+           order.adjustStock();
+           order.delete();
+           
+            flash("success", "Your order has been cancelled");
+        }else {
+            flash("success", "Sorry, it is too late to cancel this order");
+        }
+        return ok(viewOrders.render(User.getUserById(session().get("email"))));
+    }
+
+    public boolean compareDates(Calendar c1, Calendar c2){
+        boolean allowed = true;
+        long miliSecondForDate1 = c1.getTimeInMillis();
+        long miliSecondForDate2 = c2.getTimeInMillis();
+        // Calculate the difference in millisecond between two dates
+        long diffInMilis = miliSecondForDate2 - miliSecondForDate1;
+
+        long diffInMinutes = diffInMilis / (60 * 1000);
+        if(diffInMinutes >0.166667){
+            allowed=false;
+        }
+        return allowed;
+    }
+  
+    
 }

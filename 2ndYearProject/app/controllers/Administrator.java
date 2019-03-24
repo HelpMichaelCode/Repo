@@ -5,7 +5,6 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CompletableFuture;
 
 import models.users.*;
-////////////////////////////// See step 10 from Session Management notes //////////////////////////////////////
 public class Administrator extends Action.Simple {
 
     public CompletionStage<Result> call(Http.Context context) {

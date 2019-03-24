@@ -26,6 +26,7 @@ public class LoginController extends Controller{
         this.env = env;
     }
 
+    @Transactional
     public Result login() {
         // if(session().)
         Form<Login> loginForm = formFactory.form(Login.class);
