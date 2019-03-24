@@ -9,12 +9,10 @@
 @main("View Order history", user) {
 
 
-	<div class="col-md-12">
-		@if(flash.containsKey("success")) {
-			  <div class="alert alert-success">
-			      @flash.get("success")
-			  </div>
-		} 
+	<!-- <div class="col-md-12">
+	
+			  </div> -->
+		 
 
 		
                
@@ -36,14 +34,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                        @for(i <- o.getId()) {
+                        @for(i <- o.getProducts()) {
 
                         <tr>
                         <td>@i.getId</td>
-                        <td>@i.getProduct.getName()</td>
+                        <td>@i.getProduct.getProductName()</td>
                         <td>@i.getQuantity()</td>
                         <td>&euro; @("%.2f".format(i.getPrice()))</td>
-                        <td>&euro; @("%.2f".format(i.getItemTotal))</td>
+                        <td>&euro; @("%.2f".format(i.getLineTotal))</td>
                         
                     </tr>
                     }<!-- End of For loop -->

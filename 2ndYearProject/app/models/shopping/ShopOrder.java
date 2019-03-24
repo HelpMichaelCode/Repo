@@ -9,6 +9,7 @@ import play.data.validation.*;
 import java.util.Date;
 import models.*;
 import models.users.*;
+import java.text.SimpleDateFormat;
 
 // ShopOrder entity managed by Ebean
 @Entity
@@ -16,8 +17,7 @@ public class ShopOrder extends Model {
 
     @Id
     private Long id;    
-
-    private Date orderDate;
+    private Calendar orderDate;
     
     
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL)
@@ -34,6 +34,9 @@ public class ShopOrder extends Model {
     	
     public static Finder<Long,ShopOrder> find = new Finder<Long,ShopOrder>(ShopOrder.class);
 
+    public static List<ShopOrder> findAll() {
+        return ShopOrder.find.all();
+    }
     //Find all Products in the database
     public List<OrderLine> getProducts() {
         return products;
@@ -60,11 +63,19 @@ public class ShopOrder extends Model {
         this.id = id;
     }
 
-    public Date getOrderDate() {
+    public Calendar getOrderDate() {
         return orderDate;
     }
+    //date
+    public String getOrderDateString() {
+        if(orderDate == null) {
+            return "No Date Availible";
+        }
+        String s = new SimpleDateFormat("dd-MMM-yyyy").format(orderDate.getTime());
+        return s;
+    }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(Calendar orderDate) {
         orderDate = orderDate;
     }
 
@@ -78,13 +89,17 @@ public class ShopOrder extends Model {
         return total;
     }
 
-    
-    public String getOrderDateString() {
-        if(orderDate == null) {
-            return "No Date Availible";
+
+    public void adjustStock(){
+     
+        for (OrderLine i : products) {
+           Product p = Product.find.byId(i.getProduct().getProductID());
+            if (i.getProduct().getProductID() == p.getProductID()) {
+                int quantity = i.getQuantity();
+                p.restock(quantity);
+                p.update();
+            }
         }
-        String s = new SimpleDateFormat("dd-MMM-yyyy").format(orderDate.getTime());
-        return s;
     }
 
 }
