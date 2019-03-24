@@ -39,5 +39,8 @@ function showCart() {
 }
 
 function confirmDel() {
-    confirm("Are you sure you want to delete?");
+  if(!confirm("Are you sure you want to delete?")){
+    event.preventDefault();
+  }
+    
 }

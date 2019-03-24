@@ -258,8 +258,9 @@ top: 1em;
     <li class="nav-items"><a href="#" class="nav-links">Stats</a></li>
   }
   @if(user != null) {
-  <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
-  }else {<li class="nav-items"><a href="@routes.LoginController.login()"class="nav-links">Log In</a></li>
+    <li class="nav-items"><a href="@routes.LoginController.logout()"class="nav-links">Log Out</a></li>
+  }else {
+    <li class="nav-items"><a href="@routes.LoginController.login()"class="nav-links">Log In</a></li>
   }
 <li class="Search">
     

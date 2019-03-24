@@ -23,7 +23,7 @@
     <table class="table table-bordered table-condensed">
         <thead class="thead-dark">
             <tr>
-                @if(user.getRole.equals("admin")){
+                @if(user != null && user.getRole().equals("admin")){
                     <th class="low-stock-col">Low</th>
                 }
                 <th class="product-list-image-col">Image</th>
@@ -55,9 +55,9 @@
                 @for(p<-products) {
                     @if(p.getProductName.toLowerCase.contains(keyword) || p.getProductDescription.toLowerCase.contains(keyword)){
                     <tr data-href="http://localhost:9000/product/@p.getProductName">
-                        @if(p.checkLowQty && user.getRole.equals("admin")){
+                        @if(user != null && p.checkLowQty && user.getRole.equals("admin")){
                             <td><img src="/assets/images/lowstock.png" class="low-stock"/></td>
-                        } else if(!(p.checkLowQty) && user.getRole.equals("admin")){
+                        } else if(user != null && !(p.checkLowQty) && user.getRole.equals("admin")){
                             <td></td>
                         }
                         @if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
@@ -96,7 +96,7 @@
                         @if((user != null) && (user.getRole().equals("customer"))){
                             @if(p.getProductQty() > 0){
                                 <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
-                                class="btn btn-default btn-lg" onclick="confirmDel()"><span 
+                                class="btn btn-default btn-lg"><span 
                                 class="glyphicon glyphicon-shopping-cart"></span></a></td>
                             }else{
                                 <td><img src="/assets/images/nostock.jpg"/></td>
