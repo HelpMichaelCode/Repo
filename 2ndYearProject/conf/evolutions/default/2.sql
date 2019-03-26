@@ -2,9 +2,12 @@
 
 -- # --- !Ups
 -- delete from Product;
--- insert into user (email,username,password,address,mobile_number,role) values ( 'michael@play.com', 'Michael Admin', '','122 Michaels Lane','0851234567', 'admin' );
--- insert into user (email,username,password,address,mobile_number,role) values ( 'pavel@play.com', 'Pavel Admin', '','321 Pavel Street','0897654321','admin' );
--- insert into user (email,username,password,address,mobile_number,role) values ( 'nitesh@play.com', 'Nitesh Customer', '','12 Nitesh Court','0866549873','customer' );
+-- delete from category;
+-- delete from user;
+-- delete from review;
+
+-- insert into user (email,username,password,address,mobile_number,role) values ( 'admin@play.com', 'Admin', '','122 New Lane','0851234567', 'admin' );
+-- insert into user (email,username,password,address,mobile_number,role) values ( 'customer@play.com', 'James Olsen', '','12 Goodwill Court','0866549873','customer' );
 
 -- insert into category (id,name) values ( 1,'Home PCs' );
 -- insert into category (id,name) values ( 2,'Top spec PCs' );
@@ -117,4 +120,4 @@
 -- 189.99, 6, 0, 0, 0, 0, 12);
 
 -- insert into review (id, body, rating, user_email, product_product_id) 
--- values (400, "Great laptop! Definitely worth buying.", 4.8, "pavel@play.com", 106);
+-- values (400, 'Great laptop! Definitely worth buying.', 4.8, 'customer@play.com', 106);

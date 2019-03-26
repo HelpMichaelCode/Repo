@@ -6,12 +6,13 @@
 @import models._
 
 <!-- Pass page title and user on to main -->
-@main("View Order history", user) {
+@main("View order history", user) {
 
 
-	<!-- <div class="col-md-12">
-	
-			  </div> -->
+	<div class="col-md-12">
+        <p><h2>@user.getUsername's orders
+        </h2> (you can cancel an order within 10 seconds after placing it)</p>    
+    </div>
 		 
 
 		
@@ -55,9 +56,9 @@
         </div>
         <p>
             <a href="@routes.ShoppingController.cancelOrder(o.getId())">
-              <button class="btn btn-primary">Cancel Order</button>
+                <button class="btn btn-primary cancel-order-btn">Cancel Order</button>
             </a>
-          </p>
+        </p>
          }<!-- End of For loop -->
        
         </div>

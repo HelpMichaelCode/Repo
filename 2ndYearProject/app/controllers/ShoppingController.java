@@ -123,7 +123,8 @@ public class ShoppingController extends Controller {
         u.getShoppingCart().update();
         
         // Show order confirmed view
-        return ok(orderconfirmed.render(u, order));
+        flash("success", "You order has been confirmed!");
+        return redirect(routes.ProductController.productList(0, ""));
     }
 
     @Transactional
