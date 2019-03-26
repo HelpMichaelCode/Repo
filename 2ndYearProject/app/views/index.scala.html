@@ -1,103 +1,335 @@
 @(products: List[models.Product], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
-
-
-	<Style>
-	.slider
-{
- overflow: hidden;
- height: 100%;
- width: 100%;
+<style>
+*{
+margin:0;
+padding:0;
+color:black;
 
 }
-.slider figure div
-{
- float: left;
- width:20%;      
-
- 
+.mySlides {
+	width: 100%;
+	left: 0;
+	display:none;
 }
-.slider figure img
-{
-	width:100%;
-    float: left;
+.slider{
+	margin-left: 0;
+    width:100%;
+    height:100%;
+
+
+}
+
+.color{
+    background: radial-gradient(white,#30ff00);
+    padding:.8em;
+
+}
+
+body {
+background: #DFC2F2;
+	background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%);
+	background-attachment: fixed;	
+	background-size: cover;
+	}
+
+#container{
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	background: rgba(255, 255, 255, 0.90);
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 5em auto;
+	height: 350px;
+	width: 700px;
+    overflow:hidden;
+	
+}
+
+
+
+/* 	Product details  */
+.product-details {
+	position: relative;
+	text-align: left;
+	overflow: hidden;
+	padding: 30px;
+	height: 100%;
+	float: left;
+	width: 40%;
+
+}
+
+/* 	Product Name */
+#container .product-details h1{
+	font-family: 'Old Standard TT', serif;
+	display: inline-block;
+	position: relative;
+	font-size: 34px;
+	color: #344055;
+	margin: 0;
+	
+}
+
+#container .product-details h1:before{
+	position: absolute;
+	content: '';
+	right: 0%; 
+	top: 0%;
+	transform: translate(25px, -15px);
+	font-family: 'Farsan', cursive;
+	display: inline-block;
+	background: #FFA69E;
+	border-radius: 5px;
+	font-size: 14px;
+	padding: 5px;
+	color: #FFF;
+	margin: 0;
+	animation: chan-sh 6s ease infinite;
+
+}
+
+
+
+/*Product Rating  */
+.hint-star {
+	display: inline-block;
+	margin-left: 0.5em;
+	color: gold;
+	width: 50%;
+}
+
+
+/* The most important information about the product */
+#container .product-details > p {
+	font-family: 'Farsan', cursive;
+	text-align: center;
+	font-size: 20px;
+	color: #7d7d7d;
+	
+}
+
+/* control */
+
+.control{
+	position: absolute;
+	bottom: 20%;
+	left: 22.8%;
+	
+}
+/* the Button */
+.btn {
+	transform: translateY(0px);
+	transition: 0.3s linear;
+	background: #49C608;
+	border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: #eee;
+	padding: 0;
+	margin: 0;
+	
+}
+
+.btn:hover{transform: translateY(-4px);}
+
+.btn span {
+	font-family: 'Farsan', cursive;
+	transition: transform 0.3s;
+	display: inline-block;
+  padding: 10px 20px;
+	font-size: 1.2em;
+	margin:0;
+	
+}
+/* shopping cart icon */
+.btn .price, .shopping-cart{
+	background: #333;
+	border: 0;
+	margin: 0;
+}
+
+.btn .price {
+	transform: translateX(-10%); padding-right: 15px;
+}
+
+/* the Icon */
+.btn .shopping-cart {
+	transform: translateX(-100%);
+  position: absolute;
+	background: #333;
+	z-index: 1;
+  left: 0;
+  top: 0;
+}
+
+/* buy */
+.btn .buy {z-index: 3; font-weight: bolder;}
+
+.btn:hover .price {transform: translateX(-110%);}
+
+.btn:hover .shopping-cart {transform: translateX(0%);}
+
+
+
+/* product image  */
+.product-image {
+	transition: all 0.3s ease-out;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	/* float: right; */
+	width: 50%;
+	display: inline-block;
+}
+
+#container img {width: 100%;height: 100%;}
+
+.info {
+    background: rgba(27, 26, 26, 0.9);
+    font-family: 'Farsan', cursive;
+    transition: all 0.3s ease-out;
+    transform: translateX(-100%);
+    position: absolute;
+    line-height: 1.9;
+    text-align: left;
+    font-size: 120%;
+    cursor: no-drop;
+    color: #FFF;
     height: 100%;
-}
-.slider figure{
-    position: relative;
-    width: 500%;
-    margin: 0;
+    width: 100%;
     left: 0;
-    animation: 35s slidy infinite;
+    top: 0;
 }
-@@keyframes slidy{
-	0%
-	{
-		left:0%;
-	}
-	10%
-	{
-		left:0%;	
-	}
-	12%
-	{
-	 	left: -100%;
-	}
-	22%{
-		left: -100%;
-	}
-	24%
-	{
-		left:-200%;
-	}
-	34%{
-		left:-200%;
-	}
-	36%{
-		left:-300%;
-	}
-	46%{
-		left: -300%;
-	}
-	48%{
-		left:-400%;
-	}
-    58%{
-		left:-400%;
-	}
-    60%{
-		left:-300%;
-	}
-    70%{
-		left:-300%;
-	}
-    72%{
-		left:-200%;
-	}
-    82%{
-		left:-200%;
-	}
-    84%{
-		left:-100%;
-	}
-    94%{
-		left:-100%;
-	}
-    96%{
-		left:0%;
-	}
+
+.info h2 {text-align: center}
+.product-image:hover .info{transform: translateX(0);}
+
+.info ul li{transition: 0.3s ease;}
+.info ul li:hover{transform: translateX(50px) scale(1.3);}
+
+.product-image:hover img {transition: all 0.3s ease-out;}
+.product-image:hover img {transform: scale(1.2, 1.2);}
+/* .container{
+    max-width:98%;
+    margin-left:1%;
+    margin-right:1%;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 40%;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  float:left;
+  margin-left:1em;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+} */
+
+   
+</style>
+<div class="slider">
+  <img class="mySlides" src="/assets/images/productImages/gs65.png" >
+  <img class="mySlides" src="/assets/images/productImages/Acer.jpg" >
+  <!-- <img class="mySlides" src="/assets/images/productImages/gs65.png" > -->
+</div>
 
 
- 
+<div class ="color"></div>
+<!--<div class="container">
+ @for(p<-products){
+
+<div class="card">
+  <img src="/assets/images/productImages/172.jpg" >
+  <h1>@p.getProductName</h1>
+  <p class="price">@p.getProductPrice</p>
+  <p>@p.getProductDescription</p>
+  
+</div>
+
 }
-	</Style>
-	<div class ="slider">
-			<figure>
-								 <div class="slide"><img src="/assets/images/productImages/intel.jpg" alt="Game store logo"/></div>
-			 <div class="slide"><img src="/assets/images/productImages/MSI.jpg" alt="CSGO Picture" /></div>
-			 <div class="slide"><img src="/assets/images/productImages/106.jpg" alt="ATA Picture" /></div>
-			 <div class="slide"><img src="/assets/images/productImages/111.jpg" alt="League Picture" /></div>
-								 <div class="slide"><img src="/assets/images/productImages/Acer.jpg" alt="Just cause 3 Picture" /></div>
-										</figure>
-								</div>
+</div> -->
+
+
+
+
+
+<div id="container">	
+	
+<!-- Start	Product details -->
+	<div class="product-details">
+		
+		<!-- 	Product Name -->
+	<h1>MSI CUSTOM BUILT</h1>
+<!-- 		<span class="hint new">New</span> -->
+<!-- 		<span class="hint free-shipping">Free Shipping</span> -->
+<!-- 		the Product rating -->
+	<span class="hint-star star">
+		<i class="fa fa-star" aria-hidden="true"></i>
+		<i class="fa fa-star" aria-hidden="true"></i>
+		<i class="fa fa-star" aria-hidden="true"></i>
+		<i class="fa fa-star-half-o" aria-hidden="true"></i>
+		<i class="fa fa-star-o" aria-hidden="true"></i>
+	</span>
+		
+	
+<!-- The most important information about the product -->
+		<p class="information">" Best PC IN THE WORLD "</p>
+
+		
+		
+<!-- 		Control -->
+<div class="control">
+	
+<!-- Start Button buying -->
+	<button class="btn" onclick="showCart()">
+<!-- 		the Price -->
+	 <span class="price">4999 $</span>
+<!-- 		shopping cart icon-->
+   <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+<!-- 		Buy Now / ADD to Cart-->
+   <span class="buy">Buy Now</span>
+ </button>
+	<!-- End Button buying -->
+	
+</div>
+			
+</div>
+	
+<!-- 	End	Product details   -->
+	
+	
+	
+<!-- 	Start product image & Information -->
+	
+<div class="product-image">
+	
+	<img src="/assets/images/productImages/100.jpg" alt="Omar Dsoky">
+	
+<!-- 	product Information-->
+<div class="info">
+	<h2>The Description</h2>
+	<ul>
+		<li><strong>1080ti: </strong>GPU</li>
+		<li><strong>i7 8700k: </strong>CPU</li>
+		<li><strong>Z700: </strong>Mother Board</li>
+		<li><strong>EVGA PS: </strong>Power Supply</li>
+		<li><strong>VEGENCE in: </strong>RAM</li>
+		<li><strong>COARSAIR: </strong>Case</li>
+	</ul>
+</div>
+</div>
+<!--  End product image  -->
+
+
+</div>
+
 }
