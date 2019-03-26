@@ -230,7 +230,7 @@ public class ProductController extends Controller{
 
         if(reviewForm.hasErrors()){
             flash("error", "Please fill in all the fields!");
-            return badRequest(product.render(reviewForm.get().getProduct(), Review.findAll(), filtered, reviewForm, productForm, User.getUserById(session().get("email")), env));
+            return badRequest(product.render(productForm.get(), Review.findAll(), filtered, reviewForm, productForm, User.getUserById(session().get("email")), env));
         } else {
             Review newReview = reviewForm.get();
             Product temp = productForm.get();

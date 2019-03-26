@@ -24,6 +24,10 @@ body textarea{
   width: 100%;
   padding: 1%;
 }
+
+.text{
+  color: rgb(20, 20, 20);
+}
 /* REGISTER */
 .box{
   width: 40%;
@@ -232,6 +236,7 @@ tr[data-href]{
 }
 
 .product-reviews{
+  border: 1px solid red;
   width: 60%;
   float: right;
   text-align: left;

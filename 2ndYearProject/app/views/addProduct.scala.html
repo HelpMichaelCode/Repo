@@ -25,11 +25,11 @@
     @* CSRF attack prevention *@
     @CSRF.formField
 
-    @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control")
+    @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control", '_showConstraints -> false)
     
-    @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "")
-    @inputText(productForm("productQty"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control")
-    @inputText(productForm("productPrice"), '_label -> "", 'placeholder -> "Price", 'class -> "form-control")
+    @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "", '_showConstraints -> false)
+    @inputText(productForm("productQty"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("productPrice"), '_label -> "", 'placeholder -> "Price", 'class -> "form-control", '_showConstraints -> false)
     @select(
         productForm("category.id"), options(Category.options), '_label -> "Category", '_default -> "-- Choose a category --",
         '_showConstraints -> false, 'class -> "form-control"

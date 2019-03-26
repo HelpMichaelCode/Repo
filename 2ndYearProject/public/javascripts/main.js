@@ -1,4 +1,4 @@
-// search button
+// search function
 function search(){
   var word = document.getElementById("search").value;
   var keyword = word.toLowerCase();
@@ -14,8 +14,15 @@ $('#search').keypress(function(event){
 });
 
 //redirects to individual product page
-$('tr[data-href]').on("click", function() {
-  document.location = $(this).data('href');
+// $('tr[data-href]').on("click", function() {
+//   document.location = $(this).data('href');
+// });
+
+$(document).ready(function(){
+  $('table tr').click(function(){
+      window.location = $(this).data('href');
+      return false;
+  });
 });
 
 var myIndex = 0;
@@ -24,7 +31,7 @@ carousel();
 function carousel() {
   
   var i;
-  var x = document.getElementsByClassName("mySlides");
+  var x = document.getElementsById("mySlides");
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";  
   }

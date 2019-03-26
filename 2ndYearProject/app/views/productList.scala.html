@@ -55,7 +55,7 @@
                 @for(p<-products) {
                     @if(p.getProductName.toLowerCase.contains(keyword) || p.getProductDescription.toLowerCase.contains(keyword)){
                     <tr data-href="http://localhost:9000/product/@p.getProductName">
-                        @if(user != null && p.checkLowQty && user.getRole.equals("admin")){
+                        @if(user != null && user.getRole.equals("admin") && p.checkLowQty){
                             <td><img src="/assets/images/lowstock.png" class="low-stock"/></td>
                         } else if(user != null && !(p.checkLowQty) && user.getRole.equals("admin")){
                             <td></td>
