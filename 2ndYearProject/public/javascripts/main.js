@@ -42,5 +42,14 @@ function confirmDel() {
   if(!confirm("Are you sure you want to delete?")){
     event.preventDefault();
   }
-    
 }
+
+$(document).ready(function(){
+  $(window).on('scroll',function(){
+      if($(window).scrollTop()){
+          $(".sub-header").addClass('active');
+      }else{
+          $(".sub-header").removeClass('active');
+      }
+  });
+});
