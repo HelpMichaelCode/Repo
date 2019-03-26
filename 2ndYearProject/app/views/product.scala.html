@@ -30,18 +30,18 @@
 
         <div class="product-description-div">@product.getProductDescription</div> <!-- row 2 -->
         <div class="add-to-cart">
-                @if((user != null) && (user.getRole().equals("customer"))){
-                    @if(product.getProductQty() > 0){
-                        <td><a href="@routes.ShoppingController.addToCart(product.getProductID)" 
-                        class="btn btn-default btn-lg"><span 
-                        class="glyphicon glyphicon-shopping-cart"></span></a></td>
-                    }else{
-                        <td><img src="/assets/images/nostock.jpg"/></td>
-                    }
-                } else {
+                @if((user != null) && (user.getRole().equals("admin"))){
                     <td><a href="@routes.ProductController.updateItem(product.getProductID)" 
                         class="btn btn-default btn-lg"><span 
                         class="glyphicon glyphicon-pencil"></span></a></td>
+                } else {
+                        @if(product.getProductQty() > 0){
+                            <td><a href="@routes.ShoppingController.addToCart(product.getProductID)" 
+                            class="btn btn-default btn-lg"><span 
+                            class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                        }else{
+                            <td><img src="/assets/images/nostock.jpg"/></td>
+                        }
                 }
         </div> <!-- row 3 -->
         <div class="qty-and-price">

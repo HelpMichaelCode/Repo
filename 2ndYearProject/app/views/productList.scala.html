@@ -11,7 +11,7 @@
             </a>
             }
     </ul>
-    @if(user != null && user.getRole.equals("customer")){
+    @if((user != null) && (user.getRole().equals("customer"))) {
         <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart" 
             class="btn btn-default btn-lg">View cart</a></div>
     }
@@ -23,7 +23,7 @@
     <table class="table table-bordered table-condensed">
         <thead class="thead-dark">
             <tr>
-                @if(user != null && user.getRole().equals("admin")){
+                @if((user != null) && (user.getRole().equals("admin"))) {
                     <th class="low-stock-col">Low</th>
                 }
                 <th class="product-list-image-col">Image</th>
