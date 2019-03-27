@@ -1,5 +1,41 @@
 @(products: List[models.Product], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
+
+<script>
+var TIMEOUT = 6000;
+ 
+ 
+ var interval = setInterval(handleNext, TIMEOUT);
+	
+ function handleNext() {
+	
+	 var $radios = $('input[class*="slide-radio"]');
+	 var $activeRadio = $('input[class*="slide-radio"]:checked');
+	
+	 var currentIndex = $activeRadio.index();
+	 var radiosLength = $radios.length;
+	
+	 $radios
+		 .attr('checked', false);
+	
+	
+	 if (currentIndex >= radiosLength - 1) {
+	
+		 $radios
+			 .first()
+			 .attr('checked', true);
+	
+	 } else {
+	
+		 $activeRadio
+			 .next('input[class*="slide-radio"]')
+			 .attr('checked', true);
+	
+	 }
+	
+ }
+</script>
+
 <style>
 *{
 margin:0;
@@ -8,24 +44,13 @@ color:black;
 
 }
 
-.slider{
-	margin-left: 0;
-    width:100%;
-    height:100%;
 
 
-}
-.mySlides {
-	width: 100%;
-	left: 0;
-	display:none;
-}
-
-.color{
+/* .color{
     background: radial-gradient(white,#30ff00);
     padding:.8em;
 
-}
+} */
 
 body {
 background: #DFC2F2;
@@ -34,7 +59,7 @@ background: #DFC2F2;
 	background-size: cover;
 	}
 
-#container{
+/* #container{
 	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
 	background: rgba(255, 255, 255, 0.90);
 	text-align: center;
@@ -43,14 +68,15 @@ background: #DFC2F2;
 	margin: 5em auto;
 	height: 350px;
 	width: 700px;
-    overflow:hidden;
+		overflow:hidden;
+	position:relative;   
 	
-}
+} */
 
 
 
 /* 	Product details  */
-.product-details {
+/* .product-details {
 	position: relative;
 	text-align: left;
 	overflow: hidden;
@@ -59,10 +85,10 @@ background: #DFC2F2;
 	float: left;
 	width: 40%;
 
-}
+} */
 
 /* 	Product Name */
-#container .product-details h1{
+/* #container .product-details h1{
 	font-family: 'Old Standard TT', serif;
 	display: inline-block;
 	position: relative;
@@ -90,10 +116,10 @@ background: #DFC2F2;
 
 }
 
-
+ */
 
 /*Product Rating  */
-.hint-star {
+/* .hint-star {
 	display: inline-block;
 	margin-left: 0.5em;
 	color: gold;
@@ -101,7 +127,6 @@ background: #DFC2F2;
 }
 
 
-/* The most important information about the product */
 #container .product-details > p {
 	font-family: 'Farsan', cursive;
 	text-align: center;
@@ -110,7 +135,7 @@ background: #DFC2F2;
 	
 }
 
-/* control */
+
 
 .control{
 	position: absolute;
@@ -118,7 +143,7 @@ background: #DFC2F2;
 	left: 22.8%;
 	
 }
-/* the Button */
+
 .btn {
 	transform: translateY(0px);
 	transition: 0.3s linear;
@@ -146,7 +171,7 @@ background: #DFC2F2;
 	margin:0;
 	
 }
-/* shopping cart icon */
+
 .btn .price, .shopping-cart{
 	background: #333;
 	border: 0;
@@ -157,7 +182,7 @@ background: #DFC2F2;
 	transform: translateX(-10%); padding-right: 15px;
 }
 
-/* the Icon */
+
 .btn .shopping-cart {
 	transform: translateX(-100%);
   position: absolute;
@@ -167,7 +192,7 @@ background: #DFC2F2;
   top: 0;
 }
 
-/* buy */
+
 .btn .buy {z-index: 3; font-weight: bolder;}
 
 .btn:hover .price {transform: translateX(-110%);}
@@ -176,14 +201,14 @@ background: #DFC2F2;
 
 
 
-/* product image  */
+
 .product-image {
 	transition: all 0.3s ease-out;
 	display: inline-block;
 	position: relative;
 	overflow: hidden;
 	height: 100%;
-	/* float: right; */
+
 	width: 50%;
 	display: inline-block;
 }
@@ -214,7 +239,7 @@ background: #DFC2F2;
 .info ul li:hover{transform: translateX(50px) scale(1.3);}
 
 .product-image:hover img {transition: all 0.3s ease-out;}
-.product-image:hover img {transform: scale(1.2, 1.2);}
+.product-image:hover img {transform: scale(1.2, 1.2);} */
 /* .container{
     max-width:98%;
     margin-left:1%;
@@ -235,88 +260,439 @@ background: #DFC2F2;
   font-size: 22px;
 } */
 
-   
-</style>
-<div class="slider">
-  <img class="mySlides" src="/assets/images/productImages/100.jpg" />
-  <img class="mySlides" src="/assets/images/productImages/Acer.jpg" >
-  <!-- <img class="mySlides" src="/assets/images/productImages/gs65.png" > -->
-</div>
+	 
 
 
-<div class ="color"></div>
-<!--<div class="container">
- @for(p<-products){
+/* //slider */
 
-<div class="card">
-  <img src="/assets/images/productImages/172.jpg" >
-  <h1>@p.getProductName</h1>
-  <p class="price">@p.getProductPrice</p>
-  <p>@p.getProductDescription</p>
-  
-</div>
-
+/* Slider wrapper*/
+.css-slider-wrapper {
+  display: block;
+  background: #FFF;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+	bottom: 0;
+	z-index:-1;
 }
-</div> -->
+ 
+/* Slider */
+.slider {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  z-index: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  -webkit-transition: -webkit-transform 1600ms;
+  transition: -webkit-transform 1600ms, transform 1600ms;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+ 
+/* Slides Background Color */
+.slide-1 {
+  background: #fbad99;
+  left: 0;
+}
+.slide-2 {
+  background: #a9785c;
+  left: 100%
+}
+.slide-3 {
+  background: #9ea6b3;
+  left: 200%
+}
+.slide-4 {
+  background: #b1a494;
+  left: 300%;
+}
+.slider {
+  display: flex;
+  justify-content: flex-start;
+}
+.slider-content {
+  width: 635px;
+  padding-left: 100px;
+}
+ 
+ 
+/* Slider Inner Slide Effect */
+.slider h2 {
+  color: #ea2e49;
+  font-weight: 900;
+  text-transform: capitalize;
+  font-size: 60px;
+  font-weight: 300;
+  line-height: 1.2;
+  opacity: 0;
+  -webkit-transform: translateX(500px);
+  transform: translateX(500px);
+  margin-top: 0;
+  letter-spacing: 2px;
+}
+ 
+.slider h4 {
+  font-size: 22px;
+  font-family: "Oswald";
+  color: rgba(51, 51, 51, 0.349);
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.2;
+  opacity: 0;
+  -webkit-transform: translateX(500px);
+  transform: translateX(500px);
+}
+ 
+.slider > img {
+  position: absolute;
+  right: 10%;
+  bottom: 0;
+  height: 100%;
+  opacity: 0;
+  -webkit-transform: translateX(500px);
+  transform: translateX(500px);
+}
+ 
+.slide-1 > img {
+  right: 0;
+}
+ 
+.buy-now-btn {
+  background-color: #ea2e49;
+  width: 220px;
+  height: 50px;
+  border-radius: 30px;
+  border: none;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 100;
+  color: #fff;
+  text-align: left;
+  padding-left: 35px;
+  position: relative;
+  cursor: pointer;
+  transition: all .2s;
+}
+ 
+.buy-now-btn:hover {
+  box-shadow: 0px 0px 60px -17px rgba(51,51,51,1);
+}
+ 
+.buy-now-btn:after {
+  content: 'Buy Now';
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: absolute;
+  right: 35px;
+  top: 18px;
+}
+ 
+.slider .buy-now-btn:focus,
+.navigation .login-btn:focus {
+  outline: none;
+}
+ 
+/* Animations */
+.slider h2 {
+  -webkit-transition: opacity 800ms, -webkit-transform 800ms;
+  transition: transform 800ms, opacity 800ms;
+  -webkit-transition-delay: 1s; /* Safari */
+  transition-delay: 1s;
+}
+.slider h4 {
+  -webkit-transition: opacity 800ms, -webkit-transform 800ms;
+  transition: transform 800ms, opacity 800ms;
+  -webkit-transition-delay: 1.4s; /* Safari */
+  transition-delay: 1.4s;
+}
+.slider > img {
+  -webkit-transition: opacity 800ms, -webkit-transform 800ms;
+  transition: transform 800ms, opacity 800ms;
+  -webkit-transition-delay: 1.2s; /* Safari */
+  transition-delay: 1.2s;
+}
+ 
+/* Number Pagination */
+.number-pagination {
+  position: absolute;
+  bottom: 30px;
+  right: 100px;
+  font-family: "Oswald";
+  font-weight: bold;
+}
+ 
+.number-pagination span {
+  font-size: 30px;
+  color: #ea2e49;
+  letter-spacing: 4px;
+}
+ 
+.number-pagination span:after {
+  content: "/4";
+  font-size: 16px;
+  color: #fff;
+}
+ 
+/* Slider Pagger */
+.slider-pagination {
+  position: absolute;
+  bottom: 30px;
+  width: 575px;
+  left: 100px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+.slider-pagination label {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #fff;
+  margin: 0 10px;
+  cursor: pointer;
+}
+ 
+/* Slider Pagger Event */
+.slide-radio1:checked ~ .slider-pagination .page1,
+.slide-radio2:checked ~ .slider-pagination .page2,
+.slide-radio3:checked ~ .slider-pagination .page3,
+.slide-radio4:checked ~ .slider-pagination .page4 {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ea2e49;
+  background: transparent;
+}
+ 
+/* Slider Slide Effect */
+.slide-radio1:checked ~ .slider {
+  -webkit-transform: translateX(0%);
+  transform: translateX(0%);
+}
+.slide-radio2:checked ~ .slider {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+.slide-radio3:checked ~ .slider {
+  -webkit-transform: translateX(-200%);
+  transform: translateX(-200%);
+}
+.slide-radio4:checked ~ .slider {
+  -webkit-transform: translateX(-300%);
+  transform: translateX(-300%);
+}
+ 
+.slide-radio1:checked ~ .slide-1 h2,
+.slide-radio2:checked ~ .slide-2 h2,
+.slide-radio3:checked ~ .slide-3 h2,
+.slide-radio4:checked ~ .slide-4 h2,
+.slide-radio1:checked ~ .slide-1 h4,
+.slide-radio2:checked ~ .slide-2 h4,
+.slide-radio3:checked ~ .slide-3 h4,
+.slide-radio4:checked ~ .slide-4 h4,
+.slide-radio1:checked ~ .slide-1 > img,
+.slide-radio2:checked ~ .slide-2 > img,
+.slide-radio3:checked ~ .slide-3 > img,
+.slide-radio4:checked ~ .slide-4 > img {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  opacity: 1
+}
+ 
+/* Responsive */
+@@media only screen and (max-width: 768px) {
+  .slider h2 {
+    font-size: 20px;
+  }
+  .slider h4 {
+    font-size: 16px;
+  }
+ 
+  .slider-content {
+    padding: 0 2%
+  }
+ 
+  .navigation {
+    padding: 0 2%;
+  }
+ 
+  .navigation-left {
+    display: none;
+  }
+ 
+  .number-pagination {
+    right: 2%;
+  }
+  .slider-pagination {
+    left: 2%;
+  }
+ 
+  .slider .buy-now-btn {
+    padding: 0 15px;
+    width: 175px;
+    height: 42px;
+  }
+ 
+  .slider .buy-now-btn:after {
+    top: 15px;
+  }
+ 
+  .slider > img {
+    right: 2%;
+  }
+ 
+  .slide-1 > img {
+    right: -110px;
+  }
+}
+</style>
 
+<!-- Slider Wrapper -->
+<div class="css-slider-wrapper">
+	<input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
+	<input type="radio" name="slider" class="slide-radio2" id="slider_2">
+	<input type="radio" name="slider" class="slide-radio3" id="slider_3">
+	<input type="radio" name="slider" class="slide-radio4" id="slider_4">
 
-
-
-
-<div id="container">	
+	<!-- Slider Pagination -->
+	<div class="slider-pagination">
+		<label for="slider_1" class="page1"></label>
+		<label for="slider_2" class="page2"></label>
+		<label for="slider_3" class="page3"></label>
+		<label for="slider_4" class="page4"></label>
+	</div>
 	
-<!-- Start	Product details -->
+	@for(p<-products) {
+	<!-- Slider #1 -->
+	<div class="slider slide-1">
+			@if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
+				<img src="/assets/images/productImages/@(p.getProductID + ".jpg")" class="product-list-images"/>
+			} else {
+				<td><img src="/assets/images/productImages/noImage.jpg"/></td>
+				}
+		<div class="slider-content">
+			<h4>New Product</h4>
+			<h2>@p.getProductName</h2>
+			<button type="button" class="buy-now-btn" name="button">@p.getProductPrice</button>
+		</div>
+		<div class="number-pagination">
+			<span>1</span>
+		</div>
+	</div>
+	}
+	<!-- Slider #2 -->
+	<div class="slider slide-2">
+		<img src="images/model-2.png" alt="">
+		<div class="slider-content">
+			<h4>New Product</h4>
+			<h2></h2>
+			<button type="button" class="buy-now-btn" name="button">$130</button>
+		</div>
+		<div class="number-pagination">
+			<span>2</span>
+		</div>
+	</div>
+
+	<!-- Slider #3 -->
+	<div class="slider slide-3">
+		<img src="images/model-3.png" alt="">
+		<div class="slider-content">
+			<h4>New Product</h4>
+			<h2></h2>
+			<button type="button" class="buy-now-btn" name="button">$130</button>
+		</div>
+		<div class="number-pagination">
+			<span>3</span>
+		</div>
+	</div>
+
+	<!-- Slider #4 -->
+	<div class="slider slide-4">
+		<img src="images/model-4.png" alt="">
+		<div class="slider-content">
+			<h4>New Product</h4>
+			<h2></h2>
+			<button type="button" class="buy-now-btn" name="button">$130</button>
+		</div>
+		<div class="number-pagination">
+			<span>4</span>
+		</div>
+	</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+<script src="app.js" charset="utf-8"></script> 
+
+
+
+
+
+<!-- <div id="container">	
+	
+
 	<div class="product-details">
-		
+		 -->
 		<!-- 	Product Name -->
-	<h1>MSI CUSTOM BUILT</h1>
+	<!-- <h1>MSI CUSTOM BUILT</h1> -->
 <!-- 		<span class="hint new">New</span> -->
 <!-- 		<span class="hint free-shipping">Free Shipping</span> -->
 <!-- 		the Product rating -->
-	<span class="hint-star star">
+	<!-- <span class="hint-star star">
 		<i class="fa fa-star" aria-hidden="true"></i>
 		<i class="fa fa-star" aria-hidden="true"></i>
 		<i class="fa fa-star" aria-hidden="true"></i>
 		<i class="fa fa-star-half-o" aria-hidden="true"></i>
 		<i class="fa fa-star-o" aria-hidden="true"></i>
 	</span>
-		
+		 -->
 	
 <!-- The most important information about the product -->
-		<p class="information">" Best PC IN THE WORLD "</p>
+		<!-- <p class="information">" Best PC IN THE WORLD "</p> -->
 
 		
 		
 <!-- 		Control -->
-<div class="control">
+<!-- <div class="control">
 	
-<!-- Start Button buying -->
+
 	<button class="btn" onclick="showCart()">
-<!-- 		the Price -->
+
 	 <span class="price">4999 $</span>
-<!-- 		shopping cart icon-->
+
    <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-<!-- 		Buy Now / ADD to Cart-->
+
    <span class="buy">Buy Now</span>
  </button>
-	<!-- End Button buying -->
+
 	
 </div>
 			
-</div>
+</div> -->
 	
 <!-- 	End	Product details   -->
 	
 	
 	
 <!-- 	Start product image & Information -->
-	
+<!-- 	
 <div class="product-image">
 	
-	<img src="/assets/images/productImages/100.jpg" alt="Omar Dsoky">
+	<img src="/assets/images/productImages/100.jpg" alt=""> -->
 	
 <!-- 	product Information-->
-<div class="info">
+<!-- <div class="info">
 	<h2>The Description</h2>
 	<ul>
 		<li><strong>1080ti: </strong>GPU</li>
@@ -327,11 +703,11 @@ background: #DFC2F2;
 		<li><strong>COARSAIR: </strong>Case</li>
 	</ul>
 </div>
-</div>
+</div> -->
 <!--  End product image  -->
 
 
-</div>
+<!-- </div> -->
 
 @if((user != null) && (user.getRole().equals("admin"))) {
 	<input type="button" value="Add Product" class="btn btn-primary btn-lg add-to-index"

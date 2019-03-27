@@ -173,7 +173,12 @@ body select{
   width: 97%;
   height: 3.5em;
   margin: 1%;
-  float: left;
+  /* float:left; */
+  background-color: white;
+  color: black;
+  display: inline-block;
+  box-shadow:lime;
+  font-weight: bold;
 }
 
 .product-image-div {
