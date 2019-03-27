@@ -1,0 +1,89 @@
+@(productForm: Form[models.products.Motherboard], user: models.users.User, heading: String)
+@import helper._
+
+@main("Add product info", user) {
+<h3>@heading</h3>
+
+@if(productForm.hasGlobalErrors) {
+<p class="alert alert-warning">
+    @for(e <- productForm.globalErrors) {
+        @e.message<br />
+    }
+</p>
+}
+
+@if(flash.containsKey("error")) {
+<div class="alert alert-danger">
+    @flash.get("error")
+</div>
+}
+
+<div class="add-product-form">
+    @helper.form(action=controllers.routes.ProductController.addMotherboardSubmit(), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
+
+    @CSRF.formField
+
+    @select(
+        productForm("product.productID"), options(Product.options("motherboard")), '_label -> "", '_default -> "-- Choose a GPU --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+
+    @select(
+        field = productForm("manufacturer"), 
+        options = options(
+            "ASRock"->"ASRock",
+            "Asus"->"Asus",
+            "Biostar"->"Biostar",
+            "EVGA"->"EVGA",
+            "Gigabyte"->"Gigabyte",
+            "MSI"->"MSI"
+            ),
+        '_label -> "",
+        '_default -> "-- Choose manufacturer --",
+        'class -> "form-control"
+    )
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints -> false)
+    @select(
+        field = productForm("ramSlots"), 
+        options = options(
+            "2 slots"->"2 slots",
+            "3 slots"->"3 slots",
+            "4 slots"->"4 slots",
+            "8 slots"->"8 slots"
+            ),
+            '_label -> "",
+            '_default -> "-- How many RAM slots? --",
+            'class -> "form-control"
+    )
+    @select(
+        field = productForm("maxRam"),
+         options = options(
+            "32 GB"->"32 GB",
+            "48 GB"-> "48 GB",
+            "64 GB"->"64 GB",
+            "128 GB"->"128 GB",
+            "256 GB"->"256 GB"
+            ),
+            '_label -> "",
+            '_default -> "-- Choose max supported RAM --",
+            'class -> "form-control"
+    )
+    @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
+
+</div>
+
+<div class="actions">
+
+    @if(heading=="Add motherboard info to BLDPC home page"){
+        <input type="submit" value="Add GPU" class="btn btn-primary" />
+    } else {
+        <input type="submit" value="Update" class="btn btn-primary" />
+    }
+
+    <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.HomeController.index()';">
+
+</div>
+}
+}

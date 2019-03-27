@@ -15,6 +15,12 @@
         <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart" 
             class="btn btn-default btn-lg">View cart</a></div>
     }
+    <!-- this is displayed only to administrators -->
+    @if((user != null) && (user.getRole().equals("admin"))) {
+        <input type="button" value="Add Product" class="btn btn-primary btn-lg"
+            onclick="window.location.href = '@routes.ProductController.addProduct()';">
+    }
+    
 </div>
 
 <div class="product-list">
@@ -74,7 +80,7 @@
                         @if((user != null) && (user.getRole().equals("admin"))) {
                             <td>@p.getProductQty</td>
                         }
-                        <td>@p.getOverallRating</td>
+                        <td> @("%.2f".format(p.getOverallRating))</td>
                         <td>&euro; @("%.2f".format(p.getProductPrice))</td>
 
                         <!-- these are displayed only to administrators -->
@@ -110,12 +116,6 @@
 
 
     </table>
-    <!-- this is displayed only to administrators -->
-    @if((user != null) && (user.getRole().equals("admin"))) {
-    <input type="button" value="Add Product" class="btn btn-primary"
-        onclick="window.location.href = '@routes.ProductController.addProduct()';">
-    }
-
-
+    
 </div>
 }

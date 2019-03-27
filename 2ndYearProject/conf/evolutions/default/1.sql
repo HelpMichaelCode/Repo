@@ -66,6 +66,48 @@
 --   constraint pk_user primary key (email)
 -- );
 
+-- create table processor(
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- cores number,
+-- clock number,
+-- cache number,
+-- product_product_id bigint,
+-- primary key (product_id)
+-- );
+
+-- create table graphics_card (
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- bus varchar2(255),
+-- memory varchar2(255),
+-- gpu_clock varchar2(255),
+-- memory_clock varchar2(255),
+-- product_product_id bigint,
+-- primary key (product_id),
+-- foreign key(product_product_id) references product(product_id)
+-- );
+
+-- create table motherboard (
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- ram_slots varchar2(255),
+-- max_ram varchar2(255),
+-- product_product_id bigint,
+-- primary key (product_id),
+-- foreign key(product_product_id) references product(product_id)
+-- );
+
+-- alter table graphics_card add constraint fk_graphics_card_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
+-- create index ix_graphics_card_product_product_id on graphics_card (product_product_id);
+
+
+-- alter table processor add constraint fk_processor_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
+-- create index ix_processor_product_product_id on processor (product_product_id);
+
 -- alter table order_line add constraint fk_order_line_order_id foreign key (order_id) references shop_order (id) on delete restrict on update restrict;
 -- create index ix_order_line_order_id on order_line (order_id);
 

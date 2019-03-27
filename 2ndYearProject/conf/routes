@@ -23,6 +23,14 @@ GET     /updateItem/:id             controllers.ProductController.updateItem(id:
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
+GET     /add-pc-to-home             controllers.ProductController.addTrendingPC
+GET     /add-processor              controllers.ProductController.addProcessor()
+POST    /add-processor-submit       controllers.ProductController.addProcessorSubmit()
+GET     /add-graphics-card          controllers.ProductController.addGraphicsCard()
+POST    /add-graphics-card-submit   controllers.ProductController.addGraphicsCardSubmit()
+GET     /add-motherboard            controllers.ProductController.addMotherboard
+POST    /add-motherboard-submit     controllers.ProductController.addMotherboardSubmit
+
 # Shopping
 GET     /show-cart                  controllers.ShoppingController.showCart()
 GET     /add-to-cart/:id            controllers.ShoppingController.addToCart(id: Long)

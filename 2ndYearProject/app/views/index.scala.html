@@ -333,4 +333,9 @@ background: #DFC2F2;
 
 </div>
 
+@if((user != null) && (user.getRole().equals("admin"))) {
+	<input type="button" value="Add Product" class="btn btn-primary btn-lg add-to-index"
+			onclick="window.location.href = '@routes.ProductController.addTrendingPC()';">
+}
+
 }

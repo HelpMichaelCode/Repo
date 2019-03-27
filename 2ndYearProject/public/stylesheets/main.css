@@ -28,6 +28,10 @@ body textarea{
 .text{
   color: rgb(20, 20, 20);
 }
+
+body select{
+  color: rgb(20, 20, 20);
+}
 /* REGISTER */
 .box{
   width: 40%;

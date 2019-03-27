@@ -1,0 +1,59 @@
+@(productForm: Form[models.products.TrendingPC], user: models.users.User, heading: String)
+@import helper._
+
+@main("Add product", user) {
+<h3>@heading</h3>
+
+@if(productForm.hasGlobalErrors) {
+<p class="alert alert-warning">
+    @for(e <- productForm.globalErrors) {
+        @e.message<br />
+    }
+</p>
+}
+
+@if(flash.containsKey("error")) {
+<div class="alert alert-danger">
+    @flash.get("error")
+</div>
+}
+
+<div class="add-product-form">
+    @helper.form(action=controllers.routes.ProductController.addProduct(), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
+
+    @CSRF.formField
+
+    @select(
+        productForm("product.productID"), options(Product.options("PC")), '_label -> "", '_default -> "-- Choose a PC --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+
+    @inputText(productForm("shortName"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", '_showConstraints -> false)
+
+    @select(
+        productForm("processor.productId"), options(Product.options("CPU")), '_label -> "", '_default -> "-- What's the processor? --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+    
+    <!-- @inputText(productForm("cpu"), '_label -> "", 'placeholder -> "What's the processor?", 'class -> "form-control", '_showConstraints -> false) -->
+    @inputText(productForm("gpu"), '_label -> "", 'placeholder -> "What's the GPU?", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("motherboard"), '_label -> "", 'placeholder -> "What's the motherboard?", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("hddSize"), '_label -> "", 'placeholder -> "What's the HDD size?", 'class -> "form-control", '_showConstraints -> false)
+    
+</div>
+
+<div class="actions">
+
+    @if(heading=="Add PC to BLDPC home page"){
+        <input type="submit" value="Add product" class="btn btn-primary" />
+    } else {
+        <input type="submit" value="Update" class="btn btn-primary" />
+    }
+
+    <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.HomeController.index()';">
+
+</div>
+}
+}

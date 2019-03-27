@@ -13,17 +13,18 @@ $('#search').keypress(function(event){
 	}
 });
 
-//redirects to individual product page
-// $('tr[data-href]').on("click", function() {
-//   document.location = $(this).data('href');
+// redirects to individual product page
+$('tr[data-href]').on("click", function() {
+  document.location = $(this).data('href');
+});
+
+// $(document).ready(function(){
+//   $('table tr').click(function(){ //
+//       window.location = $(this).data('href');
+//       return false;
+//   });
 // });
 
-$(document).ready(function(){
-  $('table tr').click(function(){
-      window.location = $(this).data('href');
-      return false;
-  });
-});
 
 var myIndex = 0;
 carousel();

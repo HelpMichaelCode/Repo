@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import models.*;
 import models.users.*;
+import models.products.*;
 import views.html.*;
 
 
@@ -269,8 +270,114 @@ public class ProductController extends Controller{
         return ok(userReviews.render(reviews, email, User.getUserById(session().get("email"))));
     }
 
-}
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addTrendingPC(){
+        Form<TrendingPC> productForm = formFactory.form(TrendingPC.class);
+        
+        return ok(addTrendingPC.render(productForm, User.getUserById(session().get("email")), "Add PC to BLDPC home page"));
+    }
 
+    // addTrendingPCSubmit()
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addProcessor(){
+        Form<Processor> productForm = formFactory.form(Processor.class);
+        
+        return ok(addProcessor.render(productForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addProcessorSubmit(){
+        Form<Processor> newProcessorForm = formFactory.form(Processor.class).bindFromRequest();
+        if(newProcessorForm.hasErrors()){
+            flash("error", "Fill in all fields!");
+            return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+        } else {
+            Processor newCpu = newProcessorForm.get();
+            if(newCpu.getProductId() == null){
+                if(newCpu.getProduct().getProductID() == null){
+                    flash("error", "Please select a product first.");
+                    return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+                } else {
+                    newCpu.save();
+                    flash("success", "Processor " + newCpu.getName() + " was added");
+                    return redirect(controllers.routes.HomeController.index());
+                }
+            } else {
+                flash("error", "An error occured while processing the form, try again.");
+                return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+            }
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addGraphicsCard(){
+        Form<GraphicsCard> gpuForm = formFactory.form(GraphicsCard.class);
+        return ok(addGraphicsCard.render(gpuForm, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addGraphicsCardSubmit(){
+        Form<GraphicsCard> gpuForm = formFactory.form(GraphicsCard.class).bindFromRequest();
+
+        if(gpuForm.hasErrors()){
+            flash("error", "Fill in all fields!");
+            return badRequest(addGraphicsCard.render(gpuForm, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+        } else {
+            GraphicsCard gpu = gpuForm.get();
+            if(gpu.getProductId() == null){
+                if(gpu.getProduct().getProductID() == null){
+                    flash("error", "Please select a product first.");
+                    return badRequest(addGraphicsCard.render(gpuForm, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+                } else {
+                    gpu.save();
+                    flash("success", "GPU " + gpu.getName() + " was added");
+                    return redirect(controllers.routes.HomeController.index());
+                }
+            } else {
+                flash("error", "An error occured while processing the form, try again.");
+                return badRequest(addGraphicsCard.render(gpuForm, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+            }
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addMotherboard(){
+        Form<Motherboard> mbForm = formFactory.form(Motherboard.class);
+        return ok(addMotherboard.render(mbForm, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result addMotherboardSubmit(){
+        Form<Motherboard> mbForm = formFactory.form(Motherboard.class).bindFromRequest();
+
+        if(mbForm.hasErrors()){
+            flash("error", "Fill in all fields!");
+            return badRequest(addMotherboard.render(mbForm, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+        } else {
+            Motherboard mb = mbForm.get();
+            if(mb.getProductId() == null){
+                if(mb.getProduct().getProductID() == null){
+                    flash("error", "Please select a product first.");
+                    return badRequest(addMotherboard.render(mbForm, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+                } else {
+                    mb.save();
+                    flash("success", "Motherboard " + mb.getName() + " was added");
+                    return redirect(controllers.routes.HomeController.index());
+                }
+            } else {
+                flash("error", "An error occured while processing the form, try again.");
+                return badRequest(addMotherboard.render(mbForm, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+            }
+        }
+    }
+}
 
 
 
