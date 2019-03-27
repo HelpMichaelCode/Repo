@@ -37,8 +37,9 @@
                 } else {
                         @if(product.getProductQty() > 0){
                             
-                        <button href="@routes.ShoppingController.addToCart(product.getProductID)" 
-                            class="buy-now-btn"></button> 
+                        <a href="@routes.ShoppingController.addToCart(product.getProductID)"
+                            class="btn btn-default btn-lg"><span 
+                            class="glyphicon glyphicon-shopping-cart"></span></a> 
                         }else{
                             <td><img src="/assets/images/nostock.jpg"/></td>
                         }

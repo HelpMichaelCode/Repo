@@ -37,6 +37,7 @@ public class ShoppingController extends Controller {
         return ok(orderconfirmed.render((User)User.getUserById(session().get("email")), order));
     }
 
+    @With(CheckIfUser.class)
     @Transactional
     public Result addToCart(Long id) {
         

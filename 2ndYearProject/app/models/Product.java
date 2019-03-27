@@ -222,35 +222,4 @@ public class Product extends Model {
         }
         return options;
     }
-
-    // public static Map<String,String> optionsPC() {
-    // LinkedHashMap<String,String> options = new LinkedHashMap<>();
-    // for (Product p: Product.findAll()) {
-    //     String cat = p.getCategory().getName();
-    //     if(cat.equals("Gaming PCs") || cat.equals("Gaming laptops") || 
-    //     cat.equals("Home PCs") || cat.equals("Home laptops") || 
-    //     cat.equals("Top spec PCs") || cat.equals("Worstations")){
-    //         options.put(p.getProductID().toString(), p.getProductName());
-    //     }
-    // }
-    // return options;
-    // }
-
-    // public static Map<String, String> optionsCPU(){
-    //   LinkedHashMap<String,String> options = new LinkedHashMap<>();
-    // for (Product p: Product.findAll()) {
-    //     String cat = p.getCategory().getName();
-    //     if(cat.equals("CPUs")){
-    //         options.put(p.getProductID().toString(), p.getProductName());
-    //     }
-    // }
-    // return options;
-    // }
-
-
-
-    //      cat.equals("Graphics cards") || 
-    //      cat.equals("Motherboards") || cat.equals("RAM") || 
-    //      cat.equals("Storage")
-    
 }
