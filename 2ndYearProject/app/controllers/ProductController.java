@@ -75,7 +75,16 @@ public class ProductController extends Controller{
                 flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
             }
             String saveImageMessage = saveFile(newProduct.getProductID(), image);
-            return redirect(controllers.routes.ProductController.productList(0, ""));
+            Category cat = newProduct.getCategory();
+            // if(cat.getItems().contains(newProduct)){
+                int i = cat.getId().intValue();
+                switch(i){
+                    case 7:
+                        return redirect(controllers.routes.ProductController.addProcessor(newProduct.getProductID()));
+                }
+            // }
+                        return redirect(controllers.routes.ProductController.productList(0, ""));
+
         }
     }
 
@@ -110,12 +119,11 @@ public class ProductController extends Controller{
     // this method gets all the products from the database and passes them into the productList view, which displays them
 
     public Result productList(Long cat, String keyword) {
-
         if(Product.getLowQty().size() > 0){
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
-
+    
 
         List<Product> itemList = null;
         List<Category> categoryList = Category.findAll();
@@ -125,11 +133,10 @@ public class ProductController extends Controller{
 
         if(cat == 0){
             itemList = Product.findAll();
-        }else {
-            itemList = Category.find.ref(cat).getItems();
-
+            return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env, keyword));
+        } else {
+            return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env, keyword));
         }
-        return ok(productList.render(itemList, categoryList,User.getUserById(session().get("email")), env, keyword));
     }
       
     @Security.Authenticated(Secured.class)
@@ -281,33 +288,35 @@ public class ProductController extends Controller{
     // addTrendingPCSubmit()
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
-    public Result addProcessor(){
+    public Result addProcessor(Long p){
         Form<Processor> productForm = formFactory.form(Processor.class);
         
-        return ok(addProcessor.render(productForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+        return ok(addProcessor.render(productForm, p, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
     }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
-    public Result addProcessorSubmit(){
+    public Result addProcessorSubmit(Long pid){
         Form<Processor> newProcessorForm = formFactory.form(Processor.class).bindFromRequest();
         if(newProcessorForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+            return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
         } else {
             Processor newCpu = newProcessorForm.get();
             if(newCpu.getProductId() == null){
-                if(newCpu.getProduct().getProductID() == null){
-                    flash("error", "Please select a product first.");
-                    return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
-                } else {
+                // if(newCpu.getProduct().getProductID() == null){
+                //     flash("error", "Please select a product first.");
+                //     return badRequest(addProcessor.render(newProcessorForm,pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+                // } else {
+                    Product p = Product.getProductById(pid);
+                    newCpu.setProduct(p);
                     newCpu.save();
                     flash("success", "Processor " + newCpu.getName() + " was added");
                     return redirect(controllers.routes.HomeController.index());
-                }
+                // }
             } else {
                 flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addProcessor.render(newProcessorForm, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+                return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
             }
         }
     }

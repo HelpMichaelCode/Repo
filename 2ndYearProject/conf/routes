@@ -24,8 +24,8 @@ POST    /add-product-submit         controllers.ProductController.addProductSubm
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
 GET     /add-pc-to-home             controllers.ProductController.addTrendingPC
-GET     /add-processor              controllers.ProductController.addProcessor()
-POST    /add-processor-submit       controllers.ProductController.addProcessorSubmit()
+GET     /add-processor/:prod        controllers.ProductController.addProcessor(prod: Long)
+POST    /add-processor-submit/:pid      controllers.ProductController.addProcessorSubmit(pid: Long)
 GET     /add-graphics-card          controllers.ProductController.addGraphicsCard()
 POST    /add-graphics-card-submit   controllers.ProductController.addGraphicsCardSubmit()
 GET     /add-motherboard            controllers.ProductController.addMotherboard

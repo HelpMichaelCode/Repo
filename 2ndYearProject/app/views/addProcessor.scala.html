@@ -1,4 +1,4 @@
-@(productForm: Form[models.products.Processor], user: models.users.User, heading: String)
+@(productForm: Form[models.products.Processor], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product info", user) {
@@ -6,8 +6,8 @@
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning">
-    @for(e <- productForm.globalErrors) {
-        @e.message<br />
+    @for(e
+    <- productForm.globalErrors) { @e.message<br />
     }
 </p>
 }
@@ -19,61 +19,60 @@
 }
 
 <div class="add-product-form">
-    @helper.form(action=controllers.routes.ProductController.addProcessorSubmit(), 'class -> "form-horizontal",
+    @helper.form(action=controllers.routes.ProductController.addProcessorSubmit(pid), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
 
     @CSRF.formField
 
     @select(
-        productForm("product.productID"), options(Product.options("cpu")), '_label -> "", '_default -> "-- Choose a CPU --",
-        '_showConstraints -> false, 'class -> "form-control"
+    field = productForm("manufacturer"),
+    options = options(
+    "Intel"->"Intel",
+    "NVIDIA"->"NVIDIA",
+    "Qualcomm"->"Qualcomm",
+    "Acer"->"Acer"
+    ),
+    '_label -> "",
+    '_default -> "-- Choose manufacturer --",
+    'class -> "form-control"
     )
-
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints
+    -> false)
     @select(
-        field = productForm("manufacturer"), 
-        options = options(
-            "Intel"->"Intel",
-            "NVIDIA"->"NVIDIA",
-            "Qualcomm"->"Qualcomm",
-            "Acer"->"Acer"
-            ),
-        '_label -> "",
-        '_default -> "-- Choose manufacturer --",
-        'class -> "form-control"
+    field = productForm("cores"),
+    options = options(
+    "2"->"2",
+    "4"->"4",
+    "6"->"6",
+    "8"->"8",
+    "10"->"10",
+    "12"->"12",
+    "16"->"16",
+    "32"->"32"
+    ),
+    '_label -> "",
+    '_default -> "-- How many cores? --",
+    'class -> "form-control"    
     )
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints -> false)
-    @select(
-        field = productForm("cores"), 
-        options = options(
-            "2"->"2",
-            "4"->"4",
-            "6"->"6",
-            "8"->"8",
-            "10"->"10",
-            "12"->"12",
-            "16"->"16",
-            "32"->"32"
-            ),
-        '_label -> "",
-        '_default -> "-- How many cores? --",
-        'class -> "form-control"
-    )
-    @inputText(productForm("clock"), '_label -> "", 'placeholder -> "Clock frequency in GHz", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("cache"), '_label -> "", 'placeholder -> "Size of L3 cache in MB", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
-
+    @inputText(productForm("clock"), '_label -> "", 'placeholder -> "Clock frequency in GHz", 'class -> "form-control",
+    '_showConstraints -> false)
+    @inputText(productForm("cache"), '_label -> "", 'placeholder -> "Size of L3 cache in MB", 'class -> "form-control",
+    '_showConstraints -> false)
+    <div class="hide">
+        @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
+    </div>
 </div>
 
 <div class="actions">
 
     @if(heading=="Add processor info to BLDPC home page"){
-        <input type="submit" value="Add product" class="btn btn-primary" />
+    <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
-        <input type="submit" value="Update" class="btn btn-primary" />
+    <input type="submit" value="Update" class="btn btn-primary" />
     }
 
     <input type="button" value="Cancel" class="btn btn-danger"
-    onclick="window.location.href = '@routes.HomeController.index()';">
+        onclick="window.location.href = '@routes.HomeController.index()';">
 
 </div>
 }
