@@ -1,12 +1,12 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background-image: url(https://i.stack.imgur.com/p9mUO.jpg);
+   font-family: sans-serif; 
+  background-image: url(https://i.stack.imgur.com/p9mUO.jpg); 
   background-repeat: repeat;
-  background-size: 100%;
+  background-size: 100%; 
   color: white;
-}
+} */
 
 body textarea{
   color: rgb(20, 20, 20);
@@ -242,6 +242,7 @@ tr[data-href]{
   width: 95%;
   margin-left: 3%;
   margin-top: 2em;
+  margin-top: 20%;
 }
 
 .add-review-form{
@@ -363,6 +364,7 @@ footer {
   div#slider figure img { 
     width: 20%;
     float: left; 
+    height: 90%;
   }
   div#slider figure {
     height: 100%;

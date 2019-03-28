@@ -1,333 +1,121 @@
-@(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment,
-keyword: String)
+@(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment, keyword: String)
 @main("Product List", user){
-<style>
-    #container {
-        box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
-        background: rgba(255, 255, 255, 0.90);
-        text-align: center;
-        border-radius: 5px;
-        overflow: hidden;
-        margin: 5em auto;
-        height: 350px;
-        width: 700px;
-        overflow: hidden;
-        position: relative;
-    }
 
-    /* 	Product details  */
-    .product-details {
-        position: relative;
-        text-align: left;
-        overflow: hidden;
-        padding: 30px;
-        height: 100%;
-        float: left;
-        width: 40%;
-
-    }
-
-    */
-
-    /* 	Product Name */
-    #container .product-details h1 {
-        font-family: 'Old Standard TT', serif;
-        display: inline-block;
-        position: relative;
-        font-size: 34px;
-        color: #344055;
-        margin: 0;
-
-    }
-
-    #container .product-details h1:before {
-        position: absolute;
-        content: '';
-        right: 0%;
-        top: 0%;
-        transform: translate(25px, -15px);
-        font-family: 'Farsan', cursive;
-        display: inline-block;
-        background: #FFA69E;
-        border-radius: 5px;
-        font-size: 14px;
-        padding: 5px;
-        color: #FFF;
-        margin: 0;
-        animation: chan-sh 6s ease infinite;
-
-    }
-
-    */
-
-    /*Product Rating  */
-    .hint-star {
-        display: inline-block;
-        margin-left: 0.5em;
-        color: gold;
-        width: 50%;
-    }
-
-
-    #container .product-details>p {
-        font-family: 'Farsan', cursive;
-        text-align: center;
-        font-size: 20px;
-        color: #7d7d7d;
-
-    }
-
-
-
-    .control {
-        position: absolute;
-        bottom: 20%;
-        left: 22.8%;
-
-    }
-
-    .btn {
-        transform: translateY(0px);
-        transition: 0.3s linear;
-        background: #49C608;
-        border-radius: 5px;
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-        outline: none;
-        border: none;
-        color: #eee;
-        padding: 0;
-        margin: 0;
-
-    }
-
-    .btn:hover {
-        transform: translateY(-4px);
-    }
-
-    .btn span {
-        font-family: 'Farsan', cursive;
-        transition: transform 0.3s;
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 1.2em;
-        margin: 0;
-
-    }
-
-    .btn .price,
-    .shopping-cart {
-        background: #333;
-        border: 0;
-        margin: 0;
-    }
-
-    .btn .price {
-        transform: translateX(-10%);
-        padding-right: 15px;
-    }
-
-
-    .btn .shopping-cart {
-        transform: translateX(-100%);
-        position: absolute;
-        background: #333;
-        z-index: 1;
-        left: 0;
-        top: 0;
-    }
-
-
-    .btn .buy {
-        z-index: 3;
-        font-weight: bolder;
-    }
-
-    .btn:hover .price {
-        transform: translateX(-110%);
-    }
-
-    .btn:hover .shopping-cart {
-        transform: translateX(0%);
-    }
-
-
-
-
-    .product-image {
-        transition: all 0.3s ease-out;
-        display: inline-block;
-        position: relative;
-        overflow: hidden;
-        height: 100%;
-
-        width: 50%;
-        display: inline-block;
-    }
-
-    #container img {
-        width: 100%;
-        height: 100%;
-    }
-
-    .info {
-        background: rgba(27, 26, 26, 0.9);
-        font-family: 'Farsan', cursive;
-        transition: all 0.3s ease-out;
-        transform: translateX(-100%);
-        position: absolute;
-        line-height: 1.9;
-        text-align: left;
-        font-size: 120%;
-        cursor: no-drop;
-        color: #FFF;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-    }
-
-    .info h2 {
-        text-align: center
-    }
-
-    .product-image:hover .info {
-        transform: translateX(0);
-    }
-
-    .info ul li {
-        transition: 0.3s ease;
-    }
-
-    .info ul li:hover {
-        transform: translateX(50px) scale(1.3);
-    }
-
-    .product-image:hover img {
-        transition: all 0.3s ease-out;
-    }
-
-    .product-image:hover img {
-        transform: scale(1.2, 1.2);
-    }
-
-    */ .container {
-        max-width: 98%;
-        margin-left: 1%;
-        margin-right: 1%;
-    }
-
-    .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        width: 40%;
-        margin: auto;
-        text-align: center;
-        font-family: arial;
-        float: left;
-        margin-left: 1em;
-    }
-
-    .price {
-        color: grey;
-        font-size: 22px;
-    }
-</style>
 <div class="cats">
     <h2>Categories</h2>
     <ul class="list-group">
         <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
-        @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId(), "")" class="list-group-item">
-            @c.getName
+        @for(c<-categories) { <a href="@routes.ProductController.productList(c.getId(), "")"
+            class="list-group-item">@c.getName
             <span class="badge">@c.getItems.size</span>
             </a>
             }
     </ul>
     @if((user != null) && (user.getRole().equals("customer"))) {
-    <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart"
+        <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart" 
             class="btn btn-default btn-lg">View cart</a></div>
     }
     <!-- this is displayed only to administrators -->
     @if((user != null) && (user.getRole().equals("admin"))) {
-    <input type="button" value="Add Product" class="btn btn-primary btn-lg"
-        onclick="window.location.href = '@routes.ProductController.addProduct()';">
+        <input type="button" value="Add Product" class="btn btn-primary btn-lg"
+            onclick="window.location.href = '@routes.ProductController.addProduct()';">
     }
-
+    
 </div>
-<h2>List of all available products</h2>
+
 <div class="product-list">
-    @for(p<-products) { @if(p.getProductName.toLowerCase.contains(keyword) ||
-        p.getProductDescription.toLowerCase.contains(keyword)){ <div id="container">
+    <h2>List of all available products</h2>
 
+    <table class="table table-bordered table-condensed">
+        <thead class="thead-dark">
+            <tr>
+                @if((user != null) && (user.getRole().equals("admin"))) {
+                    <th class="low-stock-col">Low</th>
+                }
+                <th class="product-list-image-col">Image</th>
+                @if((user != null) && (user.getRole().equals("admin"))) {
+                    <th>ID</th>
+                }
+                <th>Name</th>
+                <!-- <th>Category</th> -->
+                <th>Description</th>
+                @if((user != null) && (user.getRole().equals("admin"))) {
+                    <th>Stock</th>
+                }
+                <th>Rating</th>
+                <th>Price</th>
+                @if((user != null) && (user.getRole().equals("customer"))){
+                    <th>Buy</th>
+                }
+                @if((user != null) && (user.getRole().equals("admin"))){
+                    <th colspan="2">Actions</th>
+                }
+            </tr>
+        </thead>
+        <!-- End of table header -->
+        <div class="table">
+            <tbody>
+                <!-- Product row(s) -->
 
-        <div class="product-details">
+                @* Loop for creating table rows from Product data *@
+                @for(p<-products) {
+                    @if(p.getProductName.toLowerCase.contains(keyword) || p.getProductDescription.toLowerCase.contains(keyword)){
+                    <tr data-href="http://localhost:9000/product/@p.getProductName">
+                        @if(user != null && user.getRole.equals("admin") && p.checkLowQty){
+                            <td><img src="/assets/images/lowstock.png" class="low-stock"/></td>
+                        } else if(user != null && !(p.checkLowQty) && user.getRole.equals("admin")){
+                            <td></td>
+                        }
+                        @if(env.resource("public/images/productImages/" + p.getProductID + ".jpg").isDefined){
+                        <td><img src="/assets/images/productImages/@(p.getProductID + ".jpg")" class="product-list-images"/></td>
+                        } else {
+                        <td><img src="/assets/images/productImages/noImage.jpg"/></td>
+                        }
+                        @if((user != null) && (user.getRole().equals("admin"))) {
+                            <td>@p.getProductID</td>
+                        }
+                        <td>@p.getProductName</td>
+                        <!-- <td>@p.getCategory.getName</td> -->
+                        <td>@p.getProductDescription</td>
+                        @if((user != null) && (user.getRole().equals("admin"))) {
+                            <td>@p.getProductQty</td>
+                        }
+                        <td> @("%.2f".format(p.getOverallRating))</td>
+                        <td>&euro; @("%.2f".format(p.getProductPrice))</td>
 
-            <!-- 	Product Name -->
-            <h1>MSI CUSTOM BUILT</h1>
-            <span class="hint new">New</span>
-            <span class="hint free-shipping">Free Shipping</span>
-            <!-- 		the Product rating -->
-            <span class="hint-star star">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-            </span>
+                        <!-- these are displayed only to administrators -->
+                        @if((user != null) && (user.getRole().equals("admin"))) {
+                        <!-- update button -->
+                        <td>
+                            <a href="@routes.ProductController.updateItem(p.getProductID)" class="button-lg btn-danger">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
 
-
-            <!-- The most important information about the product -->
-            <p class="information">" Best PC IN THE WORLD "</p>
-
-
-
-            <!-- Control -->
-            <div class="control">
-
-
-                <button class="btn" onclick="showCart()">
-
-                    <span class="price">4999 $</span>
-
-                    <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-
-                    <span class="buy">Buy Now</span>
-                </button>
-
-
-            </div>
-
+                        <!-- delete button -->
+                        <td>
+                            <a href="@routes.ProductController.deleteItem(p.getProductID)" class="button-lg btn-danger" onclick="confirmDel()">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                        }
+                        @if((user != null) && (user.getRole().equals("customer"))){
+                            @if(p.getProductQty() > 0){
+                                <td><a href="@routes.ShoppingController.addToCart(p.getProductID)" 
+                                class="btn btn-default btn-lg"><span 
+                                class="glyphicon glyphicon-shopping-cart"></span></a></td>
+                            }else{
+                                <td><img src="/assets/images/nostock.jpg"/></td>
+                            }
+                        }
+                    </tr>
+                    }
+                }
+            </tbody>
         </div>
 
-        <!-- 	End	Product details   -->
 
-
-
-        <!-- 	Start product image & Information -->
-
-        <div class="product-image">
-
-            <img src="/assets/images/productImages/100.jpg" alt="">
-
-            <!-- 	product Information-->
-            <div class="info">
-                <h2>The Description</h2>
-                <ul>
-                    <li><strong>1080ti: </strong>GPU</li>
-                    <li><strong>i7 8700k: </strong>CPU</li>
-                    <li><strong>Z700: </strong>Mother Board</li>
-                    <li><strong>EVGA PS: </strong>Power Supply</li>
-                    <li><strong>VEGENCE in: </strong>RAM</li>
-                    <li><strong>COARSAIR: </strong>Case</li>
-                </ul>
-            </div>
-        </div>
-        <!--  End product image  -->
-
-
+    </table>
+    
 </div>
-
-}
-</div>
-}
 }
