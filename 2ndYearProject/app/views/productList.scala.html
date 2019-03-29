@@ -1,5 +1,5 @@
-@(products: List[models.Product], categories: List[models.Category], user: models.users.User, env: play.api.Environment,
-keyword: String)
+@(products: List[models.Product], specs: List[models.products.ProductSkeleton], categories: List[models.Category], user:
+models.users.User, env: play.api.Environment)
 @main("Product List", user){
 <style>
     #container {
@@ -254,15 +254,31 @@ keyword: String)
     }
 
 </div>
-<h2>List of all available products</h2>
-<div class="product-list">
-    @for(p<-products) { @if(p.getProductName.toLowerCase.contains(keyword) ||
-        p.getProductDescription.toLowerCase.contains(keyword)){ <div id="container">
 
+<div class="product-list">
+    <h2>List of all available products @specs.size</h2>
+
+    @for(p<-specs) { 
+        @if(p.isInstanceOf[models.products.Processor]){
+            @p.asInstanceOf[models.products.Processor] 
+        } else if(p.isInstanceOf[models.products.Ram]){ 
+            @p.asInstanceOf[models.products.Ram] 
+        } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
+            @p.asInstanceOf[models.products.GraphicsCard] 
+        } else if(p.isInstanceOf[models.products.Motherboard]){
+            @p.asInstanceOf[models.products.Motherboard] 
+        } else if(p.isInstanceOf[models.products.Storage]){
+            @p.asInstanceOf[models.products.Storage]
+        } else if(p.isInstanceOf[models.products.TrendingPC]){
+            @p.asInstanceOf[models.products.TrendingPC]
+        } 
+
+        <div id="container">
 
         <div class="product-details">
 
             <!-- 	Product Name -->
+
             <h1>MSI CUSTOM BUILT</h1>
             <span class="hint new">New</span>
             <span class="hint free-shipping">Free Shipping</span>
@@ -293,18 +309,10 @@ keyword: String)
 
                     <span class="buy">Buy Now</span>
                 </button>
-
-
             </div>
-
         </div>
-
         <!-- 	End	Product details   -->
-
-
-
         <!-- 	Start product image & Information -->
-
         <div class="product-image">
 
             <img src="/assets/images/productImages/100.jpg" alt="">
@@ -323,11 +331,9 @@ keyword: String)
             </div>
         </div>
         <!--  End product image  -->
-
-
-</div>
-
-}
 </div>
 }
+</div>
+
+
 }

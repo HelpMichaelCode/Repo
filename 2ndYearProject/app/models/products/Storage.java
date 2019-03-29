@@ -15,22 +15,22 @@ public class Storage extends ProductSkeleton {
     // @Id
     // private Long productId;
     @Constraints.Required
-    private int capacity;
+    private String capacity;
 
     public Storage(){
     }
 
     public Storage(Long productId, String manufacturer, String name,
-     Product product, int capacity){
+     Product product, String capacity){
         // this.productId = productId;
         super(productId, manufacturer, name, product);
         this.capacity = capacity;
     }
 
-    public int getCapacity(){
+    public String getCapacity(){
         return capacity;
     }
-    public void setCapacity(int capacity){
+    public void setCapacity(String capacity){
         this.capacity = capacity;
     }
 

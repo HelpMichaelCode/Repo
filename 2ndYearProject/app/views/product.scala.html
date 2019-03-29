@@ -71,7 +71,9 @@
             @CSRF.formField
 
             @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", '_label -> "", '_showConstraints -> false)
-            @inputText(reviewForm("rating"), '_label -> "", 'placeholder -> "Rate - 1 to 5", 'class -> "dark-font", '_showConstraints -> false)
+            @inputRadioGroup(reviewForm("rating"), options = options("1"->"1","2"->"2","3"->"3","4"->"4","5"->"5"), '_label -> "Ratings", '_showConstraints -> false)
+            
+            <!-- @inputText(reviewForm("rating"), '_label -> "", 'placeholder -> "Rate - 1 to 5", 'class -> "dark-font", '_showConstraints -> false) -->
             
             <div class="hide">
                 @inputText(reviewForm("id"), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
@@ -89,18 +91,18 @@
         }
     </div>
     <div class="product-reviews">
+            <h2>Customer reviews</h2>
+            <div class="hide">
         @for(r<-reviews) {
             @if(r.getProduct.getProductName == product.getProductName){
                 @filtered.add(r)
             }
-        }
+        }</div>
         @for(f <- filtered){
             @if(filtered.isEmpty){
                 <p>This product does not have any reviews</p>
             } else {
                 <div class="col-sm-10">
-                    <h2>Customer reviews</h2>
-                
                         @if((user != null) && (user.getRole().equals("admin"))) {
                             <div class="review-username"><a href="@routes.ProductController.userReviews(f.getUser.getEmail)">
                             <h3>@f.getUser.getUsername</h3></a></div>

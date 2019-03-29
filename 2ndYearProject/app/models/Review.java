@@ -15,7 +15,7 @@ public class Review extends Model {
     @Id
     private Long id;
 
-    @Constraints.Required
+    // @Constraints.Required
     private String body;
 
     @Constraints.Required

@@ -101,6 +101,43 @@
 -- foreign key(product_product_id) references product(product_id)
 -- );
 
+-- create table ram (
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- capacity varchar2(255),
+-- product_product_id bigint,
+-- primary key (product_id),
+-- foreign key (product_product_id) references product(product_id)
+-- );
+
+-- create table storage (
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- capacity varchar2(255),
+-- product_product_id bigint,
+-- primary key (product_id),
+-- foreign key (product_product_id) references product(product_id)
+-- );
+
+-- create table trending_pc(
+-- product_id bigint auto_increment not null,
+-- manufacturer varchar2(255),
+-- name varchar2(255),
+-- cpu bigint,
+-- gpu bigint,
+-- motherboard bigint,
+-- storage bigint,
+-- product_product_id bigint,
+-- primary key (product_id),
+-- foreign key (cpu) references processor (product_id),
+-- foreign key (gpu) references graphics_card(product_id),
+-- foreign key (motherboard) references motherboard (product_id),
+-- foreign key (storage) references storage (product_id),
+-- foreign key (product_product_id) references product (product_id)
+-- );
+
 -- alter table graphics_card add constraint fk_graphics_card_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
 -- create index ix_graphics_card_product_product_id on graphics_card (product_product_id);
 

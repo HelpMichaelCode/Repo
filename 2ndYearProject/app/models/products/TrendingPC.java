@@ -6,14 +6,15 @@ import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 
+import models.*;
 @Entity
-public class TrendingPC extends Model {
+public class TrendingPC extends ProductSkeleton {
 
-    @Id
-    @OneToOne
-    private Long productId;
-    @Constraints.Required
-    private String shortName;
+    // @Id
+    // @OneToOne
+    // private Long productId;
+    // @Constraints.Required
+    // private String shortName;
     @Constraints.Required
     private Processor cpu;
     @Constraints.Required
@@ -21,33 +22,18 @@ public class TrendingPC extends Model {
     @Constraints.Required
     private Motherboard motherboard;
     @Constraints.Required
-    private Storage hddSize;
+    private Storage storage;
 
     public TrendingPC(){
     }
 
-    public TrendingPC(Long productId, String shortName, String shortDescription,
-     Processor cpu, GraphicsCard gpu, Motherboard motherboard, Storage hddSize){
-        this.productId = productId;
-        this.shortName = shortName;
+    public TrendingPC(Long productId, String name, String manufacturer,
+     Processor cpu, GraphicsCard gpu, Motherboard motherboard, Storage storage, Product product){
+        super(productId, manufacturer, name, product);
         this.cpu = cpu;
         this.gpu = gpu;
         this.motherboard = motherboard;
-        this.hddSize = hddSize;
-    }
-
-    public Long getProductId(){
-        return productId;
-    }
-    public void setProductId(Long productId){
-        this.productId = productId;
-    }
-
-    public String getShortName(){
-        return shortName;
-    }
-    public void setShortName(String shortName){
-        this.shortName = shortName;
+        this.storage = storage;
     }
 
     public Processor getCpu(){
@@ -71,11 +57,11 @@ public class TrendingPC extends Model {
         this.motherboard = motherboard;
     }
 
-    public Storage getHddSize(){
-        return hddSize;
+    public Storage getStorage(){
+        return storage;
     }
-    public void setHddSize(Storage hddSize){
-        this.hddSize = hddSize;
+    public void setStorage(Storage storage){
+        this.storage = storage;
     }
 
     public static Finder<Long, TrendingPC> find = new Finder<>(TrendingPC.class);
