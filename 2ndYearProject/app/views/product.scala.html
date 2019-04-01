@@ -45,7 +45,9 @@
         @if(product.getProductQty() > 0){
             <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
         }else{
-            <img src="/assets/images/nostock.jpg"/>
+            <div class="buttons">
+                <button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF ORDER</button>
+              </div>  
         }
       </div>
     </div>
@@ -56,7 +58,17 @@
 
 
 
+<style>
+.buttons {
+  padding: 2em;
+}
 
+button[type="button"]:disabled {
+  border: 2px dashed red;
+  background-color: black;
+  color: #ffff;
+}
+</style>
 
   
 
