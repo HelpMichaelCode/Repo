@@ -1,4 +1,4 @@
-@(productForm: Form[models.products.Motherboard], user: models.users.User, heading: String)
+@(productForm: Form[models.products.Motherboard], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product info", user) {
@@ -19,8 +19,8 @@
 }
 
 <div class="add-product-form">
-    @helper.form(action=controllers.routes.ProductController.addMotherboardSubmit(), 'class -> "form-horizontal",
-    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
+    @helper.form(action=controllers.routes.ProductController.addMotherboardSubmit(pid), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
 
@@ -81,8 +81,8 @@
         <input type="submit" value="Update" class="btn btn-primary" />
     }
 
-    <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';">
+    <!-- <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.HomeController.index()';"> -->
 
 </div>
 }

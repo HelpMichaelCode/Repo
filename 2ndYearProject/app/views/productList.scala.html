@@ -257,39 +257,35 @@ models.users.User, env: play.api.Environment)
 
 <div class="product-list">
     <h2>List of all available products @specs.size</h2>
-
     @for(p<-specs) { 
-        @if(p.isInstanceOf[models.products.Processor]){
-            @p.asInstanceOf[models.products.Processor] 
-        } else if(p.isInstanceOf[models.products.Ram]){ 
-            @p.asInstanceOf[models.products.Ram] 
-        } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
-            @p.asInstanceOf[models.products.GraphicsCard] 
-        } else if(p.isInstanceOf[models.products.Motherboard]){
-            @p.asInstanceOf[models.products.Motherboard] 
-        } else if(p.isInstanceOf[models.products.Storage]){
-            @p.asInstanceOf[models.products.Storage]
-        } else if(p.isInstanceOf[models.products.TrendingPC]){
-            @p.asInstanceOf[models.products.TrendingPC]
-        } 
-
+    <div class="hide">
+       
+            @if(p.isInstanceOf[models.products.Processor]){
+                @p.asInstanceOf[models.products.Processor] 
+            } else if(p.isInstanceOf[models.products.Ram]){ 
+                @p.asInstanceOf[models.products.Ram] 
+            } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
+                @p.asInstanceOf[models.products.GraphicsCard] 
+            } else if(p.isInstanceOf[models.products.Motherboard]){
+                @p.asInstanceOf[models.products.Motherboard] 
+            } else if(p.isInstanceOf[models.products.Storage]){
+                @p.asInstanceOf[models.products.Storage]
+            } else if(p.isInstanceOf[models.products.TrendingPC]){
+                @p.asInstanceOf[models.products.TrendingPC]
+            }  
+    </div>
         <div id="container">
 
         <div class="product-details">
 
             <!-- 	Product Name -->
 
-            <h1>MSI CUSTOM BUILT</h1>
-            <span class="hint new">New</span>
-            <span class="hint free-shipping">Free Shipping</span>
+            <h1>@p.getName</h1>
             <!-- 		the Product rating -->
             <span class="hint-star star">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                <i class="fa fa-star-o" aria-hidden="true"></i>
+                @p.getProduct.getOverallRating
             </span>
+            
 
 
             <!-- The most important information about the product -->
@@ -303,7 +299,7 @@ models.users.User, env: play.api.Environment)
 
                 <button class="btn" onclick="showCart()">
 
-                    <span class="price">4999 $</span>
+                    <span class="price">@p.getProduct.getProductPrice $</span>
 
                     <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
 

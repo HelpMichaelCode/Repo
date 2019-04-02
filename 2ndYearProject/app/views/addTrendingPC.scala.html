@@ -1,4 +1,4 @@
-@(productForm: Form[models.products.TrendingPC], user: models.users.User, heading: String)
+@(productForm: Form[models.products.TrendingPC], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product", user) {
@@ -19,40 +19,64 @@
 }
 
 <div class="add-product-form">
-    @helper.form(action=controllers.routes.ProductController.addProduct(), 'class -> "form-horizontal",
-    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
+    @helper.form(action=controllers.routes.ProductController.addTrendingPCSubmit(pid), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
 
+    @inputText(productForm("manufacturer"), '_label -> "", 'placeholder -> "Manufacturer", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", '_showConstraints -> false)
+
     @select(
-        productForm("product.productID"), options(Product.options("PC")), '_label -> "", '_default -> "-- Choose a PC --",
+        productForm("cpu.productId"), options(Product.options("cpu")), '_label -> "", '_default -> "-- What's the processor? --",
         '_showConstraints -> false, 'class -> "form-control"
     )
 
-    @inputText(productForm("shortName"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", '_showConstraints -> false)
-
-    @select(
-        productForm("processor.productId"), options(Product.options("CPU")), '_label -> "", '_default -> "-- What's the processor? --",
-        '_showConstraints -> false, 'class -> "form-control"
-    )
-    
     <!-- @inputText(productForm("cpu"), '_label -> "", 'placeholder -> "What's the processor?", 'class -> "form-control", '_showConstraints -> false) -->
-    @inputText(productForm("gpu"), '_label -> "", 'placeholder -> "What's the GPU?", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("motherboard"), '_label -> "", 'placeholder -> "What's the motherboard?", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("hddSize"), '_label -> "", 'placeholder -> "What's the HDD size?", 'class -> "form-control", '_showConstraints -> false)
-    
+    @select(
+        productForm("gpu.productId"), options(Product.options("graphics")), '_label -> "", '_default -> "-- What's the GPU? --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+    @select(
+        productForm("motherboard.productId"), options(Product.options("motherboard")), '_label -> "", '_default -> "-- What's the motherboard? --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )    
+    @select(
+        productForm("storage.productId"), options(Product.options("storage")), '_label -> "", '_default -> "-- What's the hard drive? --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+    @select(
+        field = productForm("ramQty"),
+        options = options(
+        "1"->"1",
+        "2"->"2",
+        "3"->"3",
+        "4"->"4"
+        ),
+        '_label -> "",
+        '_default -> "-- How many RAM sticks? --",
+        '_showConstraints -> false,
+        'class -> "form-control"
+    )
+    @select(
+        productForm("ram.productId"), options(Product.options("ram")), '_label -> "", '_default -> "-- What's the RAM? --",
+        '_showConstraints -> false, 'class -> "form-control"
+    )
+    <div class="hide">
+        @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
+    </div>
 </div>
 
 <div class="actions">
 
-    @if(heading=="Add PC to BLDPC home page"){
+    @if(heading=="Add PC info to BLDPC home page"){
         <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
         <input type="submit" value="Update" class="btn btn-primary" />
     }
 
-    <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';">
+    <!-- <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.HomeController.index()';"> -->
 
 </div>
 }

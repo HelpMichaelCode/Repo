@@ -23,13 +23,18 @@ GET     /updateItem/:id             controllers.ProductController.updateItem(id:
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
-GET     /add-pc-to-home             controllers.ProductController.addTrendingPC
-GET     /add-processor/:prod        controllers.ProductController.addProcessor(prod: Long)
+GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
+POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)
+GET     /add-processor/:pid         controllers.ProductController.addProcessor(pid: Long)
 POST    /add-processor-submit/:pid      controllers.ProductController.addProcessorSubmit(pid: Long)
-GET     /add-graphics-card          controllers.ProductController.addGraphicsCard()
-POST    /add-graphics-card-submit   controllers.ProductController.addGraphicsCardSubmit()
-GET     /add-motherboard            controllers.ProductController.addMotherboard
-POST    /add-motherboard-submit     controllers.ProductController.addMotherboardSubmit
+GET     /add-gpu/:pid               controllers.ProductController.addGraphicsCard(pid: Long)
+POST    /add-gpu-submit/:pid        controllers.ProductController.addGraphicsCardSubmit(pid: Long)
+GET     /add-motherboard/:pid           controllers.ProductController.addMotherboard(pid: Long)
+POST    /add-motherboard-submit/:pid     controllers.ProductController.addMotherboardSubmit(pid: Long)
+GET     /add-ram/:pid            controllers.ProductController.addRam(pid: Long)
+POST    /add-ram-submit/:pid     controllers.ProductController.addRamSubmit(pid: Long)
+GET     /add-storage/:pid            controllers.ProductController.addStorage(pid: Long)
+POST    /add-storage-submit/:pid     controllers.ProductController.addStorageSubmit(pid: Long)
 
 # Shopping
 GET     /show-cart                  controllers.ShoppingController.showCart()
@@ -38,8 +43,8 @@ GET     /add-one/:itemId            controllers.ShoppingController.addOne(itemId
 GET     /remove-one/:itemId         controllers.ShoppingController.removeOne(itemId: Long)
 GET     /empty-cart                 controllers.ShoppingController.emptyCart()
 GET     /place-order                controllers.ShoppingController.placeOrder()
-GET     /cancel-order/:id            controllers.ShoppingController.cancelOrder(id: Long)
-GET     /view-orders                 controllers.ShoppingController.viewOrders()
+GET     /cancel-order/:id           controllers.ShoppingController.cancelOrder(id: Long)
+GET     /view-orders                controllers.ShoppingController.viewOrders()
 
 POST    /post-review                controllers.ProductController.addReviewSubmit
 GET     /delete-review/:id/:email   controllers.ProductController.deleteReview(id: Long, email: String)

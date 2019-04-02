@@ -1,4 +1,4 @@
-@(productForm: Form[models.products.Processor], pid: Long, user: models.users.User, heading: String)
+@(productForm: Form[models.products.Ram], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product info", user) {
@@ -23,41 +23,35 @@
     'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
-
+    
     @select(
-    field = productForm("manufacturer"),
-    options = options(
-    "Intel"->"Intel",
-    "NVIDIA"->"NVIDIA",
-    "Qualcomm"->"Qualcomm",
-    "Acer"->"Acer"
-    ),
-    '_label -> "",
-    '_default -> "-- Choose manufacturer --",
-    'class -> "form-control"
+        field = productForm("manufacturer"),
+        options = options(
+        "Corsair"->"Corsair",
+        "Micron"->"Micron",
+        "Kingston"->"Kingston",
+        "Transcend"->"Transcend"
+        ),
+        '_label -> "",
+        '_default -> "-- Choose manufacturer --",
+        'class -> "form-control"
     )
     @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints
     -> false)
     @select(
-    field = productForm("cores"),
-    options = options(
-    "2"->"2",
-    "4"->"4",
-    "6"->"6",
-    "8"->"8",
-    "10"->"10",
-    "12"->"12",
-    "16"->"16",
-    "32"->"32"
-    ),
-    '_label -> "",
-    '_default -> "-- How many cores? --",
-    'class -> "form-control"    
+        field = productForm("capacity"),
+        options = options(
+        "2 GB"->"2 GB",
+        "4 GB"->"4 GB",
+        "8 GB"->"8 GB",
+        "12 GB"->"12 GB",
+        "16 GB"->"16 GB",
+        "32 GB"->"32 GB"
+        ),
+        '_label -> "",
+        '_default -> "-- What size? --",
+        'class -> "form-control"    
     )
-    @inputText(productForm("clock"), '_label -> "", 'placeholder -> "Clock speed- ex. 3.2 GHz", 'class -> "form-control",
-    '_showConstraints -> false)
-    @inputText(productForm("cache"), '_label -> "", 'placeholder -> "Cache - ex. 2 MB", 'class -> "form-control",
-    '_showConstraints -> false)
     <div class="hide">
         @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
     </div>
@@ -65,7 +59,7 @@
 
 <div class="actions">
 
-    @if(heading=="Add processor info to BLDPC home page"){
+    @if(heading=="Add RAM info to BLDPC home page"){
     <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
     <input type="submit" value="Update" class="btn btn-primary" />

@@ -15,13 +15,22 @@ public class TrendingPC extends ProductSkeleton {
     // private Long productId;
     // @Constraints.Required
     // private String shortName;
-    @Constraints.Required
+    @ManyToOne
     private Processor cpu;
-    @Constraints.Required
+
+    @ManyToOne
     private GraphicsCard gpu;
-    @Constraints.Required
+
+    @ManyToOne
     private Motherboard motherboard;
+
     @Constraints.Required
+    private int ramQty;
+
+    @ManyToOne
+    private Ram ram;
+    
+    @ManyToOne
     private Storage storage;
 
     public TrendingPC(){
@@ -62,6 +71,22 @@ public class TrendingPC extends ProductSkeleton {
     }
     public void setStorage(Storage storage){
         this.storage = storage;
+    }
+
+    public int getRamQty(){
+        return ramQty;
+    }
+
+    public void setRamQty(int ramQty){
+        this.ramQty = ramQty;
+    }
+
+    public Ram getRam(){
+        return ram;
+    }
+
+    public void setRam(Ram ram){
+        this.ram = ram;
     }
 
     public static Finder<Long, TrendingPC> find = new Finder<>(TrendingPC.class);

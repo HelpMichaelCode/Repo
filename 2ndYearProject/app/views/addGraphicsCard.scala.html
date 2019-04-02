@@ -1,4 +1,4 @@
-@(productForm: Form[models.products.GraphicsCard], user: models.users.User, heading: String)
+@(productForm: Form[models.products.GraphicsCard], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
 @main("Add product info", user) {
@@ -19,8 +19,8 @@
 }
 
 <div class="add-product-form">
-    @helper.form(action=controllers.routes.ProductController.addGraphicsCardSubmit(), 'class -> "form-horizontal",
-    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
+    @helper.form(action=controllers.routes.ProductController.addGraphicsCardSubmit(pid), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
 
@@ -70,8 +70,8 @@
             '_default -> "-- Choose memory --",
             'class -> "form-control"
     )
-    @inputText(productForm("gpuClock"), '_label -> "", 'placeholder -> "GPU clock frequency in MHz", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("memoryClock"), '_label -> "", 'placeholder -> "Memory clock frequency in MHz", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("gpuClock"), '_label -> "", 'placeholder -> "GPU clock frequency - ex. 1500 MHz", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("memoryClock"), '_label -> "", 'placeholder -> "Memory clock frequency - ex. 800 MHz", 'class -> "form-control", '_showConstraints -> false)
     @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
 
 </div>
@@ -84,8 +84,8 @@
         <input type="submit" value="Update" class="btn btn-primary" />
     }
 
-    <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';">
+    <!-- <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.HomeController.index()';"> -->
 
 </div>
 }
