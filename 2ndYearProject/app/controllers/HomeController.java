@@ -24,12 +24,6 @@ public class HomeController extends Controller {
         this.env = env;
     }
 
-    /**
-     * An action that renders an HTML page with a welcome message.
-     * The configuration in the <code>routes</code> file means that
-     * this method will be called when the application receives a
-     * <code>GET</code> request with a path of <code>/</code>.
-     */
     public Result index() {
         List<Product> products = Product.findAll(); //to generate the product list dynamically
         if(Product.getLowQty().size() > 0){
@@ -45,8 +39,4 @@ public class HomeController extends Controller {
 
     //     return ok(userList.render(User.getUserById(session().get("email"))));
     // }
-    // public Result updateUser(){
-
-    // }
-    
 }

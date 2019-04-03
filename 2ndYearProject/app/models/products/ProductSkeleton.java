@@ -22,7 +22,7 @@ public abstract class ProductSkeleton extends Model {
     @Constraints.Required
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Product product;
 
     public ProductSkeleton(){

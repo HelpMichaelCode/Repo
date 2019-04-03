@@ -19,7 +19,7 @@
 }
 
 <div class="add-product-form">
-    @helper.form(action=controllers.routes.ProductController.addProcessorSubmit(pid), 'class -> "form-horizontal",
+    @helper.form(action=controllers.routes.ProductController.addRamSubmit(pid), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
@@ -59,7 +59,7 @@
 
 <div class="actions">
 
-    @if(heading=="Add RAM info to BLDPC home page"){
+    @if(heading=="Add RAM info to BLDPC"){
     <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
     <input type="submit" value="Update" class="btn btn-primary" />

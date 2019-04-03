@@ -19,22 +19,33 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public/"
 GET     /product-list               controllers.ProductController.productList(category:Long?=0L, keyword: String)
 GET     /product/:productName       controllers.ProductController.displayProduct(productName: String)
 GET     /add-product                controllers.ProductController.addProduct
-GET     /updateItem/:id             controllers.ProductController.updateItem(id: Long)
+GET     /update-item/:id             controllers.ProductController.updateItem(id: Long)
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)
+GET     /update-pc/:pid             controllers.ProductController.updateTrendingPC(pid: Long)
+
 GET     /add-processor/:pid         controllers.ProductController.addProcessor(pid: Long)
 POST    /add-processor-submit/:pid      controllers.ProductController.addProcessorSubmit(pid: Long)
+GET     /update-processor/:pid      controllers.ProductController.updateProcessor(pid: Long)
+
 GET     /add-gpu/:pid               controllers.ProductController.addGraphicsCard(pid: Long)
 POST    /add-gpu-submit/:pid        controllers.ProductController.addGraphicsCardSubmit(pid: Long)
+GET     /update-gpu/:pid            controllers.ProductController.updateGraphicsCard(pid: Long)
+
 GET     /add-motherboard/:pid           controllers.ProductController.addMotherboard(pid: Long)
 POST    /add-motherboard-submit/:pid     controllers.ProductController.addMotherboardSubmit(pid: Long)
+GET     /update-motherboard/:pid    controllers.ProductController.updateMotherboard(pid: Long)
+
 GET     /add-ram/:pid            controllers.ProductController.addRam(pid: Long)
 POST    /add-ram-submit/:pid     controllers.ProductController.addRamSubmit(pid: Long)
+GET     /update-ram/:pid        controllers.ProductController.updateRam(pid: Long)
+
 GET     /add-storage/:pid            controllers.ProductController.addStorage(pid: Long)
 POST    /add-storage-submit/:pid     controllers.ProductController.addStorageSubmit(pid: Long)
+GET     /update-storage/:pid        controllers.ProductController.updateStorage(pid: Long)
 
 # Shopping
 GET     /show-cart                  controllers.ShoppingController.showCart()

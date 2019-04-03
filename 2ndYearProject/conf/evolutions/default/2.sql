@@ -39,7 +39,7 @@ work projects.',
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 
-values (102, 'ACER Orion 3000 Intel® Core™ i5+ GTX 1050 Ti Gaming PC - 1 TB HDD',
+values (102, 'ACER Orion 3000 Intel® Core™ i5 GTX 1050 Ti Gaming PC - 1 TB HDD',
 'Take on your favourite games with this gaming PC. 
 With an 8th generation i5+ processor, your PC is able to run the latest titles everyone''s talking about, 
 as well as the classic games that helped you hone your skills.',

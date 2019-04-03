@@ -63,41 +63,61 @@ public class ProductController extends Controller{
         } else {
             Product newProduct = newProductForm.get();
             if (newProduct.getProductID() == null) {
+                String saveImageMessage = saveFile(newProduct.getProductID(), image);
+
                 if(newProduct.getCategory().getId() == null){
                     flash("error", "Please select a category first.");
                     return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
                 } else {
                     newProduct.save();
                     flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
+                    switch(newProduct.getCategory().getId().intValue()){
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                            return redirect(controllers.routes.ProductController.addTrendingPC(newProduct.getProductID()));
+                        case 7:
+                            return redirect(controllers.routes.ProductController.addProcessor(newProduct.getProductID()));
+                        case 8:
+                            return redirect(controllers.routes.ProductController.addMotherboard(newProduct.getProductID()));
+                        case 9:
+                            return redirect(controllers.routes.ProductController.addRam(newProduct.getProductID()));
+                        case 11:
+                            return redirect(controllers.routes.ProductController.addStorage(newProduct.getProductID()));
+                        case 10:
+                            return redirect(controllers.routes.ProductController.addGraphicsCard(newProduct.getProductID()));
+                        default:
+                            return redirect(controllers.routes.ProductController.productList(0, ""));
+                    }
                 }
             } else {
                 newProduct.update();
                 flash("success", "Item " + newProduct.getProductName() + " has been updated successfuly!");
-            }
-            String saveImageMessage = saveFile(newProduct.getProductID(), image);
-            Category cat = newProduct.getCategory();
-            int i = cat.getId().intValue();
-            switch(i){
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                    return redirect(controllers.routes.ProductController.addTrendingPC(newProduct.getProductID()));
-                case 7:
-                    return redirect(controllers.routes.ProductController.addProcessor(newProduct.getProductID()));
-                case 8:
-                    return redirect(controllers.routes.ProductController.addMotherboard(newProduct.getProductID()));
-                case 9:
-                    return redirect(controllers.routes.ProductController.addRam(newProduct.getProductID()));
-                case 11:
-                    return redirect(controllers.routes.ProductController.addStorage(newProduct.getProductID()));
-                case 10:
-                    return redirect(controllers.routes.ProductController.addGraphicsCard(newProduct.getProductID()));
-                default:
-                    return redirect(controllers.routes.ProductController.productList(0, ""));
+                switch(newProduct.getCategory().getId().intValue()){
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        return redirect(controllers.routes.ProductController.updateTrendingPC(newProduct.getProductID()));
+                    case 7:
+                        return redirect(controllers.routes.ProductController.updateProcessor(newProduct.getProductID()));
+                    case 8:
+                        return redirect(controllers.routes.ProductController.updateMotherboard(newProduct.getProductID()));
+                    case 9:
+                        return redirect(controllers.routes.ProductController.updateRam(newProduct.getProductID()));
+                    case 11:
+                        return redirect(controllers.routes.ProductController.updateStorage(newProduct.getProductID()));
+                    case 10:
+                        return redirect(controllers.routes.ProductController.updateGraphicsCard(newProduct.getProductID()));
+                    default:
+                        return redirect(controllers.routes.ProductController.productList(0, ""));
                 }
+            }
         }
     }
 
@@ -277,7 +297,7 @@ public class ProductController extends Controller{
     public Result addTrendingPC(Long p){
         Form<TrendingPC> productForm = formFactory.form(TrendingPC.class);
         
-        return ok(addTrendingPC.render(productForm, p, User.getUserById(session().get("email")), "Add PC info to BLDPC home page"));
+        return ok(addTrendingPC.render(productForm, p, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -286,9 +306,10 @@ public class ProductController extends Controller{
         Form<TrendingPC> newForm = formFactory.form(TrendingPC.class).bindFromRequest();
         if(newForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC home page"));
+            return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
         } else {
             TrendingPC pc = newForm.get();
+            pc.setProduct(Product.getProductById(pid));
             if(pc.getProductId() == null){
                 for(Processor cpu: Processor.findAll()){
                     if(pc.getCpu().getProductId() == cpu.getProductId()){
@@ -297,19 +318,34 @@ public class ProductController extends Controller{
                     }
                     
                 }
-                flash("success", "CPU id --" + pc.getCpu().getProductId());
-                   
-                
-                Product p = Product.getProductById(pid);
-                pc.setProduct(p);
                 pc.save();
-                // flash("success", "PC " + pc.getName() + " was added");
+                flash("success", "PC " + pc.getName() + " was added");
                 return redirect(controllers.routes.HomeController.index());
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+                pc.update();
+                flash("success", "PC " + pc.getName() + " was updated");
+                return redirect(controllers.routes.HomeController.index());
             }
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateTrendingPC(Long pid){
+        List<TrendingPC> all = TrendingPC.findAll();
+        Form<TrendingPC> form;
+        TrendingPC tp = null;
+        for(TrendingPC e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
+            }
+        }
+        if(tp != null){
+            form = formFactory.form(TrendingPC.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addTrendingPC.render(form, pid, User.getUserById(session().get("email")), "Update PC info"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -317,29 +353,47 @@ public class ProductController extends Controller{
     public Result addRam(Long p){
         Product temp = Product.getProductById(p);
         Form<Ram> productForm = formFactory.form(Ram.class);
-        return ok(addRam.render(productForm, p, User.getUserById(session().get("email")), "Add RAM info to BLDPC home page"));
+        return ok(addRam.render(productForm, p, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addRamSubmit(Long pid){
-        Product p = Product.getProductById(pid);
         Form<Ram> newForm = formFactory.form(Ram.class).bindFromRequest();
         if(newForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC home page"));
+            return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
         } else {
                 Ram r = newForm.get();
+                r.setProduct(Product.getProductById(pid));
             if(r.getProduct().getProductID() == null){
-                    r.setProduct(p);
-                    r.save();
-                    flash("success", r.getName() + " was added");
-                    return redirect(controllers.routes.HomeController.index());
+                r.save();
+                flash("success", r.getName() + " was added");
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC home page"));
+                r.update();
+                flash("success", r.getName() + " was updated");
+            }
+            return redirect(controllers.routes.HomeController.index());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateRam(Long pid){
+        List<Ram> all = Ram.findAll();
+        Form<Ram> form;
+        Ram tp = null;
+        for(Ram e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
             }
         }
+        if(tp != null){
+            form = formFactory.form(Ram.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addRam.render(form, pid, User.getUserById(session().get("email")), "Update RAM info"));
     }
 
         @Security.Authenticated(Secured.class)
@@ -347,29 +401,47 @@ public class ProductController extends Controller{
     public Result addStorage(Long p){
         Product temp = Product.getProductById(p);
         Form<Storage> productForm = formFactory.form(Storage.class);
-        return ok(addStorage.render(productForm, p, User.getUserById(session().get("email")), "Add storage memory info to BLDPC home page"));
+        return ok(addStorage.render(productForm, p, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addStorageSubmit(Long pid){
-        Product p = Product.getProductById(pid);
         Form<Storage> newForm = formFactory.form(Storage.class).bindFromRequest();
         if(newForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC home page"));
+            return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
         } else {
                 Storage s = newForm.get();
+                s.setProduct(Product.getProductById(pid));
             if(s.getProduct().getProductID() == null){
-                    s.setProduct(p);
-                    s.save();
-                    flash("success", s.getName() + " was added");
-                    return redirect(controllers.routes.HomeController.index());
+                s.save();
+                flash("success", s.getName() + " was added");
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC home page"));
+                s.update();
+                flash("success", s.getName() + " was updated");
+            }
+            return redirect(controllers.routes.HomeController.index());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateStorage(Long pid){
+        List<Storage> all = Storage.findAll();
+        Form<Storage> form;
+        Storage tp = null;
+        for(Storage e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
             }
         }
+        if(tp != null){
+            form = formFactory.form(Storage.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addStorage.render(form, pid, User.getUserById(session().get("email")), "Update storage memory info"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -377,7 +449,7 @@ public class ProductController extends Controller{
     public Result addProcessor(Long p){
         Form<Processor> productForm = formFactory.form(Processor.class);
         
-        return ok(addProcessor.render(productForm, p, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+        return ok(addProcessor.render(productForm, p, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -386,20 +458,38 @@ public class ProductController extends Controller{
         Form<Processor> newProcessorForm = formFactory.form(Processor.class).bindFromRequest();
         if(newProcessorForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+            return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
         } else {
             Processor newCpu = newProcessorForm.get();
+            newCpu.setProduct(Product.getProductById(pid));
             if(newCpu.getProduct().getProductID() == null){
-                    Product p = Product.getProductById(pid);
-                    newCpu.setProduct(p);
-                    newCpu.save();
-                    flash("success", "Processor " + newCpu.getName() + " was added");
-                    return redirect(controllers.routes.HomeController.index());
+                newCpu.save();
+                flash("success", "Processor " + newCpu.getName() + " was added");
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC home page"));
+                newCpu.update();
+                flash("success", "Processor " + newCpu.getName() + " was updated");
+            }
+            return redirect(controllers.routes.HomeController.index());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateProcessor(Long pid){
+        List<Processor> all = Processor.findAll();
+        Form<Processor> form;
+        Processor tp = null;
+        for(Processor e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
             }
         }
+        if(tp != null){
+            form = formFactory.form(Processor.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addProcessor.render(form, pid, User.getUserById(session().get("email")), "Update processor info"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -415,27 +505,46 @@ public class ProductController extends Controller{
         Form<GraphicsCard> gpuForm = formFactory.form(GraphicsCard.class).bindFromRequest();
         if(gpuForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+            return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC"));
         } else {
             GraphicsCard gpu = gpuForm.get();
+            gpu.setProduct(Product.getProductById(pid));
             if(gpu.getProduct().getProductID() == null){
-                    Product p = Product.getProductById(pid);
-                    gpu.setProduct(p);
-                    gpu.save();
-                    flash("success", "GPU " + gpu.getName() + " was added");
-                    return redirect(controllers.routes.HomeController.index());
+                gpu.save();
+                flash("success", "GPU " + gpu.getName() + " was added");
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC home page"));
+                gpu.update();
+                flash("success", "GPU " + gpu.getName() + " was updated");
+            }
+            return redirect(controllers.routes.HomeController.index());
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateGraphicsCard(Long pid){
+        List<GraphicsCard> all = GraphicsCard.findAll();
+        Form<GraphicsCard> form;
+        GraphicsCard tp = null;
+        for(GraphicsCard e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
             }
         }
+        if(tp != null){
+            form = formFactory.form(GraphicsCard.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addGraphicsCard.render(form, pid, User.getUserById(session().get("email")), "Update GPU info"));
+
     }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addMotherboard(Long pid){
         Form<Motherboard> mbForm = formFactory.form(Motherboard.class);
-        return ok(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+        return ok(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -444,21 +553,40 @@ public class ProductController extends Controller{
         Form<Motherboard> mbForm = formFactory.form(Motherboard.class).bindFromRequest();
         if(mbForm.hasErrors()){
             flash("error", "Fill in all fields!");
-            return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+            return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
         } else {
             Motherboard mb = mbForm.get();
+            mb.setProduct(Product.getProductById(pid));
             if(mb.getProduct().getProductID() == null){
-                Product p = Product.getProductById(pid);
-                mb.setProduct(p);
                 mb.save();
                 flash("success", "Motherboard " + mb.getName() + " was added");
-                return redirect(controllers.routes.HomeController.index());
             } else {
-                flash("error", "An error occured while processing the form, try again.");
-                return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC home page"));
+                mb.update();
+                flash("success", "Motherboard " + mb.getName() + " was updated");
             }
+            return redirect(controllers.routes.HomeController.index());
         }
     }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result updateMotherboard(Long pid){
+        List<Motherboard> all = Motherboard.findAll();
+        Form<Motherboard> form;
+        Motherboard tp = null;
+        for(Motherboard e: all){
+            if(e.getProduct().getProductID() == pid){
+                tp = e;
+            }
+        }
+        if(tp != null){
+            form = formFactory.form(Motherboard.class).fill(tp);
+        } else {
+            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+        }
+        return ok(addMotherboard.render(form, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
+    }
+
 
     public static List<ProductSkeleton> getSpecs(Long cat, String keyword){
         keyword = keyword.toLowerCase();
@@ -472,7 +600,8 @@ public class ProductController extends Controller{
         for(Product p: itemList) {
             if(p.getProductName().toLowerCase().contains(keyword) ||
             p.getProductDescription().toLowerCase().contains(keyword)){
-                switch(p.getCategory().getName().toLowerCase()){
+                String lcName = p.getCategory().getName().toLowerCase();
+                switch(lcName){
                     case "gaming pcs":
                     case "gaming laptops":
                     case "home pcs":
@@ -490,30 +619,30 @@ public class ProductController extends Controller{
                                 specs.add(temp);
                         }
                         break;
-                        case "graphics cards":
-                            for(GraphicsCard temp: GraphicsCard.findAll()){
-                                if(temp.getProduct().getProductID() == p.getProductID())
-                                specs.add(temp);
-                            }
-                            break;
-                        case "motherboards":
-                            for(Motherboard temp: Motherboard.findAll()){
-                                if(temp.getProduct().getProductID() == p.getProductID())
-                                specs.add(temp);
-                            }
-                            break;
-                        case "ram":
-                            for(Ram temp: Ram.findAll()){
-                                if(temp.getProduct().getProductID() == p.getProductID())
-                                specs.add(temp);
-                            }
-                            break;
-                        case "storage":
-                            for(Storage temp: Storage.findAll()){
-                                if(temp.getProduct().getProductID() == p.getProductID())
-                                specs.add(temp);
-                            }
-                            break;
+                    case "graphics cards":
+                        for(GraphicsCard temp: GraphicsCard.findAll()){
+                            if(temp.getProduct().getProductID() == p.getProductID())
+                            specs.add(temp);
+                        }
+                        break;
+                    case "motherboards":
+                        for(Motherboard temp: Motherboard.findAll()){
+                            if(temp.getProduct().getProductID() == p.getProductID())
+                            specs.add(temp);
+                        }
+                        break;
+                    case "ram":
+                        for(Ram temp: Ram.findAll()){
+                            if(temp.getProduct().getProductID() == p.getProductID())
+                            specs.add(temp);
+                        }
+                        break;
+                    case "storage":
+                        for(Storage temp: Storage.findAll()){
+                            if(temp.getProduct().getProductID() == p.getProductID())
+                            specs.add(temp);
+                        }
+                        break;
                     }
                 }
             }

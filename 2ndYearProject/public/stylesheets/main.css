@@ -300,6 +300,15 @@ footer {
   line-height: 2.5em;
 }
 
+.product-list-ptitle a{
+  color: inherit;
+}
+
+.product-list-ptitle :hover{
+  text-decoration: none;
+  color: rgb(117, 8, 8);
+}
+
 .low-stock-col{
   width: 6%;
 }

@@ -210,61 +210,13 @@ public class Product extends Model {
         Map<String,String> options = new LinkedHashMap<>();
         List<ProductSkeleton> plist = ProductController.getSpecs(Long.valueOf(0), "");
         for(ProductSkeleton pl: plist){
-            // if(pl.getProduct().getCategory().getName().toLowerCase().contains(s)){
-            //     switch(pl.getProduct().getCategory().getId().intValue()){
-            //         case 1:
-            //         case 2:
-            //         case 3:
-            //         case 4:
-            //         case 5:
-            //         case 6:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //         case 7:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //         case 8:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //         case 9:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //         case 11:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //         case 10:
-            //             options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-            //             break;
-            //     }
             String cat = pl.getProduct().getCategory().getName().toLowerCase();
-            if(s.equals("pc")){
-                String work = "workstation";
-                String lap = "laptop";
-                if(cat.contains(s) || cat.contains(work) || cat.contains(lap)){
-                    options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
-                }
-            } else {
+            
                 if(cat.contains(s)){
                     options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
                 }
-            }
-            }
-    // }
-        // for (Product p: Product.findAll()) {
-        //     String cat = p.getCategory().getName().toLowerCase();
-        //     if(s.equals("pc")){
-        //         String work = "workstation";
-        //         String lap = "laptop";
-        //         if(cat.contains(s) || cat.contains(work) || cat.contains(lap)){
-        //             options.put(p.getProductID().toString(), p.getProductName());
-        //         }
-        //     } else {
-        //         if(cat.contains(s)){
-        //             options.put(p.getProductID().toString(), p.getProductName());
-        //         }
-        //     }
-        // }
-        
+            
+        }
         return options;
     }
 }
