@@ -479,7 +479,10 @@ public class ProductController extends Controller{
                     case "home laptops":
                     case "top spec pcs":
                     case "workstations":
-                        // specs.add(TrendingPC.getTrendingPCById(p.getProductID()));
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getProduct().getProductID() == p.getProductID())
+                                specs.add(temp);
+                        }
                         break;
                     case "cpus":
                         for(Processor temp: Processor.findAll()){
