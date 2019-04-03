@@ -17,8 +17,87 @@
         </div>
         }
 
-    <div class="product-container">
-        <div class="product-title-div">@product.getProductName</div> <!-- row 1 -->
+
+            
+
+        <main class="container">
+            <div class="left-column">
+                    @if(env.resource("public/images/productImages/" + product.getProductID + ".jpg").isDefined){
+                <img data-image="red" class="active" src="/assets/images/productImages/@(product.getProductID + ".jpg")" alt="">
+                    } else {
+                        <img src="/assets/images/productImages/noImage.jpg" />
+                        }
+            </div>
+                <!-- Right Column -->
+  <div class="right-column">
+ 
+    <!-- Product Description -->
+    <div class="product-description">
+      <span>@product.getCategory.getName</span>
+      <h1>@product.getProductName</h1>
+      <p>@product.getProductDescription</p>
+    </div>
+    <div class="product-price">
+        <span>&euro; @("%.2f".format(product.getProductPrice))</span>
+        @if((user != null) && (user.getRole().equals("admin"))){
+        <a href="@routes.ProductController.updateItem(product.getProductID)" class="cart-btn">Update</a>
+    } else {
+        @if(product.getProductQty() > 0){
+            <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
+        }else{
+            <div class="buttons">
+                <button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF ORDER</button>
+              </div>  
+        }
+      </div>
+    </div>
+  </main>
+          
+
+
+
+
+
+<style>
+.buttons {
+  padding: 2em;
+}
+
+button[type="button"]:disabled {
+  border: 2px dashed red;
+  background-color: black;
+  color: #ffff;
+}
+</style>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="product-container">
+        <div class="product-title-div">@product.getProductName</div> 
 
         <div class="product-image-div">
             @if(env.resource("public/images/productImages/" + product.getProductID + ".jpg").isDefined){
@@ -26,9 +105,9 @@
             } else {
             <td><img src="/assets/images/productImages/noImage.jpg" /></td>
             }
-        </div> <!-- row 2 and 3 -->
+        </div>  row 2 and 3
 
-        <div class="product-description-div">@product.getProductDescription</div> <!-- row 2 -->
+        <div class="product-description-div">@product.getProductDescription</div> <!-- row 2
         <div class="add-to-cart">
                 @if((user != null) && (user.getRole().equals("admin"))){
                     <td><a href="@routes.ProductController.updateItem(product.getProductID)" 
@@ -44,13 +123,13 @@
                             <td><img src="/assets/images/nostock.jpg"/></td>
                         }
                 }
-        </div> <!-- row 3 -->
+        </div>  row 3 
         <div class="qty-and-price">
 
                 <p>&euro; @("%.2f".format(product.getProductPrice))</p>
             
 
-        </div> <!-- row 3 -->
+        </div>  row 3 
 
         
 
@@ -58,9 +137,9 @@
     <div class="solo-product-back-btn">
         <p class="text-right">
             <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary">
-            Back</a> <!-- css is in main.css/individual product/solo-product-back-btn -->
-        </p>
-    </div>
+            Back</a>  css is in main.css/individual product/solo-product-back-btn -->
+        <!-- </p>
+    </div> --> 
 
     <div class="reviews">
     <div class="add-review-form">
@@ -119,40 +198,89 @@
     </div>
 }
 <style>
-.buy-now-btn {
-    background-color: #ea2e49;
-    width: 100%;
+html, body {
   height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+}
+ 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+}
+.left-column {
+  width: 65%;
+  position: relative;
+}
+ 
+.right-column {
+  width: 35%;
+  margin-top: 60px;
+}
 
-    border-radius: 30px;
-    border: none;
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 100;
-    color: #fff;
-    text-align: left;
-   
-    position: relative;
-    cursor: pointer;
-    transition: all .2s;
-  }
-   
-  .buy-now-btn:hover {
-    box-shadow: 0px 0px 60px -17px rgba(51,51,51,1);
-  }
-   
-  .buy-now-btn:after {
-    content: 'Buy Now';
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    position: absolute;
-    right: 35px;
-    top: 18px;
-  }
-   
-  .buy-now-btn:focus,
-  .navigation .login-btn:focus {
-    outline: none;
-  }
+.left-column img {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+ 
+.left-column img.active {
+  opacity: 1;
+}
+.product-description {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 12px;
+  color: #358ED7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484D;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 16px;
+  font-weight: 300;
+  color: #86939E;
+  line-height: 24px;
+}
+.product-price {
+  display: flex;
+  align-items: center;
+}
+ 
+.product-price span {
+  font-size: 26px;
+  font-weight: 300;
+  color: #43474D;
+  margin-right: 20px;
+}
+ 
+.cart-btn {
+  display: inline-block;
+  background-color: #7DC855;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 12px 30px;
+  transition: all .5s;
+}
+.cart-btn:hover {
+  background-color: #64af3d;
+}
 </style>
+}

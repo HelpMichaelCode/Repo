@@ -73,28 +73,36 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <p class="text-right">
-                    <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-lg">
-                        Continue shopping</a>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <p class="text-right">
-                    <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-lg"
-                        onclick="return confirmDel();">
-                        <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <p class="text-right">
-                    <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-lg">
-                        <span class="glyphicon glyphicon-euro"></span> Place Order</a>
-                </p>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-3">
+        <p class="text-right">
+            <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-lg">
+                Continue shopping</a>
+        </p>
     </div>
+    <div class="col-md-4">
+        <p class="text-right">
+            <a href="@routes.ShoppingController.emptyCart()" class="btn btn-danger btn-lg"
+                onclick="return confirmDel();">
+                <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <p class="text-right">
+            <form action="/place-order" method="GET">
+                <script
+                  src="https://checkout.stripe.com/checkout.js"
+                  class="stripe-button"
+                  data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                  data-name="BLDPC"
+                  data-description="Payment"
+                  data-amount="">
+                </script>
+              </form>
+        </p>
+    </div>
+    </div>
+</div>
     }
     @if(user.getShoppingCart.getCartItems.isEmpty){
         <div class="col-md-3">
