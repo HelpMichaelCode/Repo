@@ -108,15 +108,32 @@ models.users.User, env: play.api.Environment)
                     <li><strong>RAM: </strong>9 - 11</li>
                     <li><strong>Motherboard: </strong>2 - 3 feet</li>
                     <li><strong>Storage: </strong>Mid‑Summer - Mid‑Fall</li>
+                    
+                    @if((user != null) && (user.getRole().equals("admin"))) {
+                       <input type="button" value="Delete" class="btn btn-primary btn-lg"
+                            onclick="window.location.href = '@routes.ProductController.deleteItem(p.getProduct.getProductID)';event.preventDefault();">
+                       
+                  
+                        <input type="button" value="Update" class="btn btn-primary btn-lg"
+                        onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
+                               
+                            
+
+                      
+                        }
+                  
+                    
+                
                     <!-- <li><strong>Features: </strong>Tolerates heat</li> -->
                 </ul>
             </div>
         </a>
         </div>
         <!--  End product image  -->
-        
+    
         
         </div>
     }
-
     }
+
+    
