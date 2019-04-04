@@ -368,6 +368,7 @@ public class ProductController extends Controller{
                 Ram r = newForm.get();
                 r.setProduct(Product.getProductById(pid));
             if(r.getProduct().getProductID() == null){
+                r.setProductId(pid);
                 r.save();
                 flash("success", r.getName() + " was added");
             } else {
@@ -416,6 +417,7 @@ public class ProductController extends Controller{
                 Storage s = newForm.get();
                 s.setProduct(Product.getProductById(pid));
             if(s.getProduct().getProductID() == null){
+                s.setProductId(pid);
                 s.save();
                 flash("success", s.getName() + " was added");
             } else {
@@ -464,6 +466,7 @@ public class ProductController extends Controller{
             Processor newCpu = newProcessorForm.get();
             newCpu.setProduct(Product.getProductById(pid));
             if(newCpu.getProduct().getProductID() == null){
+                newCpu.setProductId(pid);
                 newCpu.save();
                 flash("success", "Processor " + newCpu.getName() + " was added");
             } else {
@@ -511,6 +514,7 @@ public class ProductController extends Controller{
             GraphicsCard gpu = gpuForm.get();
             gpu.setProduct(Product.getProductById(pid));
             if(gpu.getProduct().getProductID() == null){
+                gpu.setProductId(pid);
                 gpu.save();
                 flash("success", "GPU " + gpu.getName() + " was added");
             } else {
@@ -559,6 +563,7 @@ public class ProductController extends Controller{
             Motherboard mb = mbForm.get();
             mb.setProduct(Product.getProductById(pid));
             if(mb.getProduct().getProductID() == null){
+                mb.setProductId(pid);
                 mb.save();
                 flash("success", "Motherboard " + mb.getName() + " was added");
             } else {
