@@ -23,8 +23,8 @@ insert into category (id,name) values ( 11,'Storage' );
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 
-values (100, 'HP Pavilion 590-a0017na AMD A9 Desktop PC - 1 TB HDD, Black',
-'The HP Pavilion 590 AMD A9 Desktop PC is part of our Everyday range of simple 
+values (100, 'HP Pavilion 590-a0017na AMD Ryzen 5 Desktop PC - 1 TB HDD, Black',
+'The HP Pavilion 590 AMD Ryzen 5 2600X Desktop PC is part of our everyday range of simple 
 and reliable PCs. It''s great for studying, working on essays, streaming TV on 
 demand, and browsing the web.',
 479.99, 11, 0, 0, 0, 0, 1);
@@ -47,9 +47,8 @@ as well as the classic games that helped you hone your skills.',
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 
-values (103, 'ThinkStation P720 Tower Dual Intel® Xeon® NVIDIA® Quadro® GP100',
-'This dual-processor 
-workstation is a tough performer. Ideal for professionals with heavy data-processing 
+values (103, 'ThinkStation P720 Tower Intel® Xeon® NVIDIA® Quadro® GP100',
+'This workstation is a tough performer. Ideal for professionals with heavy data-processing 
 needs, the P720 offers fast processing, massive storage options, and parallel-processing 
 capability.',
 2019.99, 5, 0, 0, 0, 0, 4);
@@ -177,6 +176,13 @@ enthusiasts the complete freedom to be as creative as they can be building the b
 PC that leverages the power and efficiency of 8th and 9th generation Intel processors.', 
 259.99, 5, 0, 0, 0, 0, 8);
 
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, summed_rating, count_rating, category_id) 
+values (121, 'GeForce GTX 760 2 GB Graphics card',
+'The GTX 760 graphics card is suitable for the casual student. It can keep up with HD streaming 
+and casual games with lighter graphics that do not require much processing power.', 
+259.99, 5, 0, 0, 0, 0, 10);
+
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
 values (1, 'Intel', 'i7-9700K', 6, '3.2 GHz', '12 MB', 106);
 
@@ -193,16 +199,19 @@ insert into processor (product_id, manufacturer, name, cores, clock, cache, prod
 values (5, 'Intel', 'Celeron N3450', 4, '1.1 GHz', '2 MB', 115);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (6, 'Seagate', 'BarraCuda 3.5"', '1 TB', 116);
+values (6, 'Seagate', 'BarraCuda 3.5" 1TB', '1 TB', 116);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (7, 'Seagate', 'BarraCuda 3.5"', '2 TB', 117);
+values (7, 'Seagate', 'BarraCuda 3.5" 2TB', '2 TB', 117);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (10, 'Western Design', 'Mainstream 3.5"', '3 TB', 110);
+values (10, 'Western Design', 'Mainstream 3.5" 3TB', '3 TB', 110);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
 values (8, 'NVIDIA', 'GeForce GTX 1050 Ti', 'PCIe 3.0 x16', '4 GB', '1291 MHz', '1752 MHz', 118);
+
+insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
+values (15, 'NVIDIA', 'GeForce GTX 760', 'PCIe 3.0 x16', '2 GB', '980 MHz', '1502 MHz', 121);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
 values (11, 'NVIDIA', 'Quadro GP100', 'PCIe 3.0 x16', '16 GB', '3584 MHz', '717 MHz', 119);
@@ -214,10 +223,34 @@ insert into ram (product_id, manufacturer, name, capacity, product_product_id)
 values (12, 'Corsair', 'DDR3 PC RAM', '8 GB', 108);
 
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
-values (13, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107);
+values (13, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107); --intel
 
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
-values (14, 'Asus', 'ROG Z390 MAXIMUS XI 1151 ATX', '4', '64 GB', 120);
+values (14, 'Asus', 'ROG Z390 MAXIMUS XI 1151 ATX', '4', '64 GB', 120); --amd
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(100, 'HP', 'Pavilion 590-a0017na', 100, 2, 8, 14, 1, 12, 6);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(101, 'PCSpecialist', 'Vortex Fusion Extreme II', 101, 1, 9, 13, 2, 12, 7);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(102, 'ACER', 'Orion 3000', 102, 3, 8, 13, 2, 12, 6);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(103, 'ThinkStation', 'P720 Tower', 103, 4, 11, 13, 3, 12, 10);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(104, 'HP', 'Stream 11-ak0500sa', 104, 5, 15, 13, 1, 12, 6);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(105, 'MSI', 'GF62 8RC 15.6"', 105, 3, 8, 13, 1, 12, 6);
 
 insert into review (id, body, rating, user_email, product_product_id) 
 values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 106);

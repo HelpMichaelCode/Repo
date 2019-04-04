@@ -318,6 +318,7 @@ public class ProductController extends Controller{
                     }
                     
                 }
+                pc.setProductId(pid);
                 pc.save();
                 flash("success", "PC " + pc.getName() + " was added");
                 return redirect(controllers.routes.HomeController.index());
@@ -609,7 +610,7 @@ public class ProductController extends Controller{
                     case "top spec pcs":
                     case "workstations":
                         for(TrendingPC temp: TrendingPC.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                                 specs.add(temp);
                         }
                         break;
