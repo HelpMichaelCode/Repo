@@ -25,12 +25,12 @@ public class HomeController extends Controller {
     }
 
     public Result index() {
-        List<Product> products = Product.findAll(); //to generate the product list dynamically
+        // List<Product> products = Product.findAll(); //to generate the product list dynamically
         if(Product.getLowQty().size() > 0){
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
-        return ok(index.render(products, User.getUserById(session().get("email")), env));
+        return ok(index.render(User.getUserById(session().get("email")), env));
     }
 
     // public Result userList(){

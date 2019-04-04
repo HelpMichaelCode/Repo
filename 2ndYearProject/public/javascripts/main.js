@@ -14,9 +14,9 @@ $('#search').keypress(function(event){
 });
 
 // redirects to individual product page
-$('tr[data-href]').on("click", function() {
-  document.location = $(this).data('href');
-});
+// $('tr[data-href]').on("click", function() {
+//   document.location = $(this).data('href');
+// });
 
 // $(document).ready(function(){
 //   $('table tr').click(function(){ //
@@ -26,21 +26,21 @@ $('tr[data-href]').on("click", function() {
 // });
 
 
-var myIndex = 0;
-carousel();
+// var myIndex = 0;
+// carousel();
 
-function carousel() {
+// function carousel() {
   
-  var i;
-  var x = document.getElementsById("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}    
-  x[myIndex-1].style.display = "block";  
-  setTimeout(carousel, 4000); // Change image every 2 seconds
-}
+//   var i;
+//   var x = document.getElementsById("mySlides");
+//   for (i = 0; i < x.length; i++) {
+//     x[i].style.display = "none";  
+//   }
+//   myIndex++;
+//   if (myIndex > x.length) {myIndex = 1}    
+//   x[myIndex-1].style.display = "block";  
+//   setTimeout(carousel, 4000); // Change image every 2 seconds
+// }
 
 function showCart() {
   window.location.href = "http://localhost:9000/show-cart";

@@ -176,8 +176,40 @@ public class ProductController extends Controller{
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
-
-        Product.find.ref(productID).delete();
+        List<ProductSkeleton> all = getSpecs(Product.getProductById(productID).getCategory().getId(), "");
+        for(ProductSkeleton e: all){
+            switch(e.getProduct().getCategory().getName().toLowerCase()){
+                case "gaming pcs":
+                case "gaming laptops":
+                case "home pcs":
+                case "home laptops":
+                case "top spec pcs":
+                case "workstations":
+                    if(e.getProductId().toString().equals(productID.toString()))
+                        TrendingPC.find.ref(productID).delete();
+                    break;
+                case "cpus":
+                    if(e.getProductId().toString().equals(productID.toString()))
+                        Processor.find.ref(productID).delete();
+                    break;
+                case "graphics cards":
+                    if(e.getProductId().toString().equals(productID.toString()))
+                        GraphicsCard.find.ref(productID).delete();
+                    break;
+                case "motherboards":
+                   if(e.getProductId().toString().equals(productID.toString()))
+                        Motherboard.find.ref(productID).delete();
+                    break;
+                case "ram":
+                    if(e.getProductId().toString().equals(productID.toString()))
+                        Ram.find.ref(productID).delete();
+                    break;
+                case "storage":
+                    if(e.getProductId().toString().equals(productID.toString()))
+                        Storage.find.ref(productID).delete();
+                    break;
+            }
+        }
         flash("success", "Product has been deleted");
         return redirect(controllers.routes.ProductController.productList(0, ""));
     }

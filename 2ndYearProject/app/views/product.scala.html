@@ -70,76 +70,6 @@ button[type="button"]:disabled {
 }
 </style>
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="product-container">
-        <div class="product-title-div">@product.getProductName</div> 
-
-        <div class="product-image-div">
-            @if(env.resource("public/images/productImages/" + product.getProductID + ".jpg").isDefined){
-            <td><img src="/assets/images/productImages/@(product.getProductID + ".jpg")" class="product-image-solo" /></td>
-            } else {
-            <td><img src="/assets/images/productImages/noImage.jpg" /></td>
-            }
-        </div>  row 2 and 3
-
-        <div class="product-description-div">@product.getProductDescription</div> <!-- row 2
-        <div class="add-to-cart">
-                @if((user != null) && (user.getRole().equals("admin"))){
-                    <td><a href="@routes.ProductController.updateItem(product.getProductID)" 
-                        class="btn btn-default btn-lg"><span 
-                        class="glyphicon glyphicon-pencil"></span></a></td>
-                } else {
-                        @if(product.getProductQty() > 0){
-                            
-                        <a href="@routes.ShoppingController.addToCart(product.getProductID)"
-                            class="btn btn-default btn-lg"><span 
-                            class="glyphicon glyphicon-shopping-cart"></span></a> 
-                        }else{
-                            <td><img src="/assets/images/nostock.jpg"/></td>
-                        }
-                }
-        </div>  row 3 
-        <div class="qty-and-price">
-
-                <p>&euro; @("%.2f".format(product.getProductPrice))</p>
-            
-
-        </div>  row 3 
-
-        
-
-    </div>
-    <div class="solo-product-back-btn">
-        <p class="text-right">
-            <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary">
-            Back</a>  css is in main.css/individual product/solo-product-back-btn -->
-        <!-- </p>
-    </div> --> 
 
     <div class="reviews">
     <div class="add-review-form">
@@ -170,28 +100,32 @@ button[type="button"]:disabled {
         }
     </div>
     <div class="product-reviews">
-            <h2>Customer reviews</h2>
+            
             <div class="hide">
         @for(r<-reviews) {
             @if(r.getProduct.getProductName == product.getProductName){
                 @filtered.add(r)
             }
         }</div>
-        @for(f <- filtered){
-            @if(filtered.isEmpty){
-                <p>This product does not have any reviews</p>
-            } else {
-                <div class="col-sm-10">
-                        @if((user != null) && (user.getRole().equals("admin"))) {
-                            <div class="review-username"><a href="@routes.ProductController.userReviews(f.getUser.getEmail)">
-                            <h3>@f.getUser.getUsername</h3></a></div>
-                        } else {
+        @if(filtered.isEmpty){
+          <h3>This product does not have any reviews</h3>
+        } else {
+          <h2>Customer reviews</h2>
+          @for(f <- filtered){
+              <div class="col-sm-10">
+                      @if((user != null) && (user.getRole().equals("admin"))) {
+                          <div class="review-username">
+                            <a href="@routes.ProductController.userReviews(f.getUser.getEmail)">
+                              <h3>@f.getUser.getUsername</h3>
+                            </a>
+                          </div>
+                      } else {
                             <div class="review-username"><h3>@f.getUser.getUsername</h3></div>
-                        }
-                        <div class="review-rating">Rated: @f.getRating</div>
-                        <div class="review-body"><p>@f.getBody</p></div>
+                      }
+                      <div class="review-rating">Rated: @f.getRating</div>
+                      <div class="review-body"><p>@f.getBody</p></div>
                 </div>
-            }
+          }
         }
     </div>
             

@@ -4,7 +4,7 @@
 body {
     /* background: #DFC2F2; */
     /* background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%); */
-    background-color: #FFF;
+    background-color: rgb(207, 207, 207);
 	background-attachment: fixed;	
 	background-size: cover;
 	}
@@ -173,7 +173,7 @@ body {
     /* border: 1px solid red; */
 }
 
-.info h2 {text-align: center}
+.info h3 {text-align: center}
 .product-image:hover .info{transform: translateX(0);}
 
 .info ul li{transition: 0.3s ease;}

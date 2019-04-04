@@ -226,11 +226,10 @@
               <ul class="left-menu">
                       <li><a href="@routes.HomeController.index">Home</a></li>
                       <li><a href="@routes.ProductController.productList(0,"")">Product</a></li>
-                      @if((user != null) && (user.getRole().equals("customer"))) {
+                    @if((user != null) && (user.getRole().equals("customer"))) {
                       <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
-                      }
                       <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
-                 
+                    }
                   </ul>
                   <div class="logo">
                       <a href="@routes.HomeController.index()">BLDPC</a>

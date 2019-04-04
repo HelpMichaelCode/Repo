@@ -159,7 +159,7 @@ body select{
   height: 100%;
 }
 .product-container div{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   text-align: center;
 }
 
@@ -241,7 +241,7 @@ tr[data-href]{
 }
 
 .product-reviews{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 60%;
   float: right;
   text-align: left;

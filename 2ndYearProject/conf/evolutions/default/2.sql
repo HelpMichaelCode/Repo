@@ -95,7 +95,7 @@ efficiency.',
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id)  
-values (109, 'MSI GeForce RTX 2080 Ti 11 GB GAMING X TRIO Turing Graphics Card',
+values (109, 'MSI GeForce RTX 2070 Ti 11 GB GAMING X TRIO Turing Graphics Card',
 'Powered by the Turing architecture, RTX GPUs are up to 6 times as fast as previous 
 graphics cards, so you''ll have the power to run any game, get incredible frame rates 
 and render amazing imagery in next to no time.', 
@@ -184,49 +184,49 @@ and casual games with lighter graphics that do not require much processing power
 259.99, 5, 0, 0, 0, 0, 10);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
-values (1, 'Intel', 'i7-9700K', 6, '3.2 GHz', '12 MB', 106);
+values (106, 'Intel', 'i7-9700K', 6, '3.2 GHz', '12 MB', 106);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
-values (2, 'AMD', 'Ryzen 5 2600X', 6, '3.6 GHz', '16 MB', 112);
+values (112, 'AMD', 'Ryzen 5 2600X', 6, '3.6 GHz', '16 MB', 112);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
-values (3, 'Intel', 'i5-8400', 6, '2.8 GHz', '9 MB', 113);
+values (113, 'Intel', 'i5-8400', 6, '2.8 GHz', '9 MB', 113);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
-values (4, 'Intel', 'Xeon 5122', 4, '3.6 GHz', '16 MB', 114);
+values (114, 'Intel', 'Xeon 5122', 4, '3.6 GHz', '16 MB', 114);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
-values (5, 'Intel', 'Celeron N3450', 4, '1.1 GHz', '2 MB', 115);
+values (115, 'Intel', 'Celeron N3450', 4, '1.1 GHz', '2 MB', 115);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (6, 'Seagate', 'BarraCuda 3.5" 1TB', '1 TB', 116);
+values (116, 'Seagate', 'BarraCuda 3.5" 1TB', '1 TB', 116);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (7, 'Seagate', 'BarraCuda 3.5" 2TB', '2 TB', 117);
+values (117, 'Seagate', 'BarraCuda 3.5" 2TB', '2 TB', 117);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
-values (10, 'Western Design', 'Mainstream 3.5" 3TB', '3 TB', 110);
+values (110, 'Western Design', 'Mainstream 3.5" 3TB', '3 TB', 110);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
-values (8, 'NVIDIA', 'GeForce GTX 1050 Ti', 'PCIe 3.0 x16', '4 GB', '1291 MHz', '1752 MHz', 118);
+values (118, 'NVIDIA', 'GeForce GTX 1050 Ti', 'PCIe 3.0 x16', '4 GB', '1291 MHz', '1752 MHz', 118);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
-values (15, 'NVIDIA', 'GeForce GTX 760', 'PCIe 3.0 x16', '2 GB', '980 MHz', '1502 MHz', 121);
+values (121, 'NVIDIA', 'GeForce GTX 760', 'PCIe 3.0 x16', '2 GB', '980 MHz', '1502 MHz', 121);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
-values (11, 'NVIDIA', 'Quadro GP100', 'PCIe 3.0 x16', '16 GB', '3584 MHz', '717 MHz', 119);
+values (119, 'NVIDIA', 'Quadro GP100', 'PCIe 3.0 x16', '16 GB', '3584 MHz', '717 MHz', 119);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
-values (9, 'NVIDIA', 'RTX 2070', 'PCIe 3.0 x16', '8 GB', '1410 MHz', '1750 MHz', 109);
+values (109, 'NVIDIA', 'RTX 2070', 'PCIe 3.0 x16', '8 GB', '1410 MHz', '1750 MHz', 109);
 
 insert into ram (product_id, manufacturer, name, capacity, product_product_id)
-values (12, 'Corsair', 'DDR3 PC RAM', '8 GB', 108);
+values (108, 'Corsair', 'DDR3 PC RAM', '8 GB', 108);
 
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
-values (13, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107); --intel
+values (107, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107); --intel
 
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
-values (14, 'Asus', 'ROG Z390 MAXIMUS XI 1151 ATX', '4', '64 GB', 120); --amd
+values (120, 'Asus', 'ROG Z390 MAXIMUS XI 1151 ATX', '4', '64 GB', 120); --amd
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
@@ -253,4 +253,4 @@ gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product
 (105, 'MSI', 'GF62 8RC 15.6"', 105, 3, 8, 13, 1, 12, 6);
 
 insert into review (id, body, rating, user_email, product_product_id) 
-values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 106);
+values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 102);

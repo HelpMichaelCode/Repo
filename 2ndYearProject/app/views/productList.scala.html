@@ -27,24 +27,8 @@ models.users.User, env: play.api.Environment)
 </div>
 
 <div class="product-list">
-    <h2>List of all available products @specs.size</h2>
+    <h3>Displaying @specs.size products</h3>
     @for(p<-specs) { 
-    <div class="hide">
-       
-            @if(p.isInstanceOf[models.products.Processor]){
-                @p.asInstanceOf[models.products.Processor] 
-            } else if(p.isInstanceOf[models.products.Ram]){ 
-                @p.asInstanceOf[models.products.Ram] 
-            } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
-                @p.asInstanceOf[models.products.GraphicsCard] 
-            } else if(p.isInstanceOf[models.products.Motherboard]){
-                @p.asInstanceOf[models.products.Motherboard] 
-            } else if(p.isInstanceOf[models.products.Storage]){
-                @p.asInstanceOf[models.products.Storage]
-            } else if(p.isInstanceOf[models.products.TrendingPC]){
-                @p.asInstanceOf[models.products.TrendingPC]
-            }  
-    </div>
     <div id="container">	
 	
         <!-- Start	Product details -->
@@ -68,10 +52,11 @@ models.users.User, env: play.api.Environment)
                 
                 
         <!-- 		Control -->
+        <a href="@routes.ShoppingController.addToCart(p.getProductId)">
         <div class="control">
             
         <!-- Start Button buying -->
-            <button class="btn1">
+            <button class="btn1" onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
         <!-- 		the Price -->
              <span class="price">@p.getProduct.getProductPrice $</span>
         <!-- 		shopping cart icon-->
@@ -79,6 +64,7 @@ models.users.User, env: play.api.Environment)
         <!-- 		Buy Now / ADD to Cart-->
            <span class="buy">Buy Now</span>
          </button>
+        </a>
             <!-- End Button buying -->
             
         </div>
@@ -101,13 +87,41 @@ models.users.User, env: play.api.Environment)
         <!-- 	product Information-->
         <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">
             <div class="info">
-                <h2>The Description</h2>
+                <h3>@p.getName Specs</h3>
                 <ul>
-                    <li><strong>CPU: </strong>@p.getName</li>
-                    <li><strong>GPU: </strong>@p.</li>
-                    <li><strong>RAM: </strong>9 - 11</li>
-                    <li><strong>Motherboard: </strong>2 - 3 feet</li>
-                    <li><strong>Storage: </strong>Mid‑Summer - Mid‑Fall</li>
+                        <li><strong>Manufacturer: </strong>@p.getManufacturer</li>
+
+                        @if(p.isInstanceOf[models.products.Processor]){
+                            <li><strong>Number of cores: </strong>@p.asInstanceOf[models.products.Processor].getCores</li>
+                            <li><strong>Clock frequency: </strong>@p.asInstanceOf[models.products.Processor].getClock</li>
+                            <li><strong>L3 cache: </strong>@p.asInstanceOf[models.products.Processor].getCache</li>
+                            <!-- end of processor -->
+                        } else if(p.isInstanceOf[models.products.Ram]){ 
+                            <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Ram].getCapacity</li>
+                            <!-- end of ram -->
+                        } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
+                            <li><strong>Bus type: </strong>@p.asInstanceOf[models.products.GraphicsCard].getBus</li>
+                            <li><strong>Memory: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemory</li>
+                            <li><strong>GPU clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getGpuClock</li>
+                            <li><strong>Memory clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemoryClock</li>
+                            <!-- end of graphics card -->
+                        } else if(p.isInstanceOf[models.products.Motherboard]){
+                            <li><strong>RAM slots: </strong>@p.asInstanceOf[models.products.Motherboard].getRamSlots</li>
+                            <li><strong>Max RAM: </strong>@p.asInstanceOf[models.products.Motherboard].getMaxRam</li>
+                            <!-- end of motherboard -->
+                        } else if(p.isInstanceOf[models.products.Storage]){
+                            <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Storage].getCapacity</li>
+                            <!-- end of storage -->
+                        } else if(p.isInstanceOf[models.products.TrendingPC]){
+                            
+                            <li><strong>CPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getCpu.getName</li>
+                            <li><strong>GPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getGpu.getName</li>
+                            <li><strong>RAM: </strong>@p.asInstanceOf[models.products.TrendingPC].getRamQty x @p.asInstanceOf[models.products.TrendingPC].getRam.getName</li>
+                            <li><strong>Motherboard: </strong>@p.asInstanceOf[models.products.TrendingPC].getMotherboard.getName</li>
+                            <li><strong>Storage: </strong>@p.asInstanceOf[models.products.TrendingPC].getStorage.getName</li>
+                            <!-- end of pc -->
+                        }
+                   
                     <!-- <li><strong>Features: </strong>Tolerates heat</li> -->
                 </ul>
             </div>

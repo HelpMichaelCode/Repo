@@ -28,9 +28,13 @@ public class LoginController extends Controller{
 
     @Transactional
     public Result login() {
-        // if(session().)
-        Form<Login> loginForm = formFactory.form(Login.class);
-        return ok(login.render(loginForm, User.getUserById(session().get("email"))));
+        if(User.getUserById(session().get("email")) == null){
+            Form<Login> loginForm = formFactory.form(Login.class);
+            return ok(login.render(loginForm, User.getUserById(session().get("email"))));
+        } else {
+            return ok(index.render(User.getUserById(session().get("email")), env));
+        }
+        
        }
 
     public Result loginSubmit() { //I believe the password is in plain text when the form is sent
@@ -53,9 +57,12 @@ public class LoginController extends Controller{
     }
 
     public Result register() {
-        Form<PasswordCheck> userForm = formFactory.form(PasswordCheck.class);
-        
-        return ok(register.render(userForm, User.getUserById(session().get("email")), "Register"));
+        if(User.getUserById(session().get("email")) == null){
+            Form<PasswordCheck> userForm = formFactory.form(PasswordCheck.class);
+            return ok(register.render(userForm, User.getUserById(session().get("email")), "Register"));
+        } else {
+            return ok(index.render(User.getUserById(session().get("email")), env));
+        }
     }
 
     public Result registerSubmit() {
@@ -116,7 +123,7 @@ public class LoginController extends Controller{
             return ok(userList.render(users,  User.getUserById(session().get("email"))));
         } else {
             flash("error", "No users found.");
-            return badRequest(index.render(Product.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(index.render(User.getUserById(session().get("email")), env));
         }
     }
 
