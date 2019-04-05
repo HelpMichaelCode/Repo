@@ -2,7 +2,18 @@
 @import helper._
 
 @main("Register", user) {
-  
+    <style>
+        body{
+          margin: 0;
+        background-image: url(assets/images/registerback.jpg); 
+        background-repeat: no-repeat;
+        background-size: 100%; 
+        color: white;
+        }  
+    </style>
+
+
+
     @if(userForm.hasGlobalErrors) {
         <p class="alert alert-warning  ">
             @for(e <- userForm.globalErrors) { @e.message<br/> 
@@ -54,4 +65,6 @@
             
         </div>
     }
+
+ 
 }
