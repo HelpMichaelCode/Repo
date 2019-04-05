@@ -2,7 +2,7 @@
 @main("Product List", user){
     @if((user != null) && (user.getRole().equals("admin"))) {
         @if(reviews.isEmpty){
-            <p>User hasn't reviewed any products</p>
+            <h1>User hasn't reviewed any products</h1>
         } else {
         <div class="col-sm-10">
             <h2>List of all reviews from 
@@ -29,7 +29,6 @@
                 <div class="table">
                     <tbody>
                         <!-- Review row(s) -->
-
                         @for(r<-reviews) {
                             @if(r.getUser.getEmail == email){
                                 <tr>

@@ -8,14 +8,17 @@
 <!-- Pass page title and user on to main -->
 @main("View order history", user) {
 
-
+    @if(user.getOrders().isEmpty){
+        <h3>You haven't placed any orders</h3>
+        
+    } else {
 	<div class="col-md-12">
         <p><h2>@user.getUsername's orders
         </h2> (you can cancel an order within 10 seconds after placing it)</p>    
     </div>
 		 
 
-		
+
                
                     <!-- Start of For loop - For each p in products add a row -->
                     @for(o <- user.getOrders()) {
@@ -64,5 +67,5 @@
         </div>
 
 
-
+    }
 }

@@ -114,7 +114,8 @@ total_sold,overall_rating, summed_rating, count_rating, category_id)
 values (112, 'AMD Ryzen 5 2600X Processor',
 'Perfect for everything from finishing off an essay to demanding graphic design work, 
 the Ryzen 5 2600X is a great all-round processor for your desktop.', 
-259.99, 6, 0, 0, 0, 0, 7);
+259.99, 6, 0, 0, 0, 0, 7); 
+
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 

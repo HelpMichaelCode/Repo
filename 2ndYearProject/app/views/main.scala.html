@@ -25,7 +25,7 @@
       <div class="sub-header">
               <ul class="left-menu">
                       <li><a href="@routes.HomeController.index">Home</a></li>
-                      <li><a href="@routes.ProductController.productList(0,"")">Product</a></li>
+                      <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
                     @if((user != null) && (user.getRole().equals("customer"))) {
                       <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
                       <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>

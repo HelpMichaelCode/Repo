@@ -49,7 +49,7 @@ body select{
 .header{
   position: relative;
   width: 100%;
-  height: 70px;
+  height: 5em;
   margin: 0 auto;
   
 }
@@ -430,8 +430,7 @@ tr[data-href]{
   display: inline-block;
   width: 95%;
   margin-left: 3%;
-  margin-top: 2em;
-  margin-top: 20%;
+  margin-top: 5em;
 }
 
 .add-review-form{

@@ -30,12 +30,6 @@ public class ShoppingController extends Controller {
         this.env = e;
         this.formFactory = f;
     }
-    // View an individual order
-    @Transactional
-    public Result viewOrder(long id) {
-        ShopOrder order = ShopOrder.find.byId(id);
-        return ok(orderconfirmed.render((User)User.getUserById(session().get("email")), order));
-    }
 
     @With(CheckIfUser.class)
     @Transactional

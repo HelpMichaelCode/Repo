@@ -368,7 +368,12 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result userReviews(String email){
-        List<Review> reviews = Review.findAll();
+        List<Review> reviews = new ArrayList<>();
+        for(Review r: Review.findAll()){
+            if(r.getUser().getEmail().equals(email)){
+                reviews.add(r);
+            }
+        }
         return ok(userReviews.render(reviews, email, User.getUserById(session().get("email"))));
     }
 
