@@ -14,7 +14,7 @@
     </style>
   <!-- Display login errors if there are any-->
   @if(loginForm.hasGlobalErrors) {
-  <p class="alert alert-warning">
+  <p class="alert alert-warning  ">
     @for(e
     <- loginForm.globalErrors) { @e.message<br />
     }
@@ -23,7 +23,7 @@
 
   @* Display error message from flash *@
   @if(flash.containsKey("error")) {
-  <div class="alert alert-success">
+  <div class="alert alert-success  ">
     @flash.get("error")
   </div>
   }

@@ -183,6 +183,10 @@ values (121, 'GeForce GTX 760 2 GB Graphics card',
 and casual games with lighter graphics that do not require much processing power.', 
 259.99, 5, 0, 0, 0, 0, 10);
 
+insert into product (product_ID,product_name,product_description,product_price,product_qty,
+total_sold,overall_rating, summed_rating, count_rating, category_id) 
+values (1, 'Unknown - N/A','Unknown - N/A', 0, 0, 0, 0, 0, 0, 1);
+
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
 values (106, 'Intel', 'i7-9700K', 6, '3.2 GHz', '12 MB', 106);
 
@@ -198,6 +202,9 @@ values (114, 'Intel', 'Xeon 5122', 4, '3.6 GHz', '16 MB', 114);
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
 values (115, 'Intel', 'Celeron N3450', 4, '1.1 GHz', '2 MB', 115);
 
+insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
+values (1, 'Unknown - N/A', 'Unknown - N/A', 0, '', '', 1);
+
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
 values (116, 'Seagate', 'BarraCuda 3.5" 1TB', '1 TB', 116);
 
@@ -206,6 +213,9 @@ values (117, 'Seagate', 'BarraCuda 3.5" 2TB', '2 TB', 117);
 
 insert into storage (product_id, manufacturer, name, capacity, product_product_id)
 values (110, 'Western Design', 'Mainstream 3.5" 3TB', '3 TB', 110);
+
+insert into storage (product_id, manufacturer, name, capacity, product_product_id)
+values (1, 'Unknown - N/A', 'Unknown - N/A', '', 1);
 
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
 values (118, 'NVIDIA', 'GeForce GTX 1050 Ti', 'PCIe 3.0 x16', '4 GB', '1291 MHz', '1752 MHz', 118);
@@ -219,8 +229,14 @@ values (119, 'NVIDIA', 'Quadro GP100', 'PCIe 3.0 x16', '16 GB', '3584 MHz', '717
 insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
 values (109, 'NVIDIA', 'RTX 2070', 'PCIe 3.0 x16', '8 GB', '1410 MHz', '1750 MHz', 109);
 
+insert into graphics_card (product_id, manufacturer, name, bus, memory, gpu_clock, memory_clock, product_product_id)
+values (1, 'Unknown - N/A', 'Unknown - N/A', '', '', '', '', 1);
+
 insert into ram (product_id, manufacturer, name, capacity, product_product_id)
 values (108, 'Corsair', 'DDR3 PC RAM', '8 GB', 108);
+
+insert into ram (product_id, manufacturer, name, capacity, product_product_id)
+values (1, 'Unknown - N/A', 'Unknown - N/A', '', 1);
 
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
 values (107, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107); --intel
@@ -228,29 +244,32 @@ values (107, 'Asus', 'ROG STRIX B450-F AM4', '4', '64 GB', 107); --intel
 insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
 values (120, 'Asus', 'ROG Z390 MAXIMUS XI 1151 ATX', '4', '64 GB', 120); --amd
 
-insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
-gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(100, 'HP', 'Pavilion 590-a0017na', 100, 2, 8, 14, 1, 12, 6);
+insert into motherboard (product_id, manufacturer, name, ram_slots, max_ram, product_product_id)
+values (1, 'Unknown - N/A', 'Unknown - N/A', '', '', 1); --amd
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(101, 'PCSpecialist', 'Vortex Fusion Extreme II', 101, 1, 9, 13, 2, 12, 7);
+(100, 'HP', 'Pavilion 590-a0017na', 100, 112, 121, 120, 1, 108, 116);
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(102, 'ACER', 'Orion 3000', 102, 3, 8, 13, 2, 12, 6);
+(101, 'PCSpecialist', 'Vortex Fusion Extreme II', 101, 106, 109, 107, 2, 108, 117);
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(103, 'ThinkStation', 'P720 Tower', 103, 4, 11, 13, 3, 12, 10);
+(102, 'ACER', 'Orion 3000', 102, 113, 118, 107, 2, 108, 116);
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(104, 'HP', 'Stream 11-ak0500sa', 104, 5, 15, 13, 1, 12, 6);
+(103, 'ThinkStation', 'P720 Tower', 103, 114, 119, 107, 3, 108, 110);
 
 insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
 gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
-(105, 'MSI', 'GF62 8RC 15.6"', 105, 3, 8, 13, 1, 12, 6);
+(104, 'HP', 'Stream 11-ak0500sa', 104, 115, 121, 107, 1, 108, 116);
+
+insert into trending_pc (product_id, manufacturer, name, product_product_id, cpu_product_id, 
+gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product_id) values
+(105, 'MSI', 'GF62 8RC 15.6"', 105, 113, 118, 107, 1, 108, 116);
 
 insert into review (id, body, rating, user_email, product_product_id) 
 values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 102);

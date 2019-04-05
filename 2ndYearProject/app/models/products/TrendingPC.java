@@ -15,22 +15,22 @@ public class TrendingPC extends ProductSkeleton {
     // private Long productId;
     // @Constraints.Required
     // private String shortName;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private Processor cpu;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private GraphicsCard gpu;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private Motherboard motherboard;
 
     @Constraints.Required
     private int ramQty;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private Ram ram;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private Storage storage;
 
     public TrendingPC(){

@@ -176,6 +176,7 @@ public class ProductController extends Controller{
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
+        String deleted = "";
         List<ProductSkeleton> all = getSpecs(Product.getProductById(productID).getCategory().getId(), "");
         for(ProductSkeleton e: all){
             switch(e.getProduct().getCategory().getName().toLowerCase()){
@@ -185,32 +186,79 @@ public class ProductController extends Controller{
                 case "home laptops":
                 case "top spec pcs":
                 case "workstations":
-                    if(e.getProductId().toString().equals(productID.toString()))
+                    if(e.getProductId().toString().equals(productID.toString())){
+                        deleted = TrendingPC.getTrendingPCById(productID).getName();
                         TrendingPC.find.ref(productID).delete();
+                    }
                     break;
                 case "cpus":
-                    if(e.getProductId().toString().equals(productID.toString()))
-                        Processor.find.ref(productID).delete();
+                    if(e.getProductId().toString().equals(productID.toString())){
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getCpu().getProductId().toString().equals(productID.toString())){
+                                temp.setCpu(Processor.getProcessorById(Long.valueOf(1)));
+                                temp.update();
+                                
+                            }
+                        }
+                    deleted = Processor.getProcessorById(productID).getName();
+                    Processor.find.ref(productID).delete();
+                    }
                     break;
                 case "graphics cards":
-                    if(e.getProductId().toString().equals(productID.toString()))
-                        GraphicsCard.find.ref(productID).delete();
+                    if(e.getProductId().toString().equals(productID.toString())){
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getGpu().getProductId().toString().equals(productID.toString())){
+                                temp.setGpu(GraphicsCard.getGraphicsCardById(Long.valueOf(1)));
+                                temp.update();
+                                
+                            }
+                        }
+                    deleted = GraphicsCard.getGraphicsCardById(productID).getName();
+                    GraphicsCard.find.ref(productID).delete();
+                    }
                     break;
                 case "motherboards":
-                   if(e.getProductId().toString().equals(productID.toString()))
-                        Motherboard.find.ref(productID).delete();
+                   if(e.getProductId().toString().equals(productID.toString())){
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getMotherboard().getProductId().toString().equals(productID.toString())){
+                                temp.setMotherboard(Motherboard.getMotherboardById(Long.valueOf(1)));
+                                temp.update();
+                                
+                            }
+                        }
+                    deleted = Motherboard.getMotherboardById(productID).getName();
+                    Motherboard.find.ref(productID).delete();
+                    }
                     break;
                 case "ram":
-                    if(e.getProductId().toString().equals(productID.toString()))
-                        Ram.find.ref(productID).delete();
+                    if(e.getProductId().toString().equals(productID.toString())){
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getRam().getProductId().toString().equals(productID.toString())){
+                                temp.setRam(Ram.getRamById(Long.valueOf(1)));
+                                temp.update();
+                                
+                            }
+                        }
+                    deleted = Ram.getRamById(productID).getName();
+                    Ram.find.ref(productID).delete();
+                    }
                     break;
                 case "storage":
-                    if(e.getProductId().toString().equals(productID.toString()))
-                        Storage.find.ref(productID).delete();
+                    if(e.getProductId().toString().equals(productID.toString())){
+                        for(TrendingPC temp: TrendingPC.findAll()){
+                            if(temp.getStorage().getProductId().toString().equals(productID.toString())){
+                                temp.setStorage(Storage.getStorageById(Long.valueOf(1)));
+                                temp.update();
+                                
+                            }
+                        }
+                    deleted = Storage.getStorageById(productID).getName();
+                    Storage.find.ref(productID).delete();
+                    }
                     break;
             }
         }
-        flash("success", "Product has been deleted");
+        flash("success", deleted + " has been deleted");
         return redirect(controllers.routes.ProductController.productList(0, ""));
     }
 
