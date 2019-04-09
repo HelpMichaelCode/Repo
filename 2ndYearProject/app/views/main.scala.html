@@ -26,10 +26,7 @@
               <ul class="left-menu">
                       <li><a href="@routes.HomeController.index">Home</a></li>
                       <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
-                    @if((user != null) && (user.getRole().equals("customer"))) {
-                      <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
-                      <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
-                    }
+                    
                   </ul>
                   <div class="logo">
                       <a href="@routes.HomeController.index()">BLDPC</a>
@@ -37,6 +34,10 @@
                   <ul class="right-menu">
                       @if((user != null) && (user.getRole().equals("admin"))) {
                       <li><a href="@routes.LoginController.userList()">Users</a></li>
+                      }
+                      @if((user != null) && (user.getRole().equals("customer"))) {
+                        <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
+                        <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
                       }
 
                       @if(user != null){
@@ -46,7 +47,7 @@
                       }
                       <li class="search">
                         <input type="text" id="search" name="" class="text" placeholder="Search..."/>
-                         <button onclick="search()" class="btn btn-default btn-md">SEARCH</button>
+                         <button onclick="search()" class="btn btn-default btn-md">GO</button>
                        </li>
                        </ul>
       </div>
@@ -57,13 +58,19 @@
 
 <body>
   @if(flash.containsKey("success")){
-    <div class="alert alert-succes">
+    <div class="alert alert-success">
       @flash.get("success")
     </div>
   }
   @if(user != null && flash.containsKey("warning") && user.getRole.equals("admin")){
     <div class="alert alert-warning">
       @flash.get("warning")
+    </div>
+  }
+
+  @if(flash.containsKey("error")){
+    <div class="alert alert-danger">
+      @flash.get("error")
     </div>
   }
   <div class="content">

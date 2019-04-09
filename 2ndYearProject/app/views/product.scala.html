@@ -12,18 +12,12 @@ Form[models.Review], productForm: Form[models.Product], user: models.users.User,
 </p>
 }
 
-@if(flash.containsKey("error")) {
-<div class="alert alert-danger">
-  @flash.get("error")
-</div>
-}
-
 <div class="left-column">
     @if(env.resource("public/images/productImages/" + product.getProductID + ".jpg").isDefined){
       <img data-image="red" class="active" src="/assets/images/productImages/@(product.getProductID + ".jpg")" alt="">
     } else {
         <img src="/assets/images/productImages/noImage.jpg" />
-        }
+    }
 </div>
 <!-- Right Column -->
 <div class="right-column">

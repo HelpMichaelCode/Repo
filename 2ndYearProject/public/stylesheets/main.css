@@ -55,8 +55,8 @@ body select{
 }
 .sub-header{
   position: relative;
-  width: 1200px;
-  height: 70px;
+  width: 90%;
+  height: 4em;
   margin: 0 auto;
   transition:0.5s;
 }
@@ -575,7 +575,7 @@ footer {
   }
   
   div#slider { 
-    overflow: hidden;
+    overflow-x: hidden;
   }
   div#slider figure img { 
     width: 20%;

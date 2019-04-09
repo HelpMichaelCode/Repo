@@ -12,12 +12,6 @@
 </p>
 }
 
-@if(flash.containsKey("error")) {
-<div class="alert alert-danger ">
-    @flash.get("error")
-</div>
-}
-
 <div class="add-product-form">
     @helper.form(action=controllers.routes.ProductController.addProductSubmit(), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {

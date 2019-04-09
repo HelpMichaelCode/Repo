@@ -13,6 +13,8 @@ GET     /login-submit               controllers.LoginController.loginSubmit
 GET     /logout                     controllers.LoginController.logout
 GET     /register                   controllers.LoginController.register
 POST    /register-submit            controllers.LoginController.registerSubmit
+GET     /update-user/:email         controllers.LoginController.updateUser(email: String)
+POST    /update-user-submit/:email  controllers.LoginController.updateUserSubmit(email: String)
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public/", file: Asset)
 

@@ -8,20 +8,9 @@
 
 <div class="row">
     @if(user.getShoppingCart.getCartItems.isEmpty){
-        Your cart is empty.
+        <h2>Your cart is empty.</h2>
     } else {
     <div class="col-md-12">
-        @if(flash.containsKey("success")) {
-        <div class="alert alert-success  ">
-            @flash.get("success")
-        </div>
-        }
-
-        @if(flash.containsKey("error")) {
-            <div class="alert alert-danger ">
-                @flash.get("error")
-            </div>
-        }
         <h2>@user.getUsername
             's shopping cart
         </h2>

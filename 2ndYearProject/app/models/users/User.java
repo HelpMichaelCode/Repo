@@ -47,18 +47,7 @@ public class User extends Model{
         this.email = email;
         this.role = role;
         this.username = username;
-        try{
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] b = password.getBytes("UTF-8");
-            b = md.digest(b);
-            String passwordCheckSum = new String(b);
-            this.password = passwordCheckSum;
-            }
-            catch (NoSuchAlgorithmException e) {
-                //unfortunate sequence of events eh?
-            } catch (UnsupportedEncodingException e) {
-                //unfortunate sequence of events eh?
-            }
+        this.password = hash(password);
         this.address = address;
         this.mobileNumber = mobileNumber;
     }
@@ -103,19 +92,8 @@ public class User extends Model{
         return this.password;
     }
     public void setPassword(String password){
-        try{
-            MessageDigest md = MessageDigest.getInstance("MD5"); // gets instance of Message Digest-gets you a hash code (MD5, SHA-1)
-            byte[] b = password.getBytes(); //turns the passed into the method string into a byte array
-            b = md.digest(b); //gets the checksum of the byte array/encrytpts
-            String passwordCheckSum = new String(b); //encrypted byte array is passed into a string object
-            this.password = passwordCheckSum; //assign the attribute the encrypted string
-            }
-            catch (NoSuchAlgorithmException e) {
-                //unfortunate sequence of events
-            // } catch (UnsupportedEncodingException e) {
-            // //     //unfortunate sequence of events
-            }
-        }
+        this.password = password;
+    }
 
     public String getAddress() {
         return address;
@@ -149,6 +127,19 @@ public class User extends Model{
          } else {
             return find.query().where().eq("email", id).findUnique();
         }
+    }
+
+    public static String hash(String password){
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] b = password.getBytes("UTF-8");
+            b = md.digest(b);
+            String passwordCheckSum = new String(b);
+            return passwordCheckSum; //returns the hash signature of the entered password if successful
+        } catch (NoSuchAlgorithmException e) {
+        } catch (UnsupportedEncodingException e) {
+        }
+        return " "; //should never get to this statement
     }
 
     public boolean emailCheck(){
