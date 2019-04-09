@@ -385,6 +385,12 @@ public class ProductController extends Controller{
         return ok(addTrendingPC.render(productForm, p, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
     }
 
+   
+
+  
+
+
+
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addTrendingPCSubmit(Long pid){

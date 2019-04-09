@@ -15,6 +15,7 @@ import models.*;
 import models.users.*;
 import models.shopping.*;
 import java.util.Calendar;
+import models.products.*;
 
 @Security.Authenticated(Secured.class)
 // Authorise user (check if user is a customer)
@@ -218,6 +219,70 @@ public class ShoppingController extends Controller {
         }
         return allowed;
     }
-  
+    
+    @Security.Authenticated(Secured.class)
+    public Result addBuild(){
+        Form<TrendingPC> productForm = formFactory.form(TrendingPC.class);
+        
+        return ok(buildPC.render(productForm, User.getUserById(session().get("email")), "Build Your PC!"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result addBuildSubmit(){
+        Form<TrendingPC> newForm = formFactory.form(TrendingPC.class).bindFromRequest();
+        User user = User.getUserById(session().get("email"));
+        if(newForm.hasErrors()){
+            flash("error", "Fill in all fields!");
+            return badRequest(buildPC.render(newForm, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
+        } else {
+            TrendingPC pc = newForm.get();
+            if (user.getShoppingCart() == null) {
+                // If no cart, create one
+                user.setShoppingCart(new ShoppingCart());
+            user.getShoppingCart().setUser(user);
+            user.update();
+        }
+        for(GraphicsCard g : GraphicsCard.findAll()){
+            if(pc.getGpu() == g){
+                user.getShoppingCart().addProductToCart(g.getProduct());
+                user.update();
+            flash("error", "GPU added!");
+            }
+            
+        } 
+            for(Motherboard g : Motherboard.findAll()){
+                if(pc.getMotherboard() == g){
+                    user.getShoppingCart().addProductToCart(g.getProduct());
+                    user.update();
+                }
+               
+            } 
+            for(Processor g : Processor.findAll()){
+                if(pc.getCpu() == g){
+                    user.getShoppingCart().addProductToCart(g.getProduct());
+                    user.update();
+                }
+               
+            } 
+            for(Ram g : Ram.findAll()){
+                if(pc.getRam() == g){
+                    user.getShoppingCart().addProductToCart(g.getProduct());
+                    user.update();
+                }
+               
+            } 
+            for(Storage g : Storage.findAll()){
+                if(pc.getStorage() == g){
+                    user.getShoppingCart().addProductToCart(g.getProduct());
+                    user.update();
+                }
+               
+            } 
+            flash("success", "BLDPC " + " was updated");
+            return redirect(controllers.routes.HomeController.index());
+
+        }
+    }
+
     
 }
