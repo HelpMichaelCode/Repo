@@ -25,6 +25,8 @@ GET     /update-item/:id             controllers.ProductController.updateItem(id
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
+GET     /stats                      controllers.HomeController.stats
+
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)
 GET     /update-pc/:pid             controllers.ProductController.updateTrendingPC(pid: Long)

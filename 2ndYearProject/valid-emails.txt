@@ -1,3 +1,2 @@
-michael@play.com password -admin
-pavel@play.com password -admin
-nitesh@play.com password -customer
+admin@play.com password
+customer@play.com password

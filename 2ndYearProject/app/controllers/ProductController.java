@@ -396,13 +396,13 @@ public class ProductController extends Controller{
             TrendingPC pc = newForm.get();
             pc.setProduct(Product.getProductById(pid));
             if(pc.getProductId() == null){
-                for(Processor cpu: Processor.findAll()){
-                    if(pc.getCpu().getProductId() == cpu.getProductId()){
-                        pc.setCpu(cpu);
-                         flash("success", "CPU id --" + cpu.getProductId()); //never gets to this one
-                    }
+                // for(Processor cpu: Processor.findAll()){
+                //     if(pc.getCpu().getProductId() == cpu.getProductId()){
+                //         pc.setCpu(cpu);
+                //          flash("success", "CPU id --" + cpu.getProductId()); //never gets to this one
+                //     }
                     
-                }
+                // }
                 pc.setProductId(pid);
                 pc.save();
                 flash("success", "PC " + pc.getName() + " was added");

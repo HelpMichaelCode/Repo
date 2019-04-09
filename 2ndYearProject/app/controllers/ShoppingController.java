@@ -43,7 +43,7 @@ public class ShoppingController extends Controller {
         
         // Check if item in cart
         if (user.getShoppingCart() == null) {
-            // If no cart, create one
+            // If no cart, create one -- Which should not be the case
             user.setShoppingCart(new ShoppingCart());
             user.getShoppingCart().setUser(user);
             user.update();
@@ -51,11 +51,6 @@ public class ShoppingController extends Controller {
         // Add product to the cart and save
         user.getShoppingCart().addProductToCart(product);
         user.update();
-
-        // //update stock
-        // product.decrementStock();
-        // product.update();
-        
         // notify user that item was added to their cart
         flash("success", "Product " + product.getProductName() + " was added to cart.");
         return redirect(routes.ProductController.productList(0, ""));

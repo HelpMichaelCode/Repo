@@ -37,7 +37,7 @@ public class User extends Model{
     @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     private ShoppingCart shoppingCart;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<ShopOrder> orders;
 
     public User(){

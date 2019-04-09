@@ -33,10 +33,21 @@ public class HomeController extends Controller {
         return ok(index.render(User.getUserById(session().get("email")), env));
     }
 
-    // public Result userList(){
-    //     List<User> userList = null;
-    //     userList = User.findAll();
+    public Result stats(){
+        List<String> names = new ArrayList<>();
+        List<Integer> sales = new ArrayList<>();
+        
+        for(Category c: Category.findAll()){
+            names.add(c.getName());
+            int sum = 0;
+            for(Product p: Product.findAll()){
+                if(p.getCategory().getName().equals(c.getName())){
+                    sum += p.getTotalSold();
+                }
+            }
+            sales.add(sum);
+        }
 
-    //     return ok(userList.render(User.getUserById(session().get("email"))));
-    // }
+        return ok(stats.render(names, sales, User.getUserById(session().get("email"))));
+    }
 }
