@@ -146,6 +146,7 @@ public class LoginController extends Controller{
             return badRequest(updateUser.render(userForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
         } else {
             User newUser = userForm.get();
+            newUser.setPassword(update.getPassword());
             newUser.update();
             flash("success", "User " + newUser.getUsername() + " was updated.");
             return redirect(controllers.routes.HomeController.index());
