@@ -98,18 +98,59 @@ public class LoginController extends Controller{
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 }
             } else {
-                if(newUser.getUsername().equals(User.getUserById(newUser.getEmail()).getUsername())){ //if email and username are already in the DB for one user, then update
-                    newUser.update();
-                    flash("success", "User " + newUser.getUsername() + " was updated.");
-                    return redirect(controllers.routes.LoginController.userList());
-                } else {
+                // if(newUser.getUsername().equals(User.getUserById(newUser.getEmail()).getUsername())){ //if email and username are already in the DB for one user, then update
+                //     newUser.update();
+                //     flash("success", "User " + newUser.getUsername() + " was updated.");
+                //     return redirect(controllers.routes.LoginController.userList());
+                // } else {
                     flash("error", "Email already in use! Please try again!");
                     //if the email the user has entered is already in the database
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register"));
-                }
+                // }
             }
         }
     } //end of registerSubmit
+
+
+    @Security.Authenticated(Secured.class)
+    // @With(Administrator.class)
+    public Result updateUser(String email){
+        User user = null;
+        Form<User> userForm;
+        if(Product.getLowQty().size() > 0){
+            String lowQtyStr = "Restock needed! Check product list!";
+            flash("warning", lowQtyStr);
+        }
+            user = User.getUserById(email);
+            userForm = formFactory.form(User.class).fill(user);
+        if(user == null) {
+            flash("error", "User not found.");
+            return badRequest(userList.render(User.findAll(),  User.getUserById(session().get("email"))));
+        }
+        if((session().get("email")).equals(email) || User.getUserById(session().get("email")).getRole().equals("admin")){
+            return ok(updateUser.render(userForm, user, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
+        } else {
+            flash("error", "You cannot update that user");
+            return badRequest(index.render(User.getUserById(session().get("email")), env));
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result updateUserSubmit(String email){
+        User update = User.getUserById(email);
+        Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+
+        if(userForm.hasErrors()) {
+            flash("error", "Please fill in all the fields!");
+            //this message is sent only if the user has not filled in all the fields in the registration form
+            return badRequest(updateUser.render(userForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+        } else {
+            User newUser = userForm.get();
+            newUser.update();
+            flash("success", "User " + newUser.getUsername() + " was updated.");
+            return redirect(controllers.routes.HomeController.index());
+            }
+        }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
@@ -125,32 +166,7 @@ public class LoginController extends Controller{
             flash("error", "No users found.");
             return badRequest(index.render(User.getUserById(session().get("email")), env));
         }
-    }
-
-    @Security.Authenticated(Secured.class)
-    @With(Administrator.class)
-    public Result updateUser(String email){
-        User temp = null;
-        PasswordCheck user;
-        Form<PasswordCheck> userForm;
-
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
-        }
-
-        try {
-            temp = User.getUserById(email);
-            user = new PasswordCheck(temp);
-
-            userForm = formFactory.form(PasswordCheck.class).fill(user);
-        } catch (Exception ex) {
-            flash("error", "User not found.");
-            return badRequest(userList.render(User.findAll(),  User.getUserById(session().get("email"))));
-        }
-        return ok(register.render(userForm, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
-    }
-    
+    }    
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)

@@ -6,7 +6,7 @@
         body{
           margin: 0;
         background-image: url(assets/images/registerback.jpg); 
-        background-repeat: no-repeat;
+        background-repeat: repeat;
         background-size: 100%; 
         color: white;
         }  
@@ -20,13 +20,6 @@
             }
             <!-- Make  -->
         </p>
-    }
-
-    @* Display error message from flash *@
-    @if(flash.containsKey("error")) {
-        <div class="alert alert-danger  ">
-            @flash.get("error")
-        </div>
     }
     
     @helper.form(action=controllers.routes.LoginController.registerSubmit(), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST") {
@@ -44,7 +37,7 @@
                 'class -> "input", 'placeholder -> "Username", '_showConstraints -> false)
            
                 @inputPassword(userForm("password"), '_label -> "",
-                'class -> "input", 'placeholder -> "Password", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Password", 'minLength -> "8", '_showConstraints -> false)
            
                 @inputPassword(userForm("password2"), '_label -> "",
                 'class -> "input", 'placeholder -> "Confirm Password", '_showConstraints -> false)

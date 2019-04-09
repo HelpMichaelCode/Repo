@@ -21,13 +21,6 @@
   </p>
   }
 
-  @* Display error message from flash *@
-  @if(flash.containsKey("error")) {
-  <div class="alert alert-success  ">
-    @flash.get("error")
-  </div>
-  }
-
   <!--The login form-->
   @helper.form(action = controllers.routes.LoginController.loginSubmit()) {
 

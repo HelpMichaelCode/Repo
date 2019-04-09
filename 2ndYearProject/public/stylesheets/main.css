@@ -575,7 +575,7 @@ footer {
   }
   
   div#slider { 
-    overflow: hidden;
+    overflow-x: hidden;
   }
   div#slider figure img { 
     width: 20%;

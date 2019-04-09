@@ -1,0 +1,59 @@
+@(userForm: Form[models.users.User], updateUser: models.users.User, user: models.users.User, heading: String)
+@import helper._
+
+@main("Update user", user) {
+    <style>
+        body{
+          margin: 0;
+        background-image: url(assets/images/registerback.jpg); 
+        background-repeat: repeat;
+        background-size: 100%; 
+        color: white;
+        z-index: 4
+        }  
+    </style>
+
+
+
+    @if(userForm.hasGlobalErrors) {
+        <p class="alert alert-warning  ">
+            @for(e <- userForm.globalErrors) { @e.message<br/> 
+            }
+            <!-- Make  -->
+        </p>
+    }
+    
+    @helper.form(action=controllers.routes.LoginController.updateUserSubmit(updateUser.getEmail), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST") {
+        @* CSRF attack prevention *@
+        @CSRF.formField
+        
+   <div class="box">
+
+       <h1>@heading</h1>
+
+            @inputText(userForm("email").copy(value=Some(updateUser.getEmail())), '_label -> "Email", 'readonly -> "readonly", '_showConstraints -> false)
+            
+            @inputText(userForm("username"), '_label -> "Username",
+                'class -> "input", 'placeholder -> "Username", '_showConstraints -> false)
+           
+            @inputPassword(userForm("password"), '_label -> "Password", 'readonly -> "readonly", 'value -> userForm("password").value, '_showConstraints -> false)
+                    
+            @inputText(userForm("address"), '_label -> "Address",
+                'class -> "input", 'placeholder -> "Address", '_showConstraints -> false)
+    
+            @inputText(userForm("mobileNumber"), '_label -> "Mobile number",
+                'class -> "input", 'placeholder -> "Mobile Number", '_showConstraints -> false)
+            
+            @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
+       
+   
+            <input type="submit" value="Submit" class="btn"/>
+            
+            <input type="button" value="Cancel" class="btn"
+            onclick="window.location.href = '@routes.LoginController.login()';">
+            
+        </div>
+    }
+
+ 
+}

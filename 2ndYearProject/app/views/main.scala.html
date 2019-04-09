@@ -57,13 +57,19 @@
 
 <body>
   @if(flash.containsKey("success")){
-    <div class="alert alert-succes">
+    <div class="alert alert-success">
       @flash.get("success")
     </div>
   }
   @if(user != null && flash.containsKey("warning") && user.getRole.equals("admin")){
     <div class="alert alert-warning">
       @flash.get("warning")
+    </div>
+  }
+
+  @if(flash.containsKey("error")){
+    <div class="alert alert-danger">
+      @flash.get("error")
     </div>
   }
   <div class="content">
