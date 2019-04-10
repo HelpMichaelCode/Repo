@@ -304,7 +304,12 @@ public class ProductController extends Controller{
 
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
-                return ok(product.render(e, Review.findAll(), filtered, reviewForm, User.getUserById(session().get("email")), env));       
+                for(Review r: Review.findAll()){
+                    if(r.getProduct().getProductID() == e.getProductID()){
+                        filtered.add(r);
+                    }
+                }
+                return ok(product.render(e, filtered, reviewForm, User.getUserById(session().get("email")), env));       
             }
         }
         
@@ -317,10 +322,14 @@ public class ProductController extends Controller{
         Form<Review> reviewForm = formFactory.form(Review.class).bindFromRequest();
         Product productObj = Product.getProductById(pid);
         List<Review> filtered = new ArrayList<>();
-
+        for(Review r: Review.findAll()){
+            if(r.getProduct().getProductID() == productObj.getProductID()){
+                filtered.add(r);
+            }
+        }
         if(reviewForm.hasErrors()){
             flash("error", "Please fill in all the fields!");
-            return badRequest(product.render(productObj, Review.findAll(), filtered, reviewForm, User.getUserById(session().get("email")), env));
+            return badRequest(product.render(productObj, filtered, reviewForm, User.getUserById(session().get("email")), env));
         } else {
             Review newReview = reviewForm.get();
             newReview.setUser(User.getUserById(session().get("email")));
@@ -349,7 +358,7 @@ public class ProductController extends Controller{
                 return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
             } else {
                 flash("error", "We ran into a problem processing your review, please try again later.");
-                return badRequest(product.render(newReview.getProduct(), Review.findAll(), filtered, reviewForm, User.getUserById(session().get("email")), env));
+                return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
             }
         }
     }

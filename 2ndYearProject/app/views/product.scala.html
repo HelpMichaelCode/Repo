@@ -1,4 +1,4 @@
-@(product: models.Product, reviews: List[models.Review], filtered: List[models.Review], reviewForm:
+@(product: models.Product, filtered: List[models.Review], reviewForm:
 Form[models.Review], user: models.users.User, env: play.api.Environment)
 @import helper._
 
@@ -78,7 +78,6 @@ button[type="button"]:disabled {
   </div>
   <div class="product-reviews">
 
-    @for(r<-reviews) { @if(r.getProduct.getProductName==product.getProductName){ @filtered.add(r) } }
       @if(filtered.isEmpty){ <h3>This product does not have any reviews</h3>
       } else {
       <h2>Customer reviews</h2>
