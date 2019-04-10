@@ -402,14 +402,22 @@ public class ProductController extends Controller{
         } else {
             TrendingPC pc = newForm.get();
             pc.setProduct(Product.getProductById(pid));
+            if(pc.getCpu().getProductId() == null){
+                pc.setCpu(Processor.getProcessorById(Long.valueOf(1)));
+            }
+            if(pc.getGpu().getProductId() == null){
+                pc.setGpu(GraphicsCard.getGraphicsCardById(Long.valueOf(1)));
+            }
+            if(pc.getMotherboard().getProductId() == null){
+                pc.setMotherboard(Motherboard.getMotherboardById(Long.valueOf(1)));
+            }
+            if(pc.getRam().getProductId() == null){
+                pc.setRam(Ram.getRamById(Long.valueOf(1)));
+            }
+            if(pc.getStorage().getProductId() == null){
+                pc.setStorage(Storage.getStorageById(Long.valueOf(1)));
+            }
             if(pc.getProductId() == null){
-                // for(Processor cpu: Processor.findAll()){
-                //     if(pc.getCpu().getProductId() == cpu.getProductId()){
-                //         pc.setCpu(cpu);
-                //          flash("success", "CPU id --" + cpu.getProductId()); //never gets to this one
-                //     }
-                    
-                // }
                 pc.setProductId(pid);
                 pc.save();
                 flash("success", "PC " + pc.getName() + " was added");
@@ -435,10 +443,11 @@ public class ProductController extends Controller{
         }
         if(tp != null){
             form = formFactory.form(TrendingPC.class).fill(tp);
+            return ok(addTrendingPC.render(form, pid, User.getUserById(session().get("email")), "Update PC info"));
         } else {
+            flash("error", "PC not found");
             return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
-        return ok(addTrendingPC.render(form, pid, User.getUserById(session().get("email")), "Update PC info"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -459,7 +468,7 @@ public class ProductController extends Controller{
         } else {
                 Ram r = newForm.get();
                 r.setProduct(Product.getProductById(pid));
-            if(r.getProduct().getProductID() == null){
+            if(r.getProductId() == null){
                 r.setProductId(pid);
                 r.save();
                 flash("success", r.getName() + " was added");
@@ -478,7 +487,7 @@ public class ProductController extends Controller{
         Form<Ram> form;
         Ram tp = null;
         for(Ram e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId() == pid){
                 tp = e;
             }
         }
@@ -508,7 +517,7 @@ public class ProductController extends Controller{
         } else {
                 Storage s = newForm.get();
                 s.setProduct(Product.getProductById(pid));
-            if(s.getProduct().getProductID() == null){
+            if(s.getProductId() == null){
                 s.setProductId(pid);
                 s.save();
                 flash("success", s.getName() + " was added");
@@ -527,7 +536,7 @@ public class ProductController extends Controller{
         Form<Storage> form;
         Storage tp = null;
         for(Storage e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId() == pid){
                 tp = e;
             }
         }
@@ -557,8 +566,7 @@ public class ProductController extends Controller{
         } else {
             Processor newCpu = newProcessorForm.get();
             newCpu.setProduct(Product.getProductById(pid));
-            if(newCpu.getProduct().getProductID() == null){
-                newCpu.setProductId(pid);
+            if(newCpu.getProductId() == null){
                 newCpu.save();
                 flash("success", "Processor " + newCpu.getName() + " was added");
             } else {
@@ -576,7 +584,7 @@ public class ProductController extends Controller{
         Form<Processor> form;
         Processor tp = null;
         for(Processor e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId() == pid){
                 tp = e;
             }
         }
@@ -605,7 +613,7 @@ public class ProductController extends Controller{
         } else {
             GraphicsCard gpu = gpuForm.get();
             gpu.setProduct(Product.getProductById(pid));
-            if(gpu.getProduct().getProductID() == null){
+            if(gpu.getProductId() == null){
                 gpu.setProductId(pid);
                 gpu.save();
                 flash("success", "GPU " + gpu.getName() + " was added");
@@ -624,7 +632,7 @@ public class ProductController extends Controller{
         Form<GraphicsCard> form;
         GraphicsCard tp = null;
         for(GraphicsCard e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId() == pid){
                 tp = e;
             }
         }
@@ -654,7 +662,7 @@ public class ProductController extends Controller{
         } else {
             Motherboard mb = mbForm.get();
             mb.setProduct(Product.getProductById(pid));
-            if(mb.getProduct().getProductID() == null){
+            if(mb.getProductId() == null){
                 mb.setProductId(pid);
                 mb.save();
                 flash("success", "Motherboard " + mb.getName() + " was added");
@@ -673,7 +681,7 @@ public class ProductController extends Controller{
         Form<Motherboard> form;
         Motherboard tp = null;
         for(Motherboard e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId() == pid){
                 tp = e;
             }
         }
@@ -713,31 +721,31 @@ public class ProductController extends Controller{
                         break;
                     case "cpus":
                         for(Processor temp: Processor.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                                 specs.add(temp);
                         }
                         break;
                     case "graphics cards":
                         for(GraphicsCard temp: GraphicsCard.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                             specs.add(temp);
                         }
                         break;
                     case "motherboards":
                         for(Motherboard temp: Motherboard.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                             specs.add(temp);
                         }
                         break;
                     case "ram":
                         for(Ram temp: Ram.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                             specs.add(temp);
                         }
                         break;
                     case "storage":
                         for(Storage temp: Storage.findAll()){
-                            if(temp.getProduct().getProductID() == p.getProductID())
+                            if(temp.getProductId().toString().equals(p.getProductID().toString()))
                             specs.add(temp);
                         }
                         break;

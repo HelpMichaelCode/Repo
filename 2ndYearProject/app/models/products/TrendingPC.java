@@ -15,22 +15,28 @@ public class TrendingPC extends ProductSkeleton {
     // private Long productId;
     // @Constraints.Required
     // private String shortName;
+    
     @ManyToOne
+    @Constraints.Required
     private Processor cpu;
 
     @ManyToOne
+    @Constraints.Required
     private GraphicsCard gpu;
 
     @ManyToOne
+    @Constraints.Required
     private Motherboard motherboard;
 
     @Constraints.Required
     private int ramQty;
 
     @ManyToOne
+    @Constraints.Required
     private Ram ram;
     
     @ManyToOne
+    @Constraints.Required
     private Storage storage;
 
     public TrendingPC(){
