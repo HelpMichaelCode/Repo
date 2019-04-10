@@ -2,7 +2,6 @@
 @import helper._
 
 @main("Add product", user) {
-<h3>@heading</h3>
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning  ">
@@ -13,6 +12,7 @@
 }
 
 <div class="add-product-form">
+    <h3>@heading</h3>
     @helper.form(action=controllers.routes.ProductController.addProductSubmit(), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
 
@@ -21,7 +21,7 @@
 
     @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control", '_showConstraints -> false)
     
-    @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "", '_showConstraints -> false)
+    @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
     @inputText(productForm("productQty"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control", '_showConstraints -> false)
     @inputText(productForm("productPrice"), '_label -> "", 'placeholder -> "Price", 'class -> "form-control", '_showConstraints -> false)
     @select(
@@ -45,8 +45,8 @@
         <input type="submit" value="Update" class="btn btn-primary" />
     }
 
-    <!-- <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.ProductController.productList(0, "")';"> -->
+    <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
 
 </div>
 }

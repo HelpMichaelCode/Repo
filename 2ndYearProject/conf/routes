@@ -60,8 +60,11 @@ GET     /empty-cart                 controllers.ShoppingController.emptyCart()
 GET     /place-order                controllers.ShoppingController.placeOrder()
 GET     /cancel-order/:id           controllers.ShoppingController.cancelOrder(id: Long)
 GET     /view-orders                controllers.ShoppingController.viewOrders()
+GET     /addBuild                   controllers.ShoppingController.addBuild()
+GET     /addBuildSubmit             controllers.ShoppingController.addBuildSubmit()
 
-POST    /post-review                controllers.ProductController.addReviewSubmit
+
+POST    /post-review/:pid                controllers.ProductController.addReviewSubmit(pid: Long)
 GET     /delete-review/:id/:email   controllers.ProductController.deleteReview(id: Long, email: String)
 GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
 

@@ -15,6 +15,7 @@ import models.*;
 import models.users.*;
 import models.shopping.*;
 import java.util.Calendar;
+import models.products.*;
 
 @Security.Authenticated(Secured.class)
 // Authorise user (check if user is a customer)
@@ -213,6 +214,64 @@ public class ShoppingController extends Controller {
         }
         return allowed;
     }
-  
+    
+    @Security.Authenticated(Secured.class)
+    public Result addBuild(){
+        Form<TrendingPC> productForm = formFactory.form(TrendingPC.class);
+        
+        return ok(buildPC.render(productForm, User.getUserById(session().get("email")), "Build Your PC!"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result addBuildSubmit(){
+        Form<TrendingPC> newForm = formFactory.form(TrendingPC.class).bindFromRequest();
+        User user = User.getUserById(session().get("email"));
+        if(newForm.hasErrors()){
+            flash("error", "Fill in all fields!");
+            return badRequest(buildPC.render(newForm, User.getUserById(session().get("email")), "Build Your PC!"));
+        } else {
+            TrendingPC pc = newForm.get();
+            if(pc.getGpu().getProductId() != null){
+                for(GraphicsCard g: GraphicsCard.findAll()){
+                    if(pc.getGpu().getProductId().equals(g.getProductId())){
+                        user.getShoppingCart().addProductToCart(g.getProduct());
+                        // flash("error", "GPU added!");
+                    }
+                } 
+            }
+            if(pc.getMotherboard().getProductId() != null){
+                for(Motherboard g: Motherboard.findAll()){
+                    if(pc.getMotherboard().getProductId().equals(g.getProductId())){
+                        user.getShoppingCart().addProductToCart(g.getProduct());
+                    }
+                }
+            }
+            if(pc.getCpu().getProductId() != null){ 
+                for(Processor g: Processor.findAll()){
+                    if(pc.getCpu().getProductId().equals(g.getProductId())){
+                        user.getShoppingCart().addProductToCart(g.getProduct());
+                    } 
+                }
+            }
+            if(pc.getRam().getProductId() != null){  
+                for(Ram g: Ram.findAll()){
+                    if(pc.getRam().getProductId().equals(g.getProductId())){
+                        user.getShoppingCart().addProductToCart(g.getProduct());
+                    }  
+                }
+            }
+            if(pc.getRam().getProductId() != null){  
+                for(Storage g: Storage.findAll()){
+                    if(pc.getStorage().getProductId().equals(g.getProductId())){
+                        user.getShoppingCart().addProductToCart(g.getProduct());
+                    }  
+                }
+            } 
+            user.update();
+        flash("success", "Components added to cart");
+        return redirect(controllers.routes.HomeController.index());
+        }
+    }
+
     
 }

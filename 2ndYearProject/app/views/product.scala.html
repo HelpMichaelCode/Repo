@@ -1,5 +1,5 @@
 @(product: models.Product, reviews: List[models.Review], filtered: List[models.Review], reviewForm:
-Form[models.Review], productForm: Form[models.Product], user: models.users.User, env: play.api.Environment)
+Form[models.Review], user: models.users.User, env: play.api.Environment)
 @import helper._
 
 @main("Product", user) {
@@ -58,21 +58,16 @@ button[type="button"]:disabled {
 <div class="reviews">
   <div class="add-review-form">
     <h4>You already have this product or recently pruchased it? Please leave your feedback to inform others.</h4>
-    @helper.form(action=controllers.routes.ProductController.addReviewSubmit(), 'class -> "form-horizontal",
+    @helper.form(action=controllers.routes.ProductController.addReviewSubmit(product.getProductID), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST") {
 
     @CSRF.formField
 
-    @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", '_label -> "", '_showConstraints -> false)
+    @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
     @inputRadioGroup(reviewForm("rating"), options = options("1"->"1","2"->"2","3"->"3","4"->"4","5"->"5"), '_label -> "Ratings", '_showConstraints -> false)
 
     <div class="hide">
       @inputText(reviewForm("id"), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
-      @inputText(productForm("productID").copy(value=Some(product.getProductID.toString)), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
-      @inputText(productForm("productName").copy(value=Some(product.getProductName)), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
-      @inputText(productForm("productDescription").copy(value=Some(product.getProductDescription)), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
-      @inputText(productForm("productQty").copy(value=Some(product.getProductQty.toString)), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
-      @inputText(productForm("productPrice").copy(value=Some(product.getProductPrice.toString)), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
     </div>
     <div class="actions">
 

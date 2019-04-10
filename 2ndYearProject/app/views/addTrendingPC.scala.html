@@ -2,7 +2,6 @@
 @import helper._
 
 @main("Add product", user) {
-<h3>@heading</h3>
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning  ">
@@ -13,6 +12,7 @@
 }
 
 <div class="add-product-form">
+    <h3>@heading</h3>
     @helper.form(action=controllers.routes.ProductController.addTrendingPCSubmit(pid), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST") {
 

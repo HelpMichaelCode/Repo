@@ -6,7 +6,6 @@
 @main("Shopping Basket", user) {
 
 
-<div class="row">
     @if(user.getShoppingCart.getCartItems.isEmpty){
         <h2>Your cart is empty.</h2>
     } else {
@@ -14,7 +13,6 @@
         <h2>@user.getUsername
             's shopping cart
         </h2>
-
         <table class="table table-bordered table-hover table-condensed">
             <thead>
                 <!-- The header row-->
@@ -101,5 +99,5 @@
             </p>
         </div>
     }
-</div>
+
 }

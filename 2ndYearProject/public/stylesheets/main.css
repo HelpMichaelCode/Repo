@@ -595,3 +595,9 @@ footer {
     z-index: -1;
   }
   /* End of slider */
+
+  /* ADD PRODUCT FORMS */
+  .add-product-form {
+    width: 50%;
+    margin: -1em auto;
+  }
