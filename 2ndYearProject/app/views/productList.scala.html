@@ -58,7 +58,7 @@ models.users.User, env: play.api.Environment)
         <!-- Start Button buying -->
             <button class="btn1" onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
         <!-- 		the Price -->
-             <span class="price">@p.getProduct.getProductPrice $</span>
+             <span class="price">&euro;@p.getProduct.getProductPrice</span>
         <!-- 		shopping cart icon-->
            <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
         <!-- 		Buy Now / ADD to Cart-->

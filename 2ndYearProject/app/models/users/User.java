@@ -92,6 +92,10 @@ public class User extends Model{
         return this.password;
     }
     public void setPassword(String password){
+        this.password = hash(password);
+    }
+
+    public void setPasswordPlain(String password){
         this.password = password;
     }
 
