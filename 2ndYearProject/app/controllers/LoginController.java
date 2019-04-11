@@ -116,19 +116,21 @@ public class LoginController extends Controller{
     // @With(Administrator.class)
     public Result updateUser(String email){
         User user = null;
-        Form<User> userForm;
+        // Form<User> userForm;
+        Form<PasswordCheck> newPass;
         if(Product.getLowQty().size() > 0){
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
             user = User.getUserById(email);
-            userForm = formFactory.form(User.class).fill(user);
         if(user == null) {
             flash("error", "User not found.");
             return badRequest(userList.render(User.findAll(),  User.getUserById(session().get("email"))));
         }
+        newPass = formFactory.form(PasswordCheck.class).fill(new PasswordCheck(user));
+        // userForm = formFactory.form(User.class).fill(user);
         if((session().get("email")).equals(email) || User.getUserById(session().get("email")).getRole().equals("admin")){
-            return ok(updateUser.render(userForm, user, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
+            return ok(updateUser.render(newPass, user, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
         } else {
             flash("error", "You cannot update that user");
             return badRequest(index.render(User.getUserById(session().get("email")), env));
@@ -139,19 +141,34 @@ public class LoginController extends Controller{
     public Result updateUserSubmit(String email){
         User update = User.getUserById(email);
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+        Form<PasswordCheck> newPassForm = formFactory.form(PasswordCheck.class).bindFromRequest();
 
         if(userForm.hasErrors()) {
             flash("error", "Please fill in all the fields!");
             //this message is sent only if the user has not filled in all the fields in the registration form
-            return badRequest(updateUser.render(userForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
         } else {
             User newUser = userForm.get();
-            newUser.setPasswordPlain(update.getPassword());
-            newUser.update();
-            flash("success", "User " + newUser.getUsername() + " was updated.");
-            return redirect(controllers.routes.HomeController.index());
+            PasswordCheck newPass = newPassForm.get();
+            if(newPass.getPassword().equals(update.getPassword())){
+                if(!newPass.getPassword2().equals(User.hash("")) && !newPass.getPassword3().equals(User.hash(""))){ 
+                    //password will be updated only if both fields are not empty and both contain the same sequence of characters
+                    if(newPass.getPassword2().equals(newPass.getPassword3())){
+                        newUser.setPasswordPlain(newPass.getPassword2()); //updates the password of the user
+                    } else { //if the new passwords do not match
+                        flash("error", "Passwords do not match");
+                        return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                    }
+                }
+                newUser.update(); //updates the user in the database
+                flash("success", "User " + newUser.getUsername() + " was updated.");
+                return redirect(controllers.routes.HomeController.index());
+            } else {
+                flash("error", "Wrong password");
+                return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
             }
         }
+    }
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
