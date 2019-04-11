@@ -141,7 +141,7 @@ public class ProductController extends Controller{
                 productForm = formFactory.form(Product.class).fill(p);
             } else {
                 List<ProductSkeleton> specs = getSpecs(Long.valueOf(0), "");
-                return badRequest(productList.render(Product.findAll(), specs, Category.findAll(), User.getUserById(session().get("email")), env));
+                return badRequest(productList.render(specs, Category.findAll(), User.getUserById(session().get("email")), env));
                 //redirect to add/update item with user's session
             }
 
@@ -164,7 +164,7 @@ public class ProductController extends Controller{
             keyword = "";
         } 
         specs=getSpecs(cat, keyword);
-        return ok(productList.render(Product.findAll(), specs, categoryList, User.getUserById(session().get("email")), env));
+        return ok(productList.render(specs, categoryList, User.getUserById(session().get("email")), env));
     }
       
     @Security.Authenticated(Secured.class)
@@ -446,7 +446,7 @@ public class ProductController extends Controller{
             return ok(addTrendingPC.render(form, pid, User.getUserById(session().get("email")), "Update PC info"));
         } else {
             flash("error", "PC not found");
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
     }
 
@@ -494,7 +494,7 @@ public class ProductController extends Controller{
         if(tp != null){
             form = formFactory.form(Ram.class).fill(tp);
         } else {
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
         return ok(addRam.render(form, pid, User.getUserById(session().get("email")), "Update RAM info"));
     }
@@ -543,7 +543,7 @@ public class ProductController extends Controller{
         if(tp != null){
             form = formFactory.form(Storage.class).fill(tp);
         } else {
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
         return ok(addStorage.render(form, pid, User.getUserById(session().get("email")), "Update storage memory info"));
     }
@@ -591,7 +591,7 @@ public class ProductController extends Controller{
         if(tp != null){
             form = formFactory.form(Processor.class).fill(tp);
         } else {
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
         return ok(addProcessor.render(form, pid, User.getUserById(session().get("email")), "Update processor info"));
     }
@@ -639,7 +639,7 @@ public class ProductController extends Controller{
         if(tp != null){
             form = formFactory.form(GraphicsCard.class).fill(tp);
         } else {
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
         return ok(addGraphicsCard.render(form, pid, User.getUserById(session().get("email")), "Update GPU info"));
 
@@ -688,7 +688,7 @@ public class ProductController extends Controller{
         if(tp != null){
             form = formFactory.form(Motherboard.class).fill(tp);
         } else {
-            return badRequest(productList.render(Product.findAll(), getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
+            return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
         return ok(addMotherboard.render(form, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
     }

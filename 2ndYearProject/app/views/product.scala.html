@@ -3,6 +3,7 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
 @import helper._
 
 @main("Product", user) {
+  <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/individual-product.css")">
 
 @if(reviewForm.hasGlobalErrors) {
 <p class="alert alert-warning">
@@ -25,11 +26,84 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
   <!-- Product Description -->
   <div class="product-description">
     <span>@product.getCategory.getName</span>
-    <h1>@product.getProductName</h1>
+    <h2>@product.getProductName</h2>
     <p>@product.getProductDescription</p>
+    <style>
+      
+    </style>
+    
   </div>
   <div class="product-price">
-    <span>&euro; @("%.2f".format(product.getProductPrice))</span>
+      <div class="hint-star star">
+          @if((product.getOverallRating >= 0) && (product.getOverallRating < 0.5)){
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 0.5) && (product.getOverallRating < 1)){
+            <span class="glyphicon glyphicon-star half"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 1) && (product.getOverallRating < 1.5)){
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 1.5) && (product.getOverallRating < 2)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star half checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 2) && (product.getOverallRating < 2.5)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 2.5) && (product.getOverallRating < 3)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star half checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 3) && (product.getOverallRating < 3.5)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 3.5) && (product.getOverallRating < 4)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star half checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 4) && (product.getOverallRating < 4.5)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          } else if((product.getOverallRating >= 4.5) && (product.getOverallRating < 5)){
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star half checked"></span>
+          } else {
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+            <span class="glyphicon glyphicon-star checked"></span>
+          }
+        </div>
+    <span class="price">&euro; @("%.2f".format(product.getProductPrice))</span>
     @if((user != null) && (user.getRole().equals("admin"))){
     <a href="@routes.ProductController.updateItem(product.getProductID)" class="cart-btn">Update</a>
     } else {
@@ -37,7 +111,7 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
     <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
     }else{
     <div class="buttons">
-      <button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF ORDER</button>
+      <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF ORDER</button></a>
     </div>
     }
     }
@@ -64,7 +138,16 @@ button[type="button"]:disabled {
     @CSRF.formField
 
     @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
-    @inputRadioGroup(reviewForm("rating"), options = options("1"->"1","2"->"2","3"->"3","4"->"4","5"->"5"), '_label -> "Ratings", '_showConstraints -> false)
+    <!-- @inputRadioGroup(reviewForm("rating"), options = options("1"->"1","2"->"2","3"->"3","4"->"4","5"->"5"), '_label -> "Ratings", '_showConstraints -> false) -->
+    <fieldset>
+        <span class="star-cb-group">
+          <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5"></label>
+          <input type="radio" id="rating-4" name="rating" value="4"/><label for="rating-4"></label>
+          <input type="radio" id="rating-3" name="rating" value="3" checked="checked" /><label for="rating-3"></label>
+          <input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2"></label>
+          <input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1"></label>
+        </span>
+    </fieldset>
 
     <div class="hide">
       @inputText(reviewForm("id"), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
@@ -104,96 +187,4 @@ button[type="button"]:disabled {
 </div>
 
 </div>
-
-<style>
- html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: white;
-}
- 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px;
-  display: flex;
-}
-.left-column {
-  display: block;
-  float: left;
-  width: 59%;
-  position: relative;
-}
- 
-.right-column {
-  display: block;
-  float: left;
-  width: 40%;
-  text-align: left;
-  margin-top: 60px;
-}
-.left-column img {
-  padding-top: 2.5em;
-  padding-left: 15em;
-  width: 70em;
-  left: 0;
-  top: 0;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
- 
-.left-column img.active {
-  opacity: 1;
-}
-.product-description {
-  border-bottom: 1px solid #E1E8EE;
-  margin-bottom: 20px;
-}
-.product-description span {
-  font-size: 12px;
-  color: #358ED7;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-.product-description h1 {
-  font-weight: 300;
-  font-size: 52px;
-  color: #43484D;
-  letter-spacing: -2px;
-}
-.product-description p {
-  font-size: 16px;
-  font-weight: 300;
-  color: #86939E;
-  line-height: 24px;
-}
-.product-price {
-  display: flex;
-  align-items: center;
-}
- 
-.product-price span {
-  font-size: 26px;
-  font-weight: 300;
-  color: #43474D;
-  margin-right: 20px;
-}
- 
-.cart-btn {
-  display: inline-block;
-  background-color: #7DC855;
-  border-radius: 6px;
-  font-size: 16px;
-  color: #FFFFFF;
-  text-decoration: none;
-  padding: 12px 30px;
-  transition: all .5s;
-}
-.cart-btn:hover {
-  background-color: #64af3d;
-}
-</style>
 }

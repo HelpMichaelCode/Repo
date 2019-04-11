@@ -1,8 +1,7 @@
-@(products: List[models.Product], specs: List[models.products.ProductSkeleton], categories: List[models.Category], user:
+@(specs: List[models.products.ProductSkeleton], categories: List[models.Category], user:
 models.users.User, env: play.api.Environment)
 @main("Product List", user){
-<link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")"> <meta name="viewport"
-    content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 
 <div class="cats">
     <h2>Filter by</h2>
@@ -38,11 +37,73 @@ models.users.User, env: play.api.Environment)
             <h1 class="product-list-ptitle"><a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">@p.getName</a></h1>
         <!-- 		the Product rating -->
             <span class="hint-star star">
-                <!-- <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                <i class="fa fa-star-o" aria-hidden="true"></i> -->
+                @if((p.getProduct.getOverallRating >= 0) && (p.getProduct.getOverallRating < 0.5)){
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 0.5) && (p.getProduct.getOverallRating < 1)){
+                    <span class="glyphicon glyphicon-star half"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 1) && (p.getProduct.getOverallRating < 1.5)){
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 1.5) && (p.getProduct.getOverallRating < 2)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star-half-o checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 2) && (p.getProduct.getOverallRating < 2.5)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 2.5) && (p.getProduct.getOverallRating < 3)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star-half-o checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 3) && (p.getProduct.getOverallRating < 3.5)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 3.5) && (p.getProduct.getOverallRating < 4)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star half checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 4) && (p.getProduct.getOverallRating < 4.5)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                } else if((p.getProduct.getOverallRating >= 4.5) && (p.getProduct.getOverallRating < 5)){
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star half checked"></span>
+                } else {
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                    <span class="glyphicon glyphicon-star checked"></span>
+                }
             </span>
                 
             
@@ -52,19 +113,17 @@ models.users.User, env: play.api.Environment)
                 
                 
         <!-- 		Control -->
-        <a href="@routes.ShoppingController.addToCart(p.getProductId)">
-        <div class="control">
-            
-        <!-- Start Button buying -->
-            <button class="btn1" onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
-        <!-- 		the Price -->
-             <span class="price">&euro;@p.getProduct.getProductPrice</span>
-        <!-- 		shopping cart icon-->
-           <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-        <!-- 		Buy Now / ADD to Cart-->
-           <span class="buy">Buy Now</span>
-         </button>
-        </a>
+            <div class="control">
+                
+            <!-- Start Button buying -->
+                <button class="btn1" onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
+            <!--the Price -->
+                    <span class="price">&euro;@p.getProduct.getProductPrice</span>
+            <!--shopping cart icon-->
+                    <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+            <!--Buy Now / Add to Cart-->
+                    <span class="buy">Buy Now</span>
+            </button>
             <!-- End Button buying -->
             
         </div>
@@ -80,9 +139,9 @@ models.users.User, env: play.api.Environment)
     
             @if(env.resource("public/images/productImages/" + p.getProduct.getProductID + ".jpg").isDefined){
                 <img src="/assets/images/productImages/@(p.getProduct.getProductID + ".jpg")" alt="">
-                    } else {
-                        <img src="/assets/images/productImages/noImage.jpg" />
-                        }
+            } else {
+                <img src="/assets/images/productImages/noImage.jpg" />
+            }
             
         <!-- 	product Information-->
         <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">
@@ -128,7 +187,6 @@ models.users.User, env: play.api.Environment)
                          <input type="button" value="Update" class="btn btn-primary btn-lg"
                          onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
                     }
-                    <!-- <li><strong>Features: </strong>Tolerates heat</li> -->
                 </ul>
             </div>
         </a>
@@ -138,6 +196,7 @@ models.users.User, env: play.api.Environment)
         
         </div>
     }
+    </div>
     }
 
     

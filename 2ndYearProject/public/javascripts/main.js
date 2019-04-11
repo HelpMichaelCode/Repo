@@ -13,23 +13,6 @@ $('#search').keypress(function(event){
 	}
 });
 
-
-// var myIndex = 0;
-// carousel();
-
-// function carousel() {
-  
-//   var i;
-//   var x = document.getElementsById("mySlides");
-//   for (i = 0; i < x.length; i++) {
-//     x[i].style.display = "none";  
-//   }
-//   myIndex++;
-//   if (myIndex > x.length) {myIndex = 1}    
-//   x[myIndex-1].style.display = "block";  
-//   setTimeout(carousel, 4000); // Change image every 2 seconds
-// }
-
 function showCart() {
   window.location.href = "http://localhost:9000/show-cart";
 }
@@ -49,3 +32,11 @@ $(document).ready(function(){
       }
   });
 });
+
+var logID = 'log',
+  log = $('<div id="'+logID+'"></div>');
+$('body').append(log);
+  $('[type*="radio"]').change(function () {
+    var me = $(this);
+    log.html(me.attr('value'));
+  });
