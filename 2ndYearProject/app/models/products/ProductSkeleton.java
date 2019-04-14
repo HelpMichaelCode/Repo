@@ -1,6 +1,7 @@
 package models.products;
 
 import java.util.*;
+import java.util.Comparator;
 import javax.persistence.*;
 import io.ebean.*;
 import play.data.format.*;
@@ -63,4 +64,17 @@ public abstract class ProductSkeleton extends Model {
         this.product = product;
     }
 
+    public static Comparator<ProductSkeleton> TotalSoldComparator = new Comparator<ProductSkeleton>() {
+
+	public int compare(ProductSkeleton p1, ProductSkeleton p2) {
+
+	   int first = p1.getProduct().getTotalSold();
+	   int second = p2.getProduct().getTotalSold();
+
+	   /*For ascending order*/
+	//    return rollno1-rollno2;
+
+	   /*For descending order*/
+	   return second-first;
+   }};
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+import java.util.Comparator;
 import javax.persistence.*;
 import io.ebean.*;
 import play.data.format.*;
@@ -10,7 +11,7 @@ import controllers.*;
 import models.products.*;
 @Entity
 public class Product extends Model {
-    
+
     @Id
     // @Constraints.Required
     private Long productID;
@@ -38,7 +39,7 @@ public class Product extends Model {
     private int countRating;
 
     private static final int QTY_LOW = 5; //new
-    //constant for the restock notification 
+    //constant for the restock notification
     // (i.e., what's the least amount of something that you can have before sending the notification)
 
     @ManyToOne
@@ -111,7 +112,7 @@ public class Product extends Model {
     public void setTotalSold(int totalSold){
         this.totalSold = totalSold;
     }
-    
+
     public double getOverallRating() {
         return overallRating;
     }
@@ -134,8 +135,10 @@ public class Product extends Model {
     public void setReviews(List<Review> reviews){
         this.reviews = reviews;
     }
-    
 
+    public int getCountRating(){
+        return this.countRating;
+    }
     //end of getters and setters
 
     //Finder and finder methods
@@ -158,7 +161,7 @@ public class Product extends Model {
     public void decrementStock(){
         productQty--;
     }
-    
+
     public void incrementStock(){
         productQty++;
     }
@@ -196,11 +199,11 @@ public class Product extends Model {
         overallRating = summedRating / countRating;
     }
 
-    public static List<Long> getLowQty(){
-        List<Long> lowQtyProd = new ArrayList<>();
+    public static List<Product> getLowQty(){
+        List<Product> lowQtyProd = new ArrayList<>();
         for(Product e: Product.findAll()){
             if(e.checkLowQty()){
-                lowQtyProd.add(e.getProductID());
+                lowQtyProd.add(e);
             }
         }
         return lowQtyProd;
@@ -211,11 +214,11 @@ public class Product extends Model {
         List<ProductSkeleton> plist = ProductController.getSpecs(Long.valueOf(0), "");
         for(ProductSkeleton pl: plist){
             String cat = pl.getProduct().getCategory().getName().toLowerCase();
-            
+
                 if(cat.contains(s)){
                     options.put(pl.getProductId().toString(), pl.getProduct().getProductName());
                 }
-            
+
         }
         return options;
     }

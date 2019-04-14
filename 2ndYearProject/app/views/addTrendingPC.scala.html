@@ -1,7 +1,7 @@
 @(productForm: Form[models.products.TrendingPC], pid: Long, user: models.users.User, heading: String)
 @import helper._
 
-@main("Add product", user) {
+@main("Add product info", user) {
 
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning  ">
@@ -34,7 +34,7 @@
     @select(
         productForm("motherboard.productId"), options(Product.options("motherboard")), '_label -> "", '_default -> "-- What's the motherboard? --",
         '_showConstraints -> false, 'class -> "form-control"
-    )    
+    )
     @select(
         productForm("storage.productId"), options(Product.options("storage")), '_label -> "", '_default -> "-- What's the hard drive? --",
         '_showConstraints -> false, 'class -> "form-control"

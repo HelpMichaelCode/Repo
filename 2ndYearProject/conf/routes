@@ -25,6 +25,7 @@ GET     /update-item/:id             controllers.ProductController.updateItem(id
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
+GET     /low-stock-products         controllers.ProductController.lowStockProducts(category:Long?=0L)
 GET     /stats                      controllers.HomeController.stats
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
@@ -60,13 +61,14 @@ GET     /empty-cart                 controllers.ShoppingController.emptyCart()
 GET     /place-order                controllers.ShoppingController.placeOrder()
 GET     /cancel-order/:id           controllers.ShoppingController.cancelOrder(id: Long)
 GET     /view-orders                controllers.ShoppingController.viewOrders()
-GET     /addBuild                   controllers.ShoppingController.addBuild()
-GET     /addBuildSubmit             controllers.ShoppingController.addBuildSubmit()
+GET     /add-build                   controllers.ShoppingController.addBuild()
+GET     /add-build-submit             controllers.ShoppingController.addBuildSubmit()
 
 
 POST    /post-review/:pid                controllers.ProductController.addReviewSubmit(pid: Long)
 GET     /delete-review/:id/:email   controllers.ProductController.deleteReview(id: Long, email: String)
 GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
+GET     /all-Reviews                controllers.ProductController.allReviews
 
 GET     /update-user/:email         controllers.LoginController.updateUser(email: String)
 GET     /delete-user/:email         controllers.LoginController.deleteUser(email: String)

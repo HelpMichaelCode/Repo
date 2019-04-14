@@ -8,12 +8,14 @@ import play.api.Environment;
 import play.data.*;
 import play.db.ebean.Transactional;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
 import models.*;
 import models.users.*;
+import models.products.*;
 
 public class HomeController extends Controller {
 
@@ -25,12 +27,23 @@ public class HomeController extends Controller {
     }
 
     public Result index() {
-        // List<Product> products = Product.findAll(); //to generate the product list dynamically
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
+        ProductController.flashLowStock();
+
+        List<ProductSkeleton> bestSellers = new ArrayList<>();
+        List<ProductSkeleton> temp = ProductController.getSpecs(Long.valueOf(0), "");
+        List<Product> all = Product.findAll();
+        for(int i = 0; i < temp.size(); i++){
+            if(temp.get(i).getProduct().getProductName().contains("N/A")){ // this loop removes the 'Not Available' product object
+                                            // that we have created to avoid having null pointers in trending pc
+                temp.remove(i);
+            }
         }
-        return ok(index.render(User.getUserById(session().get("email")), env));
+        Collections.sort(temp, ProductSkeleton.TotalSoldComparator);
+
+        for(int i=0; i<6; i++){
+            bestSellers.add(temp.get(i));
+        }
+        return ok(index.render(bestSellers, User.getUserById(session().get("email")), env));
     }
 
     public Result stats(){

@@ -29,9 +29,9 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
     <h2>@product.getProductName</h2>
     <p>@product.getProductDescription</p>
     <style>
-      
+
     </style>
-    
+
   </div>
   <div class="product-price">
       <div class="hint-star star">
@@ -102,6 +102,7 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
             <span class="glyphicon glyphicon-star checked"></span>
             <span class="glyphicon glyphicon-star checked"></span>
           }
+          <span>(@product.getCountRating)</span>
         </div>
     <span class="price">&euro; @("%.2f".format(product.getProductPrice))</span>
     @if((user != null) && (user.getRole().equals("admin"))){
@@ -111,7 +112,7 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
     <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
     }else{
     <div class="buttons">
-      <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF ORDER</button></a>
+      <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF STOCK</button></a>
     </div>
     }
     }

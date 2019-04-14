@@ -1,18 +1,24 @@
-@(user: models.users.User, env: play.api.Environment)
+@(bestSellers: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
 <style>
     body{
         overflow-x: hidden;
     }
 </style>
+<link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 <div id="slider">
-<figure>
-<img src="/assets/images/slider/laptop1.png" alt>
-<img src="/assets/images/slider/Acer.jpg" alt>
-<img src="/assets/images/slider/gs65.png" alt>
-<img src="/assets/images/slider/intel.jpg" alt>
-<img src="/assets/images/slider/woah.png" alt>
-</figure>
+  <figure>
+    <img src="/assets/images/slider/laptop1.png" alt>
+    <img src="/assets/images/slider/Acer.jpg" alt>
+    <img src="/assets/images/slider/gs65.png" alt>
+    <img src="/assets/images/slider/intel.jpg" alt>
+    <img src="/assets/images/slider/woah.png" alt>
+  </figure>
+</div>
+<div class="product-list-index">
+  @for(p<-bestSellers) {
+    @templateProducts(p, user, env)
+  }
 </div>
 
 }
