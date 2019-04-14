@@ -1,7 +1,6 @@
 package models;
 
 import java.util.*;
-import java.util.Comparator;
 import javax.persistence.*;
 import io.ebean.*;
 import play.data.format.*;
