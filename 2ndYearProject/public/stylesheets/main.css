@@ -574,8 +574,10 @@ footer {
   86% {left: -400%; }
   }
   
-  div#slider { 
+  div#slider {
     overflow-x: hidden;
+    display: block;
+    float:left;
   }
   div#slider figure img { 
     width: 20%;

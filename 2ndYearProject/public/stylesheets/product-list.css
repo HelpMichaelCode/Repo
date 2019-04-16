@@ -116,13 +116,10 @@ body {
 	border: none;
 	color: #eee;
 	padding: 0;
-    margin: 0;
-    margin-bottom: -5em;
-	
+	margin: 0;
+	margin-bottom: -5em;
 }
-
 .btn1:hover{transform: translateY(-4px);}
-
 .btn1 span {
 	font-family: 'Farsan', cursive;
 	transition: transform 0.3s;
@@ -138,11 +135,9 @@ body {
 	border: 0;
 	margin: 0;
 }
-
 .btn1 .price {
 	transform: translateX(-10%); padding-right: 15px;
 }
-
 /* the Icon */
 .btn1 .shopping-cart {
 	transform: translateX(-100%);
@@ -152,15 +147,63 @@ body {
   left: 0;
   top: 0;
 }
-
 /* buy */
 .btn1 .buy {z-index: 3; font-weight: bolder;}
-
 .btn1:hover .price {transform: translateX(-110%);}
-
 .btn1:hover .shopping-cart {transform: translateX(0%);}
 
+/* NO STOCK BUTTON */
 
+.btn1-no-stock {
+	transform: translateY(0px);
+	transition: 0.3s linear;
+	background: rgb(175, 120, 18);
+	border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+	outline: none;
+	border: none;
+	color: #eee;
+	padding: 0;
+	margin: 0;
+	margin-bottom: -5em;
+}
+
+.btn1-no-stock:hover{transform: translateY(-4px);}
+.btn1-no-stock span {
+	font-family: 'Farsan', cursive;
+	transition: transform 0.3s;
+	display: inline-block;
+  padding: 10px 20px;
+	font-size: 1.2em;
+	margin:0;
+	
+}
+/* shopping cart icon */
+.btn1-no-stock .price, .shopping-cart-x{
+	background: #333;
+	border: 0;
+	margin: 0;
+}
+.btn1-no-stock .price {
+	transform: translateX(-10%); padding-right: 15px;
+}
+/* the Icon */
+.btn1-no-stock .shopping-cart-x {
+	background: rgb(104, 17, 17);
+	border: 0;
+	margin: 0;
+	transform: translateX(-100%);
+  position: absolute;
+	background: rgb(104, 17, 17);
+	z-index: 1;
+  left: 0;
+  top: 0;
+}
+/* buy */
+.btn1-no-stock .buy {z-index: 3; font-weight: bolder;}
+.btn1-no-stock:hover .price {transform: translateX(-110%);}
+.btn1-no-stock:hover .shopping-cart-x {transform: translateX(0%);}
 
 /* product image  */
 .product-image {
@@ -208,3 +251,8 @@ body {
 
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
+
+.product-list-index{
+	display: block;
+	float:left;
+}

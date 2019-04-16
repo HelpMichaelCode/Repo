@@ -14,7 +14,7 @@ models.users.User, env: play.api.Environment)
             }
     </ul>
     @if((user != null) && (user.getRole().equals("customer"))) {
-        <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart" 
+        <div class="product-list-show-cart"><a href="@routes.ShoppingController.showCart"
             class="btn btn-default btn-lg">View cart</a></div>
     }
     <!-- this is displayed only to administrators -->
@@ -22,181 +22,13 @@ models.users.User, env: play.api.Environment)
         <input type="button" value="Add Product" class="btn btn-primary btn-lg"
             onclick="window.location.href = '@routes.ProductController.addProduct()';">
     }
-    
+
 </div>
 
 <div class="product-list">
     <h3>Displaying @specs.size products</h3>
-    @for(p<-specs) { 
-    <div id="container">	
-	
-        <!-- Start	Product details -->
-            <div class="product-details">
-                
-                <!-- 	Product Name -->
-            <h1 class="product-list-ptitle"><a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">@p.getName</a></h1>
-        <!-- 		the Product rating -->
-            <span class="hint-star star">
-                @if((p.getProduct.getOverallRating >= 0) && (p.getProduct.getOverallRating < 0.5)){
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 0.5) && (p.getProduct.getOverallRating < 1)){
-                    <span class="glyphicon glyphicon-star half"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 1) && (p.getProduct.getOverallRating < 1.5)){
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 1.5) && (p.getProduct.getOverallRating < 2)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-half-o checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 2) && (p.getProduct.getOverallRating < 2.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 2.5) && (p.getProduct.getOverallRating < 3)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-half-o checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 3) && (p.getProduct.getOverallRating < 3.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 3.5) && (p.getProduct.getOverallRating < 4)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star half checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 4) && (p.getProduct.getOverallRating < 4.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 4.5) && (p.getProduct.getOverallRating < 5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star half checked"></span>
-                } else {
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                }
-            </span>
-                
-            
-        <!-- The most important information about the product -->
-                <p class="information"> @p.getProduct.getProductDescription</p>
-        
-                
-                
-        <!-- 		Control -->
-            <div class="control">
-                
-            <!-- Start Button buying -->
-                <button class="btn1" onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
-            <!--the Price -->
-                    <span class="price">&euro;@p.getProduct.getProductPrice</span>
-            <!--shopping cart icon-->
-                    <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-            <!--Buy Now / Add to Cart-->
-                    <span class="buy">Buy Now</span>
-            </button>
-            <!-- End Button buying -->
-            
-        </div>
-                    
-        </div>
-            
-        <!-- 	End	Product details   -->
-        <!-- 	Start product image & Information -->
-            
-        <div class="product-image">
-            
-            <!-- <img src="/assets/images/productImages/100.jpg" alt=""> -->
-    
-            @if(env.resource("public/images/productImages/" + p.getProduct.getProductID + ".jpg").isDefined){
-                <img src="/assets/images/productImages/@(p.getProduct.getProductID + ".jpg")" alt="">
-            } else {
-                <img src="/assets/images/productImages/noImage.jpg" />
-            }
-            
-        <!-- 	product Information-->
-        <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">
-            <div class="info">
-                <h3>@p.getName Specs</h3>
-                <ul>
-                    <li><strong>Manufacturer: </strong>@p.getManufacturer</li>
-
-                    @if(p.isInstanceOf[models.products.Processor]){
-                        <li><strong>Number of cores: </strong>@p.asInstanceOf[models.products.Processor].getCores</li>
-                        <li><strong>Clock frequency: </strong>@p.asInstanceOf[models.products.Processor].getClock</li>
-                        <li><strong>L3 cache: </strong>@p.asInstanceOf[models.products.Processor].getCache</li>
-                            <!-- end of processor -->
-                    } else if(p.isInstanceOf[models.products.Ram]){ 
-                        <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Ram].getCapacity</li>
-                            <!-- end of ram -->
-                    } else if(p.isInstanceOf[models.products.GraphicsCard]){ 
-                        <li><strong>Bus type: </strong>@p.asInstanceOf[models.products.GraphicsCard].getBus</li>
-                        <li><strong>Memory: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemory</li>
-                        <li><strong>GPU clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getGpuClock</li>
-                        <li><strong>Memory clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemoryClock</li>
-                            <!-- end of graphics card -->
-                    } else if(p.isInstanceOf[models.products.Motherboard]){
-                        <li><strong>RAM slots: </strong>@p.asInstanceOf[models.products.Motherboard].getRamSlots</li>
-                        <li><strong>Max RAM: </strong>@p.asInstanceOf[models.products.Motherboard].getMaxRam</li>
-                            <!-- end of motherboard -->
-                    } else if(p.isInstanceOf[models.products.Storage]){
-                        <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Storage].getCapacity</li>
-                            <!-- end of storage -->
-                    } else if(p.isInstanceOf[models.products.TrendingPC]){
-                            
-                        <li><strong>CPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getCpu.getName</li>
-                        <li><strong>GPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getGpu.getName</li>
-                        <li><strong>RAM: </strong>@p.asInstanceOf[models.products.TrendingPC].getRamQty x @p.asInstanceOf[models.products.TrendingPC].getRam.getName</li>
-                        <li><strong>Motherboard: </strong>@p.asInstanceOf[models.products.TrendingPC].getMotherboard.getName</li>
-                        <li><strong>Storage: </strong>@p.asInstanceOf[models.products.TrendingPC].getStorage.getName</li>
-                            <!-- end of pc -->
-                    }
-                   
-                    @if((user != null) && (user.getRole().equals("admin"))) {
-                        <input type="button" value="Delete" class="btn btn-danger btn-lg"
-                             onclick="window.location.href = '@routes.ProductController.deleteItem(p.getProduct.getProductID)';event.preventDefault();">
-                         <input type="button" value="Update" class="btn btn-primary btn-lg"
-                         onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
-                    }
-                </ul>
-            </div>
-        </a>
-        </div>
-        <!--  End product image  -->
-    
-        
-        </div>
+    @for(p<-specs) {
+        @templateProducts(p, user, env)
     }
     </div>
     }
-
-    

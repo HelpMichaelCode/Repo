@@ -40,13 +40,10 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result addProduct() {
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
-        }
+        flashLowStock();
 
         Form<Product> productForm = formFactory.form(Product.class);
-        
+
         return ok(addProduct.render(productForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
     }
 
@@ -125,10 +122,7 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     public Result updateItem(Long id) {
 
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
-        }
+        flashLowStock();
 
 
         Product p;
@@ -152,30 +146,24 @@ public class ProductController extends Controller{
     // this method gets all the products from the database and passes them into the productList view, which displays them
 
     public Result productList(Long cat, String keyword) {
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
-        }
+        flashLowStock();
 
         List<Category> categoryList = Category.findAll();
         List<ProductSkeleton> specs = null;
-        
+
         if(keyword == null){
             keyword = "";
-        } 
+        }
         specs=getSpecs(cat, keyword);
         return ok(productList.render(specs, categoryList, User.getUserById(session().get("email")), env));
     }
-      
+
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     @Transactional
     public Result deleteItem(Long productID){
-
-        if(Product.getLowQty().size() > 0){
-            String lowQtyStr = "Restock needed! Check product list!";
-            flash("warning", lowQtyStr);
-        }
+        flashLowStock();
+        
         String deleted = "";
         List<ProductSkeleton> all = getSpecs(Product.getProductById(productID).getCategory().getId(), "");
         for(ProductSkeleton e: all){
@@ -197,7 +185,7 @@ public class ProductController extends Controller{
                             if(temp.getCpu().getProductId().toString().equals(productID.toString())){
                                 temp.setCpu(Processor.getProcessorById(Long.valueOf(1)));
                                 temp.update();
-                                
+
                             }
                         }
                     deleted = Processor.getProcessorById(productID).getName();
@@ -210,7 +198,7 @@ public class ProductController extends Controller{
                             if(temp.getGpu().getProductId().toString().equals(productID.toString())){
                                 temp.setGpu(GraphicsCard.getGraphicsCardById(Long.valueOf(1)));
                                 temp.update();
-                                
+
                             }
                         }
                     deleted = GraphicsCard.getGraphicsCardById(productID).getName();
@@ -223,7 +211,7 @@ public class ProductController extends Controller{
                             if(temp.getMotherboard().getProductId().toString().equals(productID.toString())){
                                 temp.setMotherboard(Motherboard.getMotherboardById(Long.valueOf(1)));
                                 temp.update();
-                                
+
                             }
                         }
                     deleted = Motherboard.getMotherboardById(productID).getName();
@@ -236,7 +224,7 @@ public class ProductController extends Controller{
                             if(temp.getRam().getProductId().toString().equals(productID.toString())){
                                 temp.setRam(Ram.getRamById(Long.valueOf(1)));
                                 temp.update();
-                                
+
                             }
                         }
                     deleted = Ram.getRamById(productID).getName();
@@ -249,7 +237,7 @@ public class ProductController extends Controller{
                             if(temp.getStorage().getProductId().toString().equals(productID.toString())){
                                 temp.setStorage(Storage.getStorageById(Long.valueOf(1)));
                                 temp.update();
-                                
+
                             }
                         }
                     deleted = Storage.getStorageById(productID).getName();
@@ -278,12 +266,12 @@ public class ProductController extends Controller{
                 //  + extension);
                 + "jpg");
                 if(file.renameTo(newFile)){
-                   
+
                     try{
                         BufferedImage image = ImageIO.read(newFile);
-                        
+
                         return "/ file uploaded";
-                        
+
                     } catch (IOException e) {
                         return "/ file uploaded.";
                     }
@@ -301,7 +289,7 @@ public class ProductController extends Controller{
         
         Form<Product> prodForm = formFactory.form(Product.class);
         List<Review> filtered = new ArrayList<>();
-        
+
 
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
@@ -310,11 +298,11 @@ public class ProductController extends Controller{
                         filtered.add(r);
                     }
                 }
-                return ok(product.render(e, filtered, reviewForm, User.getUserById(session().get("email")), env));       
+                return ok(product.render(e, filtered, reviewForm, User.getUserById(session().get("email")), env));
             }
         }
-        
-        return redirect(controllers.routes.ProductController.productList(0, ""));    
+
+        return redirect(controllers.routes.ProductController.productList(0, ""));
     }
 
     // @Transactional
@@ -346,8 +334,8 @@ public class ProductController extends Controller{
                 productObj.calculateRating(newReview.getRating());
                 productObj.update();
             }
-                
-            
+
+
             if(newReview.getId() == null){
                 if(newReview.getBody().equals("")){
                     newReview.setBody("No comment");
@@ -370,7 +358,7 @@ public class ProductController extends Controller{
     public Result deleteReview(Long id, String email){
         Review.find.ref(id).delete();
         flash("Success", "Review has been deleted");
-        return redirect(controllers.routes.ProductController.userReviews(email)); 
+        return redirect(controllers.routes.ProductController.userReviews(email));
     }
 
     @Security.Authenticated(Secured.class)
@@ -387,9 +375,15 @@ public class ProductController extends Controller{
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
+    public Result allReviews(){
+        return ok(allReviews.render(Review.findAll(), User.getUserById(session().get("email"))));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
     public Result addTrendingPC(Long p){
         Form<TrendingPC> productForm = formFactory.form(TrendingPC.class);
-        
+
         return ok(addTrendingPC.render(productForm, p, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
     }
 
@@ -553,7 +547,7 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     public Result addProcessor(Long p){
         Form<Processor> productForm = formFactory.form(Processor.class);
-        
+
         return ok(addProcessor.render(productForm, p, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
     }
 
@@ -694,6 +688,44 @@ public class ProductController extends Controller{
         return ok(addMotherboard.render(form, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
     }
 
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result lowStockProducts(Long cat){
+        List<Product> temp = new ArrayList<>();
+        List<Product> itemList = null;
+        if(cat==0){
+            itemList = Product.findAll();
+        } else {
+            itemList = Category.find.ref(cat).getItems();
+        }
+        for(Product p: itemList){
+            for(Product low: Product.getLowQty()){
+                if(p.getProductName().contains("N/A")){
+                    break;
+                }
+                if(p.getProductID() == low.getProductID()){
+                    temp.add(low);
+                }
+            }
+        }
+        return ok(lowProducts.render(temp, Category.findAll(), User.getUserById(session().get("email"))));
+    }
+
+    private static boolean checkLowStock(){
+        if(Product.getLowQty().size() > 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected static void flashLowStock(){
+        if(checkLowStock()){
+            String lowQtyStr = "Restock needed! Check low stock list!";
+            flash("warning", lowQtyStr);
+        }
+    }
+
 
     public static List<ProductSkeleton> getSpecs(Long cat, String keyword){
         keyword = keyword.toLowerCase();
@@ -756,6 +788,3 @@ public class ProductController extends Controller{
             return specs;
     }
 }
-
-
-
