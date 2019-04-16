@@ -286,6 +286,7 @@ public class ProductController extends Controller{
 
     public Result displayProduct(String productName){
         Form<Review> reviewForm = formFactory.form(Review.class);
+        
         Form<Product> prodForm = formFactory.form(Product.class);
         List<Review> filtered = new ArrayList<>();
 
