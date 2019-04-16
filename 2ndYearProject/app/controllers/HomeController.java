@@ -47,6 +47,7 @@ public class HomeController extends Controller {
     }
 
     public Result stats(){
+      
         List<String> names = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
         
@@ -60,7 +61,8 @@ public class HomeController extends Controller {
             }
             sales.add(sum);
         }
-
-        return ok(stats.render(names, sales, User.getUserById(session().get("email"))));
+        String[] prodNames= names.toArray(new String[names.size()]);
+        Integer[] sold= sales.toArray(new Integer[sales.size()]);
+        return ok(stats.render(prodNames, sold, User.getUserById(session().get("email"))));
     }
 }
