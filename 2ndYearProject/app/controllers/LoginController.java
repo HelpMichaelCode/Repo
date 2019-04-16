@@ -118,7 +118,7 @@ public class LoginController extends Controller{
         User user = null;
         // Form<User> userForm;
         Form<PasswordCheck> newPass;
-        if(Product.getLowQty().size() > 0){
+        if(Product.getLowQty().size() < 0){
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
@@ -174,7 +174,7 @@ public class LoginController extends Controller{
     @With(Administrator.class)
     public Result userList(){
         List<User> users = User.findAll();
-        if(Product.getLowQty().size() > 0){
+        if(Product.getLowQty().size() < 0){
             String lowQtyStr = "Restock needed! Check product list!";
             flash("warning", lowQtyStr);
         }
