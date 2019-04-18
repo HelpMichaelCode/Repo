@@ -32,7 +32,7 @@ public class LoginController extends Controller{
             Form<Login> loginForm = formFactory.form(Login.class);
             return ok(login.render(loginForm, User.getUserById(session().get("email"))));
         } else {
-            return ok(index.render(User.getUserById(session().get("email")), env));
+            return redirect(controllers.routes.HomeController.index());
         }
         
        }
@@ -61,7 +61,7 @@ public class LoginController extends Controller{
             Form<PasswordCheck> userForm = formFactory.form(PasswordCheck.class);
             return ok(register.render(userForm, User.getUserById(session().get("email")), "Register"));
         } else {
-            return ok(index.render(User.getUserById(session().get("email")), env));
+            return redirect(controllers.routes.HomeController.index());
         }
     }
 
@@ -133,7 +133,7 @@ public class LoginController extends Controller{
             return ok(updateUser.render(newPass, user, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
         } else {
             flash("error", "You cannot update that user");
-            return badRequest(index.render(User.getUserById(session().get("email")), env));
+            return redirect(controllers.routes.HomeController.index());
         }
     }
 
@@ -163,9 +163,9 @@ public class LoginController extends Controller{
                 newUser.update(); //updates the user in the database
                 flash("success", "User " + newUser.getUsername() + " was updated.");
                 return redirect(controllers.routes.HomeController.index());
-            } else {
-                flash("error", "Wrong password");
-                return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                } else {
+                    flash("error", "Wrong password");
+                    return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
             }
         }
     }
@@ -182,7 +182,7 @@ public class LoginController extends Controller{
             return ok(userList.render(users,  User.getUserById(session().get("email"))));
         } else {
             flash("error", "No users found.");
-            return badRequest(index.render(User.getUserById(session().get("email")), env));
+            return redirect(controllers.routes.HomeController.index());
         }
     }    
 

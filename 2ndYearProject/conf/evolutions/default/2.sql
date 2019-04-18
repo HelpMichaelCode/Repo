@@ -22,6 +22,7 @@ insert into category (id,name) values ( 8,'Motherboards' );
 insert into category (id,name) values ( 9,'RAM' );
 insert into category (id,name) values ( 10,'Graphics cards' );
 insert into category (id,name) values ( 11,'Storage' );
+insert into category (id,name) values ( 1000,'None');
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 
@@ -188,7 +189,7 @@ and casual games with lighter graphics that do not require much processing power
 
 insert into product (product_ID,product_name,product_description,product_price,product_qty,
 total_sold,overall_rating, summed_rating, count_rating, category_id) 
-values (1, 'Unknown - N/A','Unknown - N/A', 0, 0, 0, 0, 0, 0, 1);
+values (1, 'Unknown - N/A','Unknown - N/A', 0, 0, 0, 0, 0, 0, 1000);
 
 insert into processor (product_id, manufacturer, name, cores, clock, cache, product_product_id)
 values (106, 'Intel', 'i7-9700K', 6, '3.2 GHz', '12 MB', 106);

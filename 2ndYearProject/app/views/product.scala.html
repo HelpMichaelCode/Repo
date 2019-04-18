@@ -131,6 +131,7 @@ button[type="button"]:disabled {
 }
 </style>
 <div class="reviews">
+  
   <div class="add-review-form">
     <h4>You already have this product or recently pruchased it? Please leave your feedback to inform others.</h4>
     @helper.form(action=controllers.routes.ProductController.addReviewSubmit(product.getProductID), 'class -> "form-horizontal",
@@ -160,6 +161,7 @@ button[type="button"]:disabled {
     </div>
     }
   </div>
+  <!-- end of review form -->
   <div class="product-reviews">
 
       @if(filtered.isEmpty){ <h3>This product does not have any reviews</h3>

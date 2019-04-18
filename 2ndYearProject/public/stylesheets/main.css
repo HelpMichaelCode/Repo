@@ -589,6 +589,8 @@ footer {
     top:10%;
     position: absolute;
     width: 500%;
+    display: block;
+    float:left;
     margin: 0;
     left: 0;
     text-align: left;

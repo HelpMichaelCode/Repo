@@ -1,50 +1,97 @@
-@(names: List[String], sales: List[Integer], user: models.users.User)
+@(names: Array[String], sales: Array[Integer], user: models.users.User)
 @main("Statistics", user){
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+<script>
+var table = document.getElementById("myTable")
+var tableLen = table.rows.length
+var data = {labels: [], sales: [], names: [] }
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
+for (var i = 1; i < tableLen; i++) {
+  data.labels.push(table.rows[i].cells[0].innerText)
+  data.population.push(table.rows[i].cells[1].innerText.replace(',',''))
+  
+}
+var canvasP = document.getElementById("pieChart")
+var ctxP = canvasP.getContext('2d')
+var myPieChart = new Chart(ctxP, {
+  type: 'pie',
+  data: {
+    labels: data.labels,
+    datasets: [{
+      data: data.sales,
+      backgroundColor: ["#64B5F6", "#FFD54F", "#2196F3", "#FFC107", "#1976D2", "#FFA000", "#0D47A1"],
+      hoverBackgroundColor: ["#B2EBF2", "#FFCCBC", "#4DD0E1", "#FF8A65", "#00BCD4", "#FF5722", "#0097A7"]
+    }]
+  },
+  options: {
+    legend: {
+      display: true,
+      position: "right"
+    }
+  }
+})
 
-<div class="container">
+</script>
+   
+--> 
+   <table id="myTable">
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Sold</th>
+    </tr>
+  </thead>
+  <tbody>
+@for(i <- 0 until names.length){
+    <tr>
+      <tr>
+          <th scope="row"><a href="@routes.HomeController.catstat(names(i))">@names(i)</a></th>
+      <td>@sales(i)</td>
+    </tr>
+    </tr>
+} </tbody>
+</table> 
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">@Messages("label.bubble")</h3>
-                </div>
-                <div class="panel-body">
-                    <div id="bubbleChart" class="chart-holder"></div>
-                </div>
-            </div>
 
-        </div><!-- /span12 -->
+<canvas id="pieChart"></canvas>
+<br/>
+<!-- Just so that JSFiddle's Result label doesn't overlap the Chart -->
+<div id="chartContainer" style="height: 360px; width: 100%;"></div>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js" ></script>
 
-    </div><!-- /row -->
 
-</div><!-- /container -->
 
 <script>
-    $(function () {
-        $('#bubbleChart').highcharts({
-            chart: {
-                type: 'bubble',
-                zoomType: 'xy'
-            },
+var dataArray = [];
 
-            title: {
-                text: 'Highcharts Bubbles'
-            },
+var dps = [];   //dataPoints. 
+   
+	 var chart = new CanvasJS.Chart("chartContainer",{
+      	title :{
+      		text: "Data Plotted from Array"
+      	},
+      	axisX: {						
+      		title: "Axis X Title"
+      	},
+      	axisY: {						
+      		title: "Units"
+      	},
+      	data: [{
+      		type: "line",
+      		dataPoints : dps
+      	}]
+      });
 
-            series: [{
-                data: [[97, 36, 79], [94, 74, 60], [68, 76, 58], [64, 87, 56], [68, 27, 73], [74, 99, 42], [7, 93, 87], [51, 69, 40], [38, 23, 33], [57, 86, 31]]
-            }, {
-                data: [[25, 10, 87], [2, 75, 59], [11, 54, 8], [86, 55, 93], [5, 3, 58], [90, 63, 44], [91, 33, 17], [97, 3, 56], [15, 67, 48], [54, 25, 81]]
-            }, {
-                data: [[47, 47, 21], [20, 12, 4], [6, 76, 91], [38, 30, 60], [57, 98, 64], [61, 17, 80], [83, 60, 13], [67, 78, 75], [64, 12, 10], [30, 77, 82]]
-            }]
 
-        });
-    });
-</script>
+     function parseDataPoints () {
+        for (var i = 0; i <= dataArray.length; i++)
+          dps.push({y: dataArray[i]});     
+     };
+   		
+   	 parseDataPoints();
+     chart.options.data[0].dataPoints = dps;
+     chart.render();
+    </script>
+
 }

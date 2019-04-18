@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import models.*;
 import models.users.*;
 import models.products.*;
+import models.shopping.*;
 import views.html.*;
 
 
@@ -322,34 +323,50 @@ public class ProductController extends Controller{
             Review newReview = reviewForm.get();
             newReview.setUser(User.getUserById(session().get("email")));
             newReview.setProduct(productObj);
-            boolean flag = false;
+            boolean alreadyReviewed = false;
+            boolean userHasPurchasedProduct = false;
+
+            for(ShopOrder s: User.getUserById(session().get("email")).getOrders()){
+                for(OrderLine o: s.getProducts()){
+                    if(o.getProduct().getProductID() == newReview.getProduct().getProductID()){
+                        userHasPurchasedProduct = true;
+                    }
+                }
+            }
             for(Review r: productObj.getReviews()){
                 if(r.getUser().getEmail().equals(newReview.getUser().getEmail())){
-                    flag = true;
+                    alreadyReviewed = true;
                 }
             }
 
-            if(!flag){
-                productObj.calculateRating(newReview.getRating());
-                productObj.update();
-            }
+            if(userHasPurchasedProduct){
+                if(newReview.getId() == null){
+                    if(!alreadyReviewed){
+                        productObj.calculateRating(newReview.getRating());
+                        productObj.update();
+                    } else {
+                        flash("error", "You have reviewed this product already. If you wish to update the comment or rating of the review please contact a moderator/admin");
+                        return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+                    }
+                    if(newReview.getBody().equals("")){
+                        newReview.setBody("No comment");
+                    }
+                    newReview.save();
+                    flash("success", "Thank you for you feedback!");
 
-
-            if(newReview.getId() == null){
-                if(newReview.getBody().equals("")){
-                    newReview.setBody("No comment");
+                        // Calculate the overall rating of the product
+                    return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+                } else {
+                    flash("error", "We ran into a problem processing your review, please try again later.");
+                    return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
                 }
-                newReview.save();
-                flash("success", "Thank you for you feedback!");
-
-                    // Calculate the overall rating of the product
-                return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
             } else {
-                flash("error", "We ran into a problem processing your review, please try again later.");
+                flash("error", "You need to purchase the product before reviewing it!");
                 return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
             }
         }
     }
+    
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)

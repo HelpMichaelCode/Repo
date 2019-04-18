@@ -27,8 +27,7 @@
                       <li><a href="@routes.HomeController.index">Home</a></li>
                       <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
                       @if((user != null) && (user.getRole().equals("customer"))) {
-                        <li><a href="@routes.LoginController.updateUser(user.getEmail)">View Profile</a></li>
-                        <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
+                        <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
                       } else if(user != null && user.getRole.equals("admin")){
                         @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock")){
                           <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
@@ -44,6 +43,7 @@
                       <li><a href="@routes.LoginController.userList()">Users</a></li>
                     }
                     @if((user != null) && (user.getRole().equals("customer"))) {
+                      <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
                       <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
                     }
                     @if(user != null){

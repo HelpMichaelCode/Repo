@@ -101,9 +101,8 @@ body {
 	position: absolute;
 	bottom: 12%;
 	left: 22.8%;
-	
 }
-/* the Button */
+/* the button */
 .btn1 {
 	transform: translateY(0px);
 	transition: 0.3s linear;
@@ -138,7 +137,7 @@ body {
 .btn1 .price {
 	transform: translateX(-10%); padding-right: 15px;
 }
-/* the Icon */
+/* the icon */
 .btn1 .shopping-cart {
 	transform: translateX(-100%);
   position: absolute;

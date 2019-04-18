@@ -27,6 +27,7 @@ GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(Pro
 
 GET     /low-stock-products         controllers.ProductController.lowStockProducts(category:Long?=0L)
 GET     /stats                      controllers.HomeController.stats
+GET     /stats-by-category/:catName          controllers.HomeController.catstat(catName: String)
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)
