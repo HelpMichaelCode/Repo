@@ -6,6 +6,7 @@ GET     /                           controllers.HomeController.index
 GET     /index                      controllers.HomeController.index
 GET     /home                       controllers.HomeController.index
 
+
 # Map static resources from the /public folder to the /assets URL path
 
 GET     /login                      controllers.LoginController.login
@@ -15,7 +16,7 @@ GET     /register                   controllers.LoginController.register
 POST    /register-submit            controllers.LoginController.registerSubmit
 GET     /update-user/:email         controllers.LoginController.updateUser(email: String)
 POST    /update-user-submit/:email  controllers.LoginController.updateUserSubmit(email: String)
-
+          
 GET     /assets/*file               controllers.Assets.versioned(path="/public/", file: Asset)
 
 GET     /product-list               controllers.ProductController.productList(category:Long?=0L, keyword: String)
