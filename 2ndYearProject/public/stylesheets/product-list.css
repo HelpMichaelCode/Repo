@@ -256,7 +256,7 @@ body {
 	float:left;
 	margin-top: 80%;
 }
-/* slider */
+/* start of slider */
 
  
 /* Slider wrapper*/
@@ -348,7 +348,8 @@ body {
  
 .slider > img {
   position: absolute;
-  right: 10%;
+	width: 50%;
+	/* float: left; */
   bottom: 0;
   height: 100%;
   opacity: 0;
@@ -357,6 +358,15 @@ body {
 }
  
 .slide-1 > img {
+  right: 0;
+}
+.slide-2 > img {
+  right: 0;
+}
+.slide-3 > img {
+  right: 0;
+}
+.slide-4 > img {
   right: 0;
 }
  
@@ -434,7 +444,7 @@ body {
 .number-pagination span:after {
   content: "/4";
   font-size: 16px;
-  color: #fff;
+  color: #ea2e49;
 }
  
 /* Slider Pagger */

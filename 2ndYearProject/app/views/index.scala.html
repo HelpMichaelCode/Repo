@@ -1,11 +1,23 @@
 @(bestSellers: List[models.products.ProductSkeleton], recentlyAdded: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
 <style>
+  *{
+    padding: 0;
+    margin: 0;
+
+  }
     body{
         overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        
+    }
+    img{
+      width: 100%;
+    
+      
     }
 </style>
-  
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 <script src="/assets/javascripts/slider.js"></script>
 <!-- <div id="slider">
@@ -18,7 +30,6 @@
   </figure>
 </div> -->
 <!-- Slider Wrapper -->
-
 <div class="css-slider-wrapper">
   <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
   <input type="radio" name="slider" class="slide-radio2" id="slider_2">
@@ -34,9 +45,9 @@
   </div>
  
   <!-- Slider #1 -->
-  @for(p <- recentlyAdded){
+  @for(p<-recentlyAdded){
   <div class="slider slide-1">
-    <img src="/assets/images/productImages/@(p.getProductId + ".jpg")" alt="">
+    <img src="/assets/images/productImages/127slider.jpg" alt="">
     <div class="slider-content">
       <h4>New Product</h4>
       <h2>Denim Longline T-Shirt Dress With Split</h2>
@@ -49,7 +60,7 @@
  
   <!-- Slider #2 -->
   <div class="slider slide-2">
-    <img src="/assets/images/productImages/@(p.getProductId + ".jpg")" alt="">
+    <img src="/assets/images/productImages/153.jpg" alt="">
     <div class="slider-content">
       <h4>New Product</h4>
       <h2>Denim Longline T-Shirt Dress With Split</h2>
@@ -62,7 +73,7 @@
  
   <!-- Slider #3 -->
   <div class="slider slide-3">
-    <img src="/assets/images/productImages/@(p.getProductId + ".jpg")" alt="">
+    <img src="/assets/images/productImages/108.jpg" alt="">
     <div class="slider-content">
       <h4>New Product</h4>
       <h2>Denim Longline T-Shirt Dress With Split</h2>
@@ -75,7 +86,7 @@
  
   <!-- Slider #4 -->
   <div class="slider slide-4">
-    <img src="/assets/images/productImages/@(p.getProductId + ".jpg")" alt="">
+    <img src="/assets/images/productImages/110.jpg" alt="">
     <div class="slider-content">
       <h4>New Product</h4>
       <h2>Denim Longline T-Shirt Dress With Split</h2>
@@ -96,6 +107,3 @@
 </div>
 
 }
-
-
-
