@@ -32,11 +32,7 @@ public class LoginController extends Controller{
             Form<Login> loginForm = formFactory.form(Login.class);
             return ok(login.render(loginForm, User.getUserById(session().get("email"))));
         } else {
-<<<<<<< HEAD
             return redirect(controllers.routes.HomeController.index());
-=======
-            return redirect(routes.HomeController.index());
->>>>>>> 9d8b5e04cdba078d43544362ebeb24902cb72c55
         }
         
        }

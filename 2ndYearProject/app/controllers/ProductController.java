@@ -150,6 +150,7 @@ public class ProductController extends Controller{
         flashLowStock();
 
         List<Category> categoryList = Category.findAll();
+        // categoryList.remove(Category.getCategoryById(Long.valueOf(1000)));
         List<ProductSkeleton> specs = null;
 
         if(keyword == null){
@@ -263,22 +264,30 @@ public class ProductController extends Controller{
                     directory.mkdirs();
                 }
                 //saving the image
-                File newFile = new File("public/images/productImages/", productID + "."
-                //  + extension);
-                + "jpg");
-                if(file.renameTo(newFile)){
-
-                    try{
-                        BufferedImage image = ImageIO.read(newFile);
-
-                        return "/ file uploaded";
-
-                    } catch (IOException e) {
-                        return "/ file uploaded.";
+                File newFile = new File("public/images/productImages/", productID + ".jpg");
+                if(!newFile.exists()){
+                    if(file.renameTo(newFile)){
+                        try{
+                            BufferedImage image = ImageIO.read(newFile);
+                            return "/ file uploaded";
+                        } catch (IOException e) {
+                            return "/ image upload failed.";
+                        }
+                    } else {
+                        return "/ file upload failed.";
                     }
-
                 } else {
-                    return "/ file upload failed.";
+                File slider = new File("public/images/productImages/", productID + "slider.jpg");
+                    if(file.renameTo(slider)){
+                        try{
+                            BufferedImage image = ImageIO.read(slider);
+                            return "/ file uploaded";
+                        } catch (IOException e) {
+                            return "/ image upload failed.";
+                        }
+                    } else {
+                        return "/ file upload failed.";
+                    }
                 }
             }
         }
@@ -408,11 +417,15 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     public Result addTrendingPCSubmit(Long pid){
         Form<TrendingPC> newForm = formFactory.form(TrendingPC.class).bindFromRequest();
+        MultipartFormData<File> data = request().body().asMultipartFormData();
+        FilePart<File> image = data.getFile("uploadSlider");
+        
         if(newForm.hasErrors()){
             flash("error", "Fill in all fields!");
             return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
         } else {
             TrendingPC pc = newForm.get();
+            String saveImageMessage = saveFile(pid, image);
             pc.setProduct(Product.getProductById(pid));
             if(pc.getCpu().getProductId() == null){
                 pc.setCpu(Processor.getProcessorById(Long.valueOf(1)));

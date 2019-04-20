@@ -59,7 +59,17 @@ public static Finder<Long,Category> find = new Finder<Long,Category>(Category.cl
 
 //Find all Products in the database
 public static List<Category> findAll() {
-   return Category.find.query().where().orderBy("name asc").findList();
+    List<Category> categoryList = Category.find.query().where().orderBy("name asc").findList();
+    categoryList.remove(Category.getCategoryById(Long.valueOf(1000)));
+    return categoryList;
+}
+
+public static Category getCategoryById(Long id){
+    if(id <= 0){
+        return null;
+    } else {
+        return find.query().where().eq("id", id).findUnique();
+    }
 }
 
 public static Map<String,String> options() {

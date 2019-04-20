@@ -29,6 +29,7 @@ public class HomeController extends Controller {
         ProductController.flashLowStock();
 
         List<ProductSkeleton> bestSellers = new ArrayList<>();
+        List<ProductSkeleton> recentlyAdded = new ArrayList<>();
         List<ProductSkeleton> temp = ProductController.getSpecs(Long.valueOf(0), "");
         List<Product> all = Product.findAll();
         for(int i = 0; i < temp.size(); i++){
@@ -37,12 +38,17 @@ public class HomeController extends Controller {
                 temp.remove(i);
             }
         }
-        Collections.sort(temp, ProductSkeleton.TotalSoldComparator);
 
+        Collections.sort(temp, ProductSkeleton.TotalSoldComparator);
         for(int i=0; i<6; i++){
             bestSellers.add(temp.get(i));
         }
-        return ok(index.render(bestSellers, User.getUserById(session().get("email")), env));
+
+        Collections.sort(temp, ProductSkeleton.IdComparator);
+        for(int i=0; i<4; i++){
+            recentlyAdded.add(temp.get(i));
+        }
+        return ok(index.render(bestSellers, recentlyAdded, User.getUserById(session().get("email")), env));
     }
 
     public Result stats(){

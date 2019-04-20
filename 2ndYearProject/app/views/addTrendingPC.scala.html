@@ -14,7 +14,7 @@
 <div class="add-product-form">
     <h3>@heading</h3>
     @helper.form(action=controllers.routes.ProductController.addTrendingPCSubmit(pid), 'class -> "form-horizontal",
-    'role -> "form", 'method -> "POST") {
+    'role -> "form", 'method -> "POST" , 'enctype -> "multipart/form-data") {
 
     @CSRF.formField
 
@@ -56,6 +56,8 @@
         productForm("ram.productId"), options(Product.options("ram")), '_label -> "", '_default -> "-- What's the RAM? --",
         '_showConstraints -> false, 'class -> "form-control"
     )
+    <label>Upload image</label>
+    <input class="btn-sm btn-default" type="file" name="uploadSlider">
     <div class="hide">
         @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
     </div>

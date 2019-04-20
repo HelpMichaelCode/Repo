@@ -1,4 +1,4 @@
-@(bestSellers: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
+@(bestSellers: List[models.products.ProductSkeleton], recentlyAdded: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
 <style>
     body{
@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 <div id="slider">
   <figure>
-    <img src="/assets/images/slider/laptop1.png" alt>
+    <img src="/assets/images/productImages/127slider.jpg" alt>
     <img src="/assets/images/slider/Acer.jpg" alt>
     <img src="/assets/images/slider/gs65.png" alt>
     <img src="/assets/images/slider/intel.jpg" alt>
@@ -16,7 +16,7 @@
   </figure>
 </div>
 <div class="product-list-index">
-  @for(p<-bestSellers) {
+  @for(p <- bestSellers) {
     @templateProducts(p, user, env)
   }
 </div>
