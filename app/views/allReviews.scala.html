@@ -1,0 +1,48 @@
+@(reviews: List[models.Review], user: models.users.User)
+@main("All reviews", user){
+    @if((user != null) && (user.getRole().equals("admin"))) {
+        @if(reviews.isEmpty){
+            <h1>No reviews available to display</h1>
+        } else {
+        <div class="table-responsive">
+            <h2>List of all reviews</h2>
+
+            <table class="table table-bordered table-condensed">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                        <th>Product name</th>
+                        <th>Review ID</th>
+                        <th>Delete review</th>
+                    </tr>
+                </thead>
+                <!-- End of table header -->
+                <div class="table">
+                    <tbody>
+                        <!-- Review row(s) -->
+                        @for(r<-reviews) {
+                                <tr>
+                                    <td><a href="@routes.ProductController.userReviews(r.getUser.getEmail)">@r.getUser.getUsername</a></td>
+                                    <td>@r.getBody</td>
+                                    <td>@("%.2f".format(r.getRating))</td>
+
+                                      <td><a href="@routes.ProductController.displayProduct(r.getProduct.getProductName)">@r.getProduct.getProductName</a></td>
+                                    <td>@r.getId</td>
+
+                                    <!-- delete button -->
+                                    <td>
+                                        <a href="@routes.ProductController.deleteReview(r.getId, r.getUser.getEmail)" class="btn btn-danger btn-sm" onclick="confirmDel()">
+                                            DELETE
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                    </tbody>
+                </div>
+            </table>
+        </div>
+        }
+    }
+}

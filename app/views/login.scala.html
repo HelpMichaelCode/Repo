@@ -1,0 +1,50 @@
+@(loginForm: Form[models.users.Login], user: models.users.User)
+@import helper._
+
+@main("Login", user) {
+  <style>
+  body{
+    background-color: #221F1F;
+  color: white;
+  }  
+   
+    </style>
+  <!-- Display login errors if there are any-->
+  @if(loginForm.hasGlobalErrors) {
+  <p class="alert alert-warning  ">
+    @for(e
+    <- loginForm.globalErrors) { @e.message<br />
+    }
+  </p>
+  }
+
+  <!--The login form-->
+  @helper.form(action = controllers.routes.LoginController.loginSubmit()) {
+
+  @* CSRF attack prevention *@
+  @CSRF.formField
+  <div class="login-box">
+    <h1>Login</h1>
+    <div class="textbox">
+      <span class="glyphicon glyphicon-user"></span>
+      @inputText(loginForm("email"), '_label -> "",
+      'class -> "input", 'placeholder -> "Email")
+    </div>
+
+    <div class="textbox">
+      <span class="glyphicon glyphicon-lock"></span>
+      @inputPassword(loginForm("password"), '_label -> "",
+      'class -> "input", 'placeholder -> "Password")
+    </div>
+
+    <input type="submit" value="Sign In" class="btn login-btn">
+    <input type="button" value="Register" class="btn login-btn"
+      onclick="window.location.href = '@routes.LoginController.register()'">
+    <input type="button" value="Cancel" class="btn login-btn"
+      onclick="window.location.href = '@routes.HomeController.index()';">
+
+  </div>
+  } @* End of form *@
+} @* End of main *@
+
+

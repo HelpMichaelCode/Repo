@@ -1,0 +1,74 @@
+@(names: List[String], sales: List[Integer], user: models.users.User)
+@main("Statistics", user){
+<head>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js%22%3E"></script>
+            <script src="https://cdnjs.com/libraries/Chart.js%22%3E"></script>
+</head>
+    
+
+
+
+
+<script>
+        var table = document.getElementById("myTable")
+        var tableLen = table.rows.length
+        var data = {labels: [], population: [], area: [] }
+        
+        for (var i = 1; i < tableLen; i++) {
+          data.labels.push(table.rows[i].cells[0].innerText)
+          data.population.push(table.rows[i].cells[1].innerText.replace(',',''))
+          data.area.push(table.rows[i].cells[2].innerText)
+        }
+        var canvasP = document.getElementById("pieChart")
+        var ctxP = canvasP.getContext('2d')
+        var myPieChart = new Chart(ctxP, {
+          type: 'pie',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              data: data.population,
+              backgroundColor: ["#64B5F6", "#FFD54F", "#2196F3", "#FFC107", "#1976D2", "#FFA000", "#0D47A1"],
+              hoverBackgroundColor: ["#B2EBF2", "#FFCCBC", "#4DD0E1", "#FF8A65", "#00BCD4", "#FF5722", "#0097A7"]
+            }]
+          },
+          options: {
+            legend: {
+              display: true,
+              position: "right"
+            }
+          }
+        })
+    </script>    
+        
+        <table id="myTable">
+          <thead>
+            <tr>
+              <th scope="col">Village</th>
+              <th scope="col">Population</th>
+              <th scope="col">Area</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">San Jose</th>
+              <td>2,332</td>
+              <td>12.46</td>
+            </tr>
+            <tr>
+              <th scope="row">Santa Maria</th>
+              <td>2,551</td>
+              <td>4.65</td>
+            </tr>
+            <tr>
+              <th scope="row">San Francisco</th>
+              <td>544</td>
+              <td>7.77</td>
+            </tr>
+          </tbody>
+        </table>
+      
+        
+   
+   
+}

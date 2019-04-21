@@ -1,0 +1,65 @@
+@(products: List[models.Product], categories: List[models.Category], user: models.users.User)
+@main("Low stock",user){
+    <h1>Low quantity products</h1>
+
+    <!-- filter the low stock list by categories? -->
+    <div class="col-sm-2">
+        <h2>Filter by</h2>
+        <ul class="list-group">
+        <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
+        @for(c<-categories) { 
+            <a href="@routes.ProductController.lowStockProducts(c.getId())" class="list-group-item">
+                @c.getName
+            </a>
+        }
+    </ul>
+    </div>
+
+    <div class="col-sm-9">
+        <h4>Products in need of restock: @products.size</h4>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+        <!-- The header row-->
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>In stock</th>
+            <th>Price</th>
+            <th colspan="3">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Product row(s) -->
+       
+            @for(i<-products) {
+               <tr>
+                  <td>@i.getProductID</td>
+                  <td>@i.getProductName</td>
+                  <td>@i.getProductDescription</td>
+                  <td>@i.getProductQty</td>
+                  <td>&euro; @("%.2f".format(i.getProductPrice))</td>
+
+                  @if((user != null) && ("admin".equals(user.getRole()))) {
+                  <!-- Update button -->
+                        <!-- restock button? that would require one new page -->
+						<td>
+							<a href="@routes.ProductController.updateItem(i.getProductID)" class="btn btn-warning btn-sm">
+								EDIT
+							</a>
+                        </td>
+                  <!-- Delete button -->
+						<td>
+							<a href="@routes.ProductController.deleteItem(i.getProductID)" class="btn btn-danger btn-sm" onclick="return confirmDel();">
+								DELETE
+							</a>
+                        </td>
+                  }
+                        
+                
+               </tr>
+            }
+        </tbody>
+    </table>
+</div>
+ }
