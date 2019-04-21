@@ -324,7 +324,7 @@ body {
   color: #333333;
   font-weight: 900;
   text-transform: capitalize;
-  font-size: 60px;
+  font-size: 3em;
   font-weight: 300;
   line-height: 1.2;
   opacity: 0;
@@ -555,8 +555,5 @@ body {
     right: 2%;
   }
  
-  .slide-1 > img {
-    right: -110px;
-  }
 }
 /* end of slider */

@@ -20,11 +20,6 @@
     @CSRF.formField
 
     @select(
-        productForm("product.productID"), options(Product.options("graphics")), '_label -> "", '_default -> "-- Choose a GPU --",
-        '_showConstraints -> false, 'class -> "form-control"
-    )
-
-    @select(
         field = productForm("manufacturer"), 
         options = options(
             "ASUS"->"ASUS",

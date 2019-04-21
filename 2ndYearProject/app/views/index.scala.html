@@ -46,57 +46,25 @@
  
   <!-- Slider #1 -->
   @for(p<-recentlyAdded){
-  <div class="slider slide-1">
-    <img src="/assets/images/productImages/127slider.jpg" alt="">
-    <div class="slider-content">
-      <h4>New Product</h4>
-      <h2>Denim Longline T-Shirt Dress With Split</h2>
-      <button type="button" class="buy-now-btn" name="button">$130</button>
+    <p>@p.getProductId</p>
+  }
+  @for((p, count) <- recentlyAdded.zipWithIndex) {
+    <div class="slider slide-@(count+1)">
+      @if(env.resource("public/images/productImages/" + p.getProductId + ".jpg").isDefined) {
+        <img src="/assets/images/productImages/@(p.getProductId + ".jpg")"/>
+      } else {
+        <img src="/assets/images/productImages/noImage.jpg"/>
+      }
+      <div class="slider-content">
+        <h4>New Product</h4>
+        <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)"><h2>@p.getProduct.getProductName</h2></a>
+        <button type="button" class="buy-now-btn" name="button">&euro;@p.getProduct.getProductPrice</button>
+      </div>
+      <div class="number-pagination">
+        <span>@(count+1)</span>
+      </div>
     </div>
-    <div class="number-pagination">
-      <span>1</span>
-    </div>
-  </div>
- 
-  <!-- Slider #2 -->
-  <div class="slider slide-2">
-    <img src="/assets/images/productImages/153.jpg" alt="">
-    <div class="slider-content">
-      <h4>New Product</h4>
-      <h2>Denim Longline T-Shirt Dress With Split</h2>
-      <button type="button" class="buy-now-btn" name="button">$130</button>
-    </div>
-    <div class="number-pagination">
-      <span>2</span>
-    </div>
-  </div>
- 
-  <!-- Slider #3 -->
-  <div class="slider slide-3">
-    <img src="/assets/images/productImages/108.jpg" alt="">
-    <div class="slider-content">
-      <h4>New Product</h4>
-      <h2>Denim Longline T-Shirt Dress With Split</h2>
-      <button type="button" class="buy-now-btn" name="button">$130</button>
-    </div>
-    <div class="number-pagination">
-      <span>3</span>
-    </div>
-  </div>
- 
-  <!-- Slider #4 -->
-  <div class="slider slide-4">
-    <img src="/assets/images/productImages/110.jpg" alt="">
-    <div class="slider-content">
-      <h4>New Product</h4>
-      <h2>Denim Longline T-Shirt Dress With Split</h2>
-      <button type="button" class="buy-now-btn" name="button">$130</button>
-    </div>
-    <div class="number-pagination">
-      <span>4</span>
-    </div>
-  </div>
-}
+  }
 </div>
 
 

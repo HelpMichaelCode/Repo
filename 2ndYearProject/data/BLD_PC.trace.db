@@ -101,3 +101,6 @@ org.h2.message.DbException: The connection was not closed by the application and
 Caused by: org.h2.jdbc.JdbcSQLException: The connection was not closed by the application and is garbage collected [90018-197]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:357)
 	... 95 more
+2019-04-21 01:12:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "PRODUCT[*]"; expected "PREPARE, {"; SQL statement:
+PRODUCT [42001-197]

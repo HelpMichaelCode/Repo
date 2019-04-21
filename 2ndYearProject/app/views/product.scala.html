@@ -35,86 +35,19 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
   </div>
   <div class="product-price">
       <div class="hint-star star">
-          @if((product.getOverallRating >= 0) && (product.getOverallRating < 0.5)){
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 0.5) && (product.getOverallRating < 1)){
-            <span class="glyphicon glyphicon-star half"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 1) && (product.getOverallRating < 1.5)){
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 1.5) && (product.getOverallRating < 2)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star half checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 2) && (product.getOverallRating < 2.5)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 2.5) && (product.getOverallRating < 3)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star half checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 3) && (product.getOverallRating < 3.5)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 3.5) && (product.getOverallRating < 4)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star half checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 4) && (product.getOverallRating < 4.5)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          } else if((product.getOverallRating >= 4.5) && (product.getOverallRating < 5)){
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star half checked"></span>
-          } else {
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-            <span class="glyphicon glyphicon-star checked"></span>
-          }
-          <span>(@product.getCountRating)</span>
-        </div>
+          @rating(product)
+      </div>
     <span class="price">&euro; @("%.2f".format(product.getProductPrice))</span>
     @if((user != null) && (user.getRole().equals("admin"))){
     <a href="@routes.ProductController.updateItem(product.getProductID)" class="cart-btn">Update</a>
     } else {
-    @if(product.getProductQty() > 0){
-    <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
-    }else{
-    <div class="buttons">
-      <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF STOCK</button></a>
-    </div>
-    }
+      @if(product.getProductQty() > 0){
+      <a href="@routes.ShoppingController.addToCart(product.getProductID)" class="cart-btn">Add to cart</a>
+      }else{
+      <div class="buttons">
+        <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF STOCK</button></a>
+      </div>
+      }
     }
   </div>
 </div>

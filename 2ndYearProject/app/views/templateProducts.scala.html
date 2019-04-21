@@ -9,74 +9,7 @@
             <h1 class="product-list-ptitle"><a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">@p.getName</a></h1>
         <!-- 		the Product rating -->
             <span class="hint-star star">
-                @if((p.getProduct.getOverallRating >= 0) && (p.getProduct.getOverallRating < 0.5)){
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 0.5) && (p.getProduct.getOverallRating < 1)){
-                    <span class="glyphicon glyphicon-star half"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 1) && (p.getProduct.getOverallRating < 1.5)){
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 1.5) && (p.getProduct.getOverallRating < 2)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-half-o checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 2) && (p.getProduct.getOverallRating < 2.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 2.5) && (p.getProduct.getOverallRating < 3)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-half-o checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 3) && (p.getProduct.getOverallRating < 3.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 3.5) && (p.getProduct.getOverallRating < 4)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star half checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 4) && (p.getProduct.getOverallRating < 4.5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                } else if((p.getProduct.getOverallRating >= 4.5) && (p.getProduct.getOverallRating < 5)){
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star half checked"></span>
-                } else {
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                    <span class="glyphicon glyphicon-star checked"></span>
-                }
-                <span>(@p.getProduct.getCountRating)</span>
+                @rating(p.getProduct)
             </span>
 
 
