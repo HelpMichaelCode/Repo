@@ -18,7 +18,6 @@ import models.users.*;
 import models.products.*;
 
 public class HomeController extends Controller {
-
     private Environment env;
 
     @Inject
@@ -30,6 +29,7 @@ public class HomeController extends Controller {
         ProductController.flashLowStock();
 
         List<ProductSkeleton> bestSellers = new ArrayList<>();
+        List<ProductSkeleton> recentlyAdded = new ArrayList<>();
         List<ProductSkeleton> temp = ProductController.getSpecs(Long.valueOf(0), "");
         List<Product> all = Product.findAll();
         for(int i = 0; i < temp.size(); i++){
@@ -38,15 +38,21 @@ public class HomeController extends Controller {
                 temp.remove(i);
             }
         }
-        Collections.sort(temp, ProductSkeleton.TotalSoldComparator);
 
+        Collections.sort(temp, ProductSkeleton.TotalSoldComparator);
         for(int i=0; i<6; i++){
             bestSellers.add(temp.get(i));
         }
-        return ok(index.render(bestSellers, User.getUserById(session().get("email")), env));
+
+        Collections.sort(temp, ProductSkeleton.IdComparator);
+        for(int i=0; i<4; i++){
+            recentlyAdded.add(temp.get(i));
+        }
+        return ok(index.render(bestSellers, recentlyAdded, User.getUserById(session().get("email")), env));
     }
 
     public Result stats(){
+      
         List<String> names = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
         
@@ -60,7 +66,28 @@ public class HomeController extends Controller {
             }
             sales.add(sum);
         }
+        String[] prodNames= names.toArray(new String[names.size()]);
+        Integer[] sold= sales.toArray(new Integer[sales.size()]);
+        return ok(stats.render(prodNames, sold, User.getUserById(session().get("email"))));
+    }
 
-        return ok(stats.render(names, sales, User.getUserById(session().get("email"))));
+    public Result catstat(String cat){ 
+        List<String> names = new ArrayList<>();
+        List<Integer> sales = new ArrayList<>();
+        List<Product> all = Product.findAll();
+        for(Category c: Category.findAll()){
+            if(c.getName().toLowerCase().equals(cat.toLowerCase())){
+                for(Product p: all){
+                    if(p.getCategory().getId() == c.getId()){
+                        names.add(p.getProductName());
+                        sales.add(p.getTotalSold());
+                    }
+                }
+                String[] prodNames= names.toArray(new String[names.size()]);
+                Integer[] sold= sales.toArray(new Integer[sales.size()]);
+                return ok(stats.render(prodNames, sold, User.getUserById(session().get("email"))));
+            }
+        }
+        return redirect(controllers.routes.HomeController.stats());
     }
 }

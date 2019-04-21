@@ -43,11 +43,7 @@ public class GraphicsCard extends ProductSkeleton {
     public void setBus(String bus){
         this.bus = bus;
     }
-
-    public String getGpu(){
-        return memory;
-    }
-
+    
     public String getMemory(){
         return memory;
     }

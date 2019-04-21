@@ -3,7 +3,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+.header{
+  z-index: 99;
+}
+</style>
 <head>
 
 
@@ -27,13 +31,13 @@
                       <li><a href="@routes.HomeController.index">Home</a></li>
                       <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
                       @if((user != null) && (user.getRole().equals("customer"))) {
-                        <li><a href="@routes.LoginController.updateUser(user.getEmail)">View Profile</a></li>
-                        <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
+                        <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
                       } else if(user != null && user.getRole.equals("admin")){
-                        @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock")){
+                        @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                           <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
                         }
                       }
+                      <li><a href="@routes.HomeController.stats">Stat</a></li>
                   </ul>
                   <div class="logo">
                       <a href="@routes.HomeController.index()">BLDPC</a>
@@ -44,6 +48,7 @@
                       <li><a href="@routes.LoginController.userList()">Users</a></li>
                     }
                     @if((user != null) && (user.getRole().equals("customer"))) {
+                      <li><a href="@routes.ShoppingController.viewOrders">my orders</a></li>
                       <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
                     }
                     @if(user != null){

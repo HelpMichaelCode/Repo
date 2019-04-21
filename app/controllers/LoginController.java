@@ -168,9 +168,9 @@ public class LoginController extends Controller{
                 newUser.update(); //updates the user in the database
                 flash("success", "User " + newUser.getUsername() + " was updated.");
                 return redirect(controllers.routes.HomeController.index());
-            } else {
-                flash("error", "Wrong password");
-                return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                } else {
+                    flash("error", "Wrong password");
+                    return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
             }
         }
     }

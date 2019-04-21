@@ -1,25 +1,75 @@
-@(bestSellers: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
+@(bestSellers: List[models.products.ProductSkeleton], recentlyAdded: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
 <style>
+  *{
+    padding: 0;
+    margin: 0;
+
+  }
     body{
         overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        
+    }
+    img{
+      width: 100%;
+    
+      
     }
 </style>
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
-<div id="slider">
+<script src="/assets/javascripts/slider.js"></script>
+<!-- <div id="slider">
   <figure>
-    <img src="/assets/images/slider/laptop1.png" alt>
+    <img src="/assets/images/productImages/127slider.jpg" alt>
     <img src="/assets/images/slider/Acer.jpg" alt>
     <img src="/assets/images/slider/gs65.png" alt>
     <img src="/assets/images/slider/intel.jpg" alt>
     <img src="/assets/images/slider/woah.png" alt>
   </figure>
+</div> -->
+<!-- Slider Wrapper -->
+<div class="css-slider-wrapper">
+  <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
+  <input type="radio" name="slider" class="slide-radio2" id="slider_2">
+  <input type="radio" name="slider" class="slide-radio3" id="slider_3">
+  <input type="radio" name="slider" class="slide-radio4" id="slider_4">
+ 
+  <!-- Slider Pagination -->
+  <div class="slider-pagination">
+    <label for="slider_1" class="page1"></label>
+    <label for="slider_2" class="page2"></label>
+    <label for="slider_3" class="page3"></label>
+    <label for="slider_4" class="page4"></label>
+  </div>
+ 
+  <!-- Slider #1 -->
+  @for(p<-recentlyAdded){
+    <p>@p.getProductId</p>
+  }
+  @for((p, count) <- recentlyAdded.zipWithIndex) {
+    <div class="slider slide-@(count+1)">
+      @if(env.resource("public/images/productImages/" + p.getProductId + ".jpg").isDefined) {
+        <img src="/assets/images/productImages/@(p.getProductId + ".jpg")"/>
+      } else {
+        <img src="/assets/images/productImages/noImage.jpg"/>
+      }
+      <div class="slider-content">
+        <h4>New Product</h4>
+        <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)"><h2>@p.getProduct.getProductName</h2></a>
+        <button type="button" class="buy-now-btn" name="button">&euro;@p.getProduct.getProductPrice</button>
+      </div>
+      <div class="number-pagination">
+        <span>@(count+1)</span>
+      </div>
+    </div>
+  }
 </div>
 
+
 <div class="product-list-index">
-    <h1>BEST SELLERS</h1>
-    <hr>
-  @for(p<-bestSellers) {
+  @for(p <- bestSellers) {
     @templateProducts(p, user, env)
   }
 </div>

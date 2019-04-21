@@ -66,15 +66,29 @@ public abstract class ProductSkeleton extends Model {
 
     public static Comparator<ProductSkeleton> TotalSoldComparator = new Comparator<ProductSkeleton>() {
 
-	public int compare(ProductSkeleton p1, ProductSkeleton p2) {
+        public int compare(ProductSkeleton p1, ProductSkeleton p2) {
 
-	   int first = p1.getProduct().getTotalSold();
-	   int second = p2.getProduct().getTotalSold();
+        int first = p1.getProduct().getTotalSold();
+        int second = p2.getProduct().getTotalSold();
 
-	   /*For ascending order*/
-	//    return rollno1-rollno2;
+        /*For ascending order*/
+        //    return rollno1-rollno2;
 
-	   /*For descending order*/
-	   return second-first;
+        /*For descending order*/
+        return second-first;
+   }};
+
+   public static Comparator<ProductSkeleton> IdComparator = new Comparator<ProductSkeleton>() {
+
+        public int compare(ProductSkeleton p1, ProductSkeleton p2) {
+
+        int first = p1.getProductId().intValue();
+        int second = p2.getProductId().intValue();
+
+        /*For ascending order*/
+        //    return rollno1-rollno2;
+
+        /*For descending order*/
+        return second-first;
    }};
 }

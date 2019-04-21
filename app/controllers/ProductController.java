@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import models.*;
 import models.users.*;
 import models.products.*;
+import models.shopping.*;
 import views.html.*;
 
 
@@ -60,13 +61,17 @@ public class ProductController extends Controller{
         } else {
             Product newProduct = newProductForm.get();
             if (newProduct.getProductID() == null) {
-                String saveImageMessage = saveFile(newProduct.getProductID(), image);
 
                 if(newProduct.getCategory().getId() == null){
                     flash("error", "Please select a category first.");
                     return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
                 } else {
+                    if(checkStringLen(newProduct.getProductName()) || checkStringLen(newProduct.getProductDescription())){
+                        flash("error", "Text is too long please try using less than 255 characters.");
+                        return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
+                    }
                     newProduct.save();
+                    String saveImageMessage = saveFile(newProduct.getProductID(), image);
                     flash("success", "Item " + newProduct.getProductName() + " has been added successfuly!");
                     switch(newProduct.getCategory().getId().intValue()){
                         case 1:
@@ -149,6 +154,7 @@ public class ProductController extends Controller{
         flashLowStock();
 
         List<Category> categoryList = Category.findAll();
+        // categoryList.remove(Category.getCategoryById(Long.valueOf(1000)));
         List<ProductSkeleton> specs = null;
 
         if(keyword == null){
@@ -255,6 +261,13 @@ public class ProductController extends Controller{
             String mimeType = uploaded.getContentType(); //making sure its an image
             if(mimeType.startsWith("image/")){
                 String fileName = uploaded.getFilename();
+                //exctracting the extension of the image
+                String extension = "";
+                int index = fileName.lastIndexOf('.');
+                if(index >= 0){
+                    extension = fileName.substring(index + 1);
+                }
+
                 File file = uploaded.getFile();
                 //checking if the directories in the specified path exist, if they do not they are created
                 File directory = new File("public/images/productImages");
@@ -262,27 +275,25 @@ public class ProductController extends Controller{
                     directory.mkdirs();
                 }
                 //saving the image
-                File newFile = new File("public/images/productImages/", productID + "."
-                //  + extension);
-                + "jpg");
+                File newFile = new File("public/images/productImages/", productID + "." + extension);
                 if(file.renameTo(newFile)){
-
+                   
                     try{
                         BufferedImage image = ImageIO.read(newFile);
-
                         return "/ file uploaded";
-
                     } catch (IOException e) {
-                        return "/ file uploaded.";
+                        return "/ file uploaded";
                     }
 
                 } else {
                     return "/ file upload failed.";
                 }
             }
+        } else {
+            return "/ no image file.";
         }
-       	return "/ no image file.";
-    }
+        return "/ this should not be returned";
+}
 
     public Result displayProduct(String productName){
         Form<Review> reviewForm = formFactory.form(Review.class);
@@ -323,34 +334,54 @@ public class ProductController extends Controller{
             Review newReview = reviewForm.get();
             newReview.setUser(User.getUserById(session().get("email")));
             newReview.setProduct(productObj);
-            boolean flag = false;
+            boolean alreadyReviewed = false;
+            boolean userHasPurchasedProduct = false;
+
+            for(ShopOrder s: User.getUserById(session().get("email")).getOrders()){
+                for(OrderLine o: s.getProducts()){
+                    if(o.getProduct().getProductID() == newReview.getProduct().getProductID()){
+                        userHasPurchasedProduct = true;
+                    }
+                }
+            }
             for(Review r: productObj.getReviews()){
                 if(r.getUser().getEmail().equals(newReview.getUser().getEmail())){
-                    flag = true;
+                    alreadyReviewed = true;
                 }
             }
 
-            if(!flag){
-                productObj.calculateRating(newReview.getRating());
-                productObj.update();
-            }
+            if(userHasPurchasedProduct){
+                if(newReview.getId() == null){
+                    if(checkStringLen(newReview.getBody())){
+                        flash("error", "Text is too long please try using less than 255 characters.");
+                        return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+                    }
+                    if(!alreadyReviewed){
+                        productObj.calculateRating(newReview.getRating());
+                        productObj.update();
+                    } else {
+                        flash("error", "You have reviewed this product already. If you wish to update the comment or rating of the review please contact a moderator/admin");
+                        return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+                    }
+                    if(newReview.getBody().equals("")){
+                        newReview.setBody("No comment");
+                    }
+                    newReview.save();
+                    flash("success", "Thank you for you feedback!");
 
-
-            if(newReview.getId() == null){
-                if(newReview.getBody().equals("")){
-                    newReview.setBody("No comment");
+                        // Calculate the overall rating of the product
+                    return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
+                } else {
+                    flash("error", "We ran into a problem processing your review, please try again later.");
+                    return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
                 }
-                newReview.save();
-                flash("success", "Thank you for you feedback!");
-
-                    // Calculate the overall rating of the product
-                return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
             } else {
-                flash("error", "We ran into a problem processing your review, please try again later.");
+                flash("error", "You need to purchase the product before reviewing it!");
                 return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
             }
         }
     }
+    
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
@@ -391,11 +422,16 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     public Result addTrendingPCSubmit(Long pid){
         Form<TrendingPC> newForm = formFactory.form(TrendingPC.class).bindFromRequest();
+        
         if(newForm.hasErrors()){
             flash("error", "Fill in all fields!");
             return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
         } else {
             TrendingPC pc = newForm.get();
+            if(checkStringLen(pc.getName()) || checkStringLen(pc.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
+            }
             pc.setProduct(Product.getProductById(pid));
             if(pc.getCpu().getProductId() == null){
                 pc.setCpu(Processor.getProcessorById(Long.valueOf(1)));
@@ -432,15 +468,16 @@ public class ProductController extends Controller{
         Form<TrendingPC> form;
         TrendingPC tp = null;
         for(TrendingPC e: all){
-            if(e.getProduct().getProductID() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
+                break;
             }
         }
         if(tp != null){
             form = formFactory.form(TrendingPC.class).fill(tp);
             return ok(addTrendingPC.render(form, pid, User.getUserById(session().get("email")), "Update PC info"));
         } else {
-            flash("error", "PC not found");
+            // flash("error", "PC not found");
             return badRequest(productList.render(getSpecs(Long.valueOf(0), ""), Category.findAll(), User.getUserById(session().get("email")), env));
         }
     }
@@ -461,8 +498,12 @@ public class ProductController extends Controller{
             flash("error", "Fill in all fields!");
             return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
         } else {
-                Ram r = newForm.get();
-                r.setProduct(Product.getProductById(pid));
+            Ram r = newForm.get();
+            if(checkStringLen(r.getCapacity()) || checkStringLen(r.getName()) || checkStringLen(r.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
+            }
+            r.setProduct(Product.getProductById(pid));            
             if(r.getProductId() == null){
                 r.setProductId(pid);
                 r.save();
@@ -482,7 +523,7 @@ public class ProductController extends Controller{
         Form<Ram> form;
         Ram tp = null;
         for(Ram e: all){
-            if(e.getProductId() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
             }
         }
@@ -510,8 +551,12 @@ public class ProductController extends Controller{
             flash("error", "Fill in all fields!");
             return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
         } else {
-                Storage s = newForm.get();
-                s.setProduct(Product.getProductById(pid));
+            Storage s = newForm.get();
+            if(checkStringLen(s.getCapacity()) || checkStringLen(s.getName()) || checkStringLen(s.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
+            }
+            s.setProduct(Product.getProductById(pid));
             if(s.getProductId() == null){
                 s.setProductId(pid);
                 s.save();
@@ -531,7 +576,7 @@ public class ProductController extends Controller{
         Form<Storage> form;
         Storage tp = null;
         for(Storage e: all){
-            if(e.getProductId() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
             }
         }
@@ -560,6 +605,12 @@ public class ProductController extends Controller{
             return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
         } else {
             Processor newCpu = newProcessorForm.get();
+            if(checkStringLen(newCpu.getCores()) || checkStringLen(newCpu.getClock()) ||
+            checkStringLen(newCpu.getCache()) || checkStringLen(newCpu.getName()) 
+            || checkStringLen(newCpu.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
+            }
             newCpu.setProduct(Product.getProductById(pid));
             if(newCpu.getProductId() == null){
                 newCpu.save();
@@ -579,7 +630,7 @@ public class ProductController extends Controller{
         Form<Processor> form;
         Processor tp = null;
         for(Processor e: all){
-            if(e.getProductId() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
             }
         }
@@ -607,6 +658,12 @@ public class ProductController extends Controller{
             return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC"));
         } else {
             GraphicsCard gpu = gpuForm.get();
+            if(checkStringLen(gpu.getBus()) || checkStringLen(gpu.getMemory()) ||
+            checkStringLen(gpu.getGpuClock()) || checkStringLen(gpu.getMemoryClock()) ||
+            checkStringLen(gpu.getName()) || checkStringLen(gpu.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC"));
+            }
             gpu.setProduct(Product.getProductById(pid));
             if(gpu.getProductId() == null){
                 gpu.setProductId(pid);
@@ -627,7 +684,7 @@ public class ProductController extends Controller{
         Form<GraphicsCard> form;
         GraphicsCard tp = null;
         for(GraphicsCard e: all){
-            if(e.getProductId() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
             }
         }
@@ -656,6 +713,11 @@ public class ProductController extends Controller{
             return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
         } else {
             Motherboard mb = mbForm.get();
+            if(checkStringLen(mb.getRamSlots()) || checkStringLen(mb.getMaxRam()) ||
+            checkStringLen(mb.getName()) || checkStringLen(mb.getManufacturer())){
+                flash("error", "Text is too long please try using less than 255 characters.");
+                return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
+            }
             mb.setProduct(Product.getProductById(pid));
             if(mb.getProductId() == null){
                 mb.setProductId(pid);
@@ -676,7 +738,7 @@ public class ProductController extends Controller{
         Form<Motherboard> form;
         Motherboard tp = null;
         for(Motherboard e: all){
-            if(e.getProductId() == pid){
+            if(e.getProductId().toString().equals(pid.toString())){
                 tp = e;
             }
         }
@@ -700,10 +762,11 @@ public class ProductController extends Controller{
         }
         for(Product p: itemList){
             for(Product low: Product.getLowQty()){
+                
                 if(p.getProductName().contains("N/A")){
                     break;
                 }
-                if(p.getProductID() == low.getProductID()){
+                if(p.getProductID().toString().equals(low.getProductID().toString())){
                     temp.add(low);
                 }
             }
@@ -786,5 +849,12 @@ public class ProductController extends Controller{
                 }
             }
             return specs;
+    }
+    
+    private boolean checkStringLen(String str){
+        if(str.length()>254){
+            return true;
+        }
+        return false;
     }
 }
