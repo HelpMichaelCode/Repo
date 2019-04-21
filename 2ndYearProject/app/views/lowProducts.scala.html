@@ -6,7 +6,7 @@
     <div class="col-sm-2">
         <h2>Filter by</h2>
         <ul class="list-group">
-        <a href="@routes.ProductController.productList(0, "")" class="list-group-item">All Categories</a>
+        <a href="@routes.ProductController.lowStockProducts(0)" class="list-group-item">All Categories</a>
         @for(c<-categories) { 
             <a href="@routes.ProductController.lowStockProducts(c.getId())" class="list-group-item">
                 @c.getName

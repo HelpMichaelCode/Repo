@@ -66,7 +66,7 @@ button[type="button"]:disabled {
 <div class="reviews">
   
   <div class="add-review-form">
-    <h4>You already have this product or recently pruchased it? Please leave your feedback to inform others.</h4>
+    <h4>Please leave your feedback to inform others.</h4>
     @helper.form(action=controllers.routes.ProductController.addReviewSubmit(product.getProductID), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST") {
 
