@@ -59,4 +59,11 @@ public class Motherboard extends ProductSkeleton {
             return find.query().where().eq("product_id", id).findUnique();
         }
     }
+
+    public boolean checkLengthOfStrings(){
+        if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(ramSlots) || checkStringLen(maxRam)){
+            return true;
+        }
+        return false;
+    }
 }

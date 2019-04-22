@@ -1,26 +1,9 @@
 @(bestSellers: List[models.products.ProductSkeleton], recentlyAdded: List[models.products.ProductSkeleton], user: models.users.User, env: play.api.Environment)
 @main("Home page", user){
-<style>
-  *{
-    padding: 0;
-    margin: 0;
-
-  }
-    body{
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-        
-    }
-    img{
-      width: 100%;
-    
-      
-    }
-</style>
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
+<link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/slider.css")">
 <script src="/assets/javascripts/slider.js"></script>
-<!-- <div id="slider">
+<!-- <div id="slider"> old slider
   <figure>
     <img src="/assets/images/productImages/127slider.jpg" alt>
     <img src="/assets/images/slider/Acer.jpg" alt>

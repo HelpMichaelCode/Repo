@@ -1,6 +1,7 @@
 package models.users;
 
 import models.shopping.*;
+import models.products.*;
 import models.SendMailSSL;
 
 import java.util.*;
@@ -165,6 +166,25 @@ public class User extends Model{
     public void SendMailSSL(){
         //from, Password, To, Subject, Message
         sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"Welcome!","Hello "+ this.username +"! Welcome to BLDPC. We hope you enjoy surfing through our website and find what's best for you! \n Click the link down below and enter in your credentials \nhttp://localhost:9000/login");
-}
+    }
 
+    public boolean numberCheck(){
+        boolean result = false;
+        try{
+            double number = Double.parseDouble(mobileNumber);
+            result = true;
+        } catch(NumberFormatException e){
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(email) ||ProductSkeleton.checkStringLen(role) || 
+        ProductSkeleton.checkStringLen(username) || ProductSkeleton.checkStringLen(mobileNumber) || 
+        ProductSkeleton.checkStringLen(address) || ProductSkeleton.checkStringLen(password)){
+            return true;
+        }
+        return false;
+    }
 }

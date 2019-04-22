@@ -47,4 +47,11 @@ public class Storage extends ProductSkeleton {
             return find.query().where().eq("product_id", id).findUnique();
         }
     }
+
+    public boolean checkLengthOfStrings(){
+        if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(capacity)){
+            return true;
+        }
+        return false;
+    }
 }

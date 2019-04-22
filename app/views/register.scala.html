@@ -31,22 +31,22 @@
        <h1>@heading</h1>
 
                 @inputText(userForm("email"), '_label -> "",
-                'class -> "input", 'placeholder -> "Email", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Email", 'maxLength -> "254", '_showConstraints -> false)
             
                 @inputText(userForm("username"), '_label -> "",
-                'class -> "input", 'placeholder -> "Username", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Username", 'maxLength -> "254", '_showConstraints -> false)
            
                 @inputPassword(userForm("password"), '_label -> "",
-                'class -> "input", 'placeholder -> "Password", 'minLength -> "8", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false)
            
                 @inputPassword(userForm("password2"), '_label -> "",
-                'class -> "input", 'placeholder -> "Confirm Password", 'minLength -> "8", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Confirm Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false)
          
                 @inputText(userForm("address"), '_label -> "",
-                'class -> "input", 'placeholder -> "Address", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Address", 'maxLength -> "254", '_showConstraints -> false)
     
                 @inputText(userForm("mobileNumber"), '_label -> "",
-                'class -> "input", 'placeholder -> "Mobile Number", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Mobile Number", 'maxLength -> "10", '_showConstraints -> false)
             
                 @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
        

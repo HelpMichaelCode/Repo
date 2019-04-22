@@ -4,66 +4,69 @@
 
 <body>
     <div class="table-responsive">
-            <h4 style="text-align: center; font-weight: bold;">List of all users</h4>
+        <h4 style="text-align: center; font-weight: bold;">List of all users</h4>
 
-            <table class="table">
-                    <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Email</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Mobile number</th>
-                                <th scope="col">Role</th>
-                                @if((user != null) && (user.getRole().equals("admin"))){
-                                <th scope="col">Comments</th>
-                                <th scope="col" colspan="2">Actions</th>
-                                }
-                            </tr>
-                        </thead>
-        
-                    <tbody>
-                          
-                            @for(u <- list) { 
-                                <tr>
-                                <th>@u.getEmail</th>
-                                <td>@u.getUsername</td>
-                                <td>@u.getAddress</td>
-                                <td>@u.getMobileNumber</td>
-                                <td>@u.getRole</td>
-            
-                                <!-- these are displayed only to administrators (this check is just in case a customer gets access to this page) -->
-                                @if((user != null) && (user.getRole().equals("admin"))) {
-            
-                                <td>
-                                    <a href="@routes.ProductController.userReviews(u.getEmail)" class="user-reviews">
-                                        <p> @u.getUsername's reviews</p>
-                                    </a>
-                                </td>
-            
-                                <!-- update button -->
-                                <td>
-                                    <a href="@routes.LoginController.updateUser(u.getEmail)" class="btn btn-warning btn-sm">
-                                        EDIT
-                                    </a>
-                                </td>
-            
-                                <!-- delete button -->
-                                <td>
-                                    <a href="@routes.LoginController.deleteUser(u.getEmail)" class="btn btn-danger btn-sm" onclick="confirmDel()">
-                                        DELETE
-                                    </a>
-                                </td>
-                                <!-- buttons shown only to admins just in case anyone else manages trick the rest of the checks before getting access to this page -->
-                                }
-                                
-                            </tr>
-                            }
-                    </tbody>
-                  </table>
-        
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile number</th>
+                    <th scope="col">Role</th>
+                    @if((user != null) && (user.getRole().equals("admin"))){
+                    <th scope="col">Comments</th>
+                    <th scope="col" colspan="2">Actions</th>
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for(u <- list) {
+                    @if(u.getEmail != "N/A"){
+                    <tr>
+                    <th>@u.getEmail</th>
+                    <td>@u.getUsername</td>
+                    <td>@u.getAddress</td>
+                    <td>@u.getMobileNumber</td>
+                    <td>@u.getRole</td>
+
+                    <!-- these are displayed only to administrators (this check is just in case a customer gets access to this page) -->
+                    @if((user != null) && (user.getRole().equals("admin"))) {
+
+                    <td>
+                        <a href="@routes.ProductController.userReviews(u.getEmail)" class="user-reviews">
+                            <p> @u.getUsername's reviews</p>
+                        </a>
+                    </td>
+
+                    <!-- update button -->
+                    <td>
+                        <a href="@routes.LoginController.updateUser(u.getEmail)" class="btn btn-warning btn-sm">
+                            EDIT
+                        </a>
+                    </td>
+
+                    <!-- delete button -->
+                    <td>
+                        <a href="@routes.LoginController.deleteUser(u.getEmail)" class="btn btn-danger btn-sm"
+                            onclick="confirmDel()">
+                            DELETE
+                        </a>
+                    </td>
+                    <!-- buttons shown only to admins just in case anyone else manages trick the rest of the checks before getting access to this page -->
+                    }
+
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
     </div>
-      
+
 </body>
-    
-          
+
+
 }

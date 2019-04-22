@@ -1,0 +1,45 @@
+@(thread: models.Forum, replyForm: Form[models.Comment], user: models.users.User)
+@import helper._
+@main("Forum",user){
+
+    @if(replyForm.hasGlobalErrors) {
+        <p class="alert alert-warning">
+          @for(e
+          <- replyForm.globalErrors) { @e.message<br />
+          }
+        </p>
+        }
+        <h1>Thread: @thread.getTitle</h1>
+         <div class="thread-body">
+            <p>@thread.getBody</p>
+         </div>
+         <div class="reply-to-thread">
+            <!-- form to add a new reply to the thread -->
+          @helper.form(action = controllers.routes.HomeController.postComment(user.getEmail, thread.getId), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
+
+          @CSRF.formField       
+
+          @textarea(field = replyForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Post a reply", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+
+        <div class="hide">
+          @inputText(replyForm("id"), '_label -> "", 'hidden -> "hidden"));
+        </div>
+        <div class="actions">
+
+            <input type="submit" value="Post reply" class="btn btn-primary" />
+      
+          </div>
+        }
+        </div>
+        <div class="thread-replies">
+            @if(thread.getComments.size > 0){
+                @for(r <- thread.getComments){
+                    <h4>@r.getBody</h4>
+                    <h4>@r.getUser.getUsername</h4>
+                }
+            } else {
+                <h1>This thread has no replies</h1>
+            }
+        </div> 
+        <!-- end of forum-topics -->
+}

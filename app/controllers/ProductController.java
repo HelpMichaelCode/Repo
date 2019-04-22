@@ -66,7 +66,8 @@ public class ProductController extends Controller{
                     flash("error", "Please select a category first.");
                     return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
                 } else {
-                    if(checkStringLen(newProduct.getProductName()) || checkStringLen(newProduct.getProductDescription())){
+                    // if(checkStringLen(newProduct.getProductName()) || checkStringLen(newProduct.getProductDescription())){
+                    if(newProduct.checkLengthOfStrings()){
                         flash("error", "Text is too long please try using less than 255 characters.");
                         return badRequest(addProduct.render(newProductForm, User.getUserById(session().get("email")), "Add product to BLDPC"));
                     }
@@ -352,7 +353,8 @@ public class ProductController extends Controller{
 
             if(userHasPurchasedProduct){
                 if(newReview.getId() == null){
-                    if(checkStringLen(newReview.getBody())){
+                    if(newReview.checkLengthOfStrings()){
+                    // if(checkStringLen(newReview.getBody())){
                         flash("error", "Text is too long please try using less than 255 characters.");
                         return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
                     }
@@ -428,7 +430,8 @@ public class ProductController extends Controller{
             return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
         } else {
             TrendingPC pc = newForm.get();
-            if(checkStringLen(pc.getName()) || checkStringLen(pc.getManufacturer())){
+            // if(checkStringLen(pc.getName()) || checkStringLen(pc.getManufacturer())){
+            if(pc.checkLengthOfStrings()){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addTrendingPC.render(newForm, pid, User.getUserById(session().get("email")), "Add PC info to BLDPC"));
             }
@@ -499,7 +502,8 @@ public class ProductController extends Controller{
             return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
         } else {
             Ram r = newForm.get();
-            if(checkStringLen(r.getCapacity()) || checkStringLen(r.getName()) || checkStringLen(r.getManufacturer())){
+            if(r.checkLengthOfStrings()){
+            // if(checkStringLen(r.getCapacity()) || checkStringLen(r.getName()) || checkStringLen(r.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addRam.render(newForm, pid, User.getUserById(session().get("email")), "Add RAM info to BLDPC"));
             }
@@ -552,7 +556,8 @@ public class ProductController extends Controller{
             return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
         } else {
             Storage s = newForm.get();
-            if(checkStringLen(s.getCapacity()) || checkStringLen(s.getName()) || checkStringLen(s.getManufacturer())){
+            if(s.checkLengthOfStrings()){
+            // if(checkStringLen(s.getCapacity()) || checkStringLen(s.getName()) || checkStringLen(s.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addStorage.render(newForm, pid, User.getUserById(session().get("email")), "Add storage memory info to BLDPC"));
             }
@@ -605,9 +610,10 @@ public class ProductController extends Controller{
             return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
         } else {
             Processor newCpu = newProcessorForm.get();
-            if(checkStringLen(newCpu.getCores()) || checkStringLen(newCpu.getClock()) ||
-            checkStringLen(newCpu.getCache()) || checkStringLen(newCpu.getName()) 
-            || checkStringLen(newCpu.getManufacturer())){
+            if(newCpu.checkLengthOfStrings()){
+            // if(checkStringLen(newCpu.getCores()) || checkStringLen(newCpu.getClock()) ||
+            // checkStringLen(newCpu.getCache()) || checkStringLen(newCpu.getName()) 
+            // || checkStringLen(newCpu.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Add processor info to BLDPC"));
             }
@@ -658,9 +664,10 @@ public class ProductController extends Controller{
             return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC"));
         } else {
             GraphicsCard gpu = gpuForm.get();
-            if(checkStringLen(gpu.getBus()) || checkStringLen(gpu.getMemory()) ||
-            checkStringLen(gpu.getGpuClock()) || checkStringLen(gpu.getMemoryClock()) ||
-            checkStringLen(gpu.getName()) || checkStringLen(gpu.getManufacturer())){
+            if(gpu.checkLengthOfStrings()){
+            // if(checkStringLen(gpu.getBus()) || checkStringLen(gpu.getMemory()) ||
+            // checkStringLen(gpu.getGpuClock()) || checkStringLen(gpu.getMemoryClock()) ||
+            // checkStringLen(gpu.getName()) || checkStringLen(gpu.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Add GPU info to BLDPC"));
             }
@@ -713,8 +720,9 @@ public class ProductController extends Controller{
             return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
         } else {
             Motherboard mb = mbForm.get();
-            if(checkStringLen(mb.getRamSlots()) || checkStringLen(mb.getMaxRam()) ||
-            checkStringLen(mb.getName()) || checkStringLen(mb.getManufacturer())){
+            if(mb.checkLengthOfStrings()){
+            // if(checkStringLen(mb.getRamSlots()) || checkStringLen(mb.getMaxRam()) ||
+            // checkStringLen(mb.getName()) || checkStringLen(mb.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addMotherboard.render(mbForm, pid, User.getUserById(session().get("email")), "Add motherboard info to BLDPC"));
             }
@@ -849,12 +857,5 @@ public class ProductController extends Controller{
                 }
             }
             return specs;
-    }
-    
-    private boolean checkStringLen(String str){
-        if(str.length()>254){
-            return true;
-        }
-        return false;
     }
 }
