@@ -53,6 +53,8 @@ public class HomeController extends Controller {
         return ok(index.render(bestSellers, recentlyAdded, User.getUserById(session().get("email")), env));
     }
 
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
     public Result stats(){
       
         List<String> names = new ArrayList<>();
@@ -70,10 +72,46 @@ public class HomeController extends Controller {
         }
         String[] prodNames= names.toArray(new String[names.size()]);
         Integer[] sold= sales.toArray(new Integer[sales.size()]);
-        return ok(stats.render(prodNames, sold, User.getUserById(session().get("email"))));
+        String exampleValues = "{'c':[{'v': 'Work'}, {'v': 11}]}, {'c':[{'v': 'Eat'}, {'v': 2}]}, {'c':[{'v': 'Commute'}, {'v': 2}]},{'c':[{'v': 'Watch TV'}, {'v':2}]}, {'c':[{'v': 'Sleep'}, {'v':7, 'f':'7'}]}";
+        String values = getValues(prodNames, sold);
+        String jsonString = "{'cols': [{'id': 'name', 'label': 'Names', 'type': 'string'}, {'id': 'sold', 'label': 'Total sold', 'type': 'number'}],'rows': [" + values + "]}";
+        return ok(stats.render(jsonString, prodNames, sold, User.getUserById(session().get("email"))));
+        // return ok(test.render(jsonString, User.getUserById(session().get("email"))));
     }
 
-    public Result catstat(String cat){ 
+    private String getValues(String[] names, Integer[] sold){
+        String start = "{'c':[{'v': '";
+        String middle = "'}, {'v': ";
+        String end = "}]},";
+        String finalElementMid = ", 'f':'";
+        String finalElementEnd = "'}]}";
+        String values = "";
+        if(names.length == sold.length){
+            for(int i = 0; i<names.length; i++){
+                if(i==0){
+                    values += start;
+                } else {
+                    values += (" " + start);
+                }
+                values += names[i];
+                values += middle;
+                values += sold[i];
+                if((i+1) == names.length){
+                    values += finalElementMid;
+                    values += sold[i];
+                    values += finalElementEnd;
+                } else {
+                    values += end;
+                }
+            }
+            return values;
+        }
+        return "{'c':[{'v': 'Bad values'}, {'v': 0}]}";
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result catstats(String cat){ 
         List<String> names = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
         List<Product> all = Product.findAll();
@@ -87,7 +125,9 @@ public class HomeController extends Controller {
                 }
                 String[] prodNames= names.toArray(new String[names.size()]);
                 Integer[] sold= sales.toArray(new Integer[sales.size()]);
-                return ok(stats.render(prodNames, sold, User.getUserById(session().get("email"))));
+                String values = getValues(prodNames, sold);
+                String jsonString = "{'cols': [{'id': 'name', 'label': 'Names', 'type': 'string'}, {'id': 'sold', 'label': 'Total sold', 'type': 'number'}],'rows': [" + values + "]}";
+                return ok(stats.render(jsonString, prodNames, sold, User.getUserById(session().get("email"))));
             }
         }
         return redirect(controllers.routes.HomeController.stats());

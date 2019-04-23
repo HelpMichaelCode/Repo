@@ -1,107 +1,55 @@
-@(names: Array[String], sales: Array[Integer], user: models.users.User)
+@(jsonString: String, names: Array[String], sales: Array[Integer], user: models.users.User)
 @main("Statistics", user){
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="https://cdnjs.com/libraries/Chart.js"></script>
-<script>
-var table = document.getElementById("myTable")
-var tableLen = table.rows.length
-var data = {labels: [], sales: [], names: [] }
-
-for (var i = 1; i < tableLen; i++) {
-  data.labels.push(table.rows[i].cells[0].innerText)
-  data.population.push(table.rows[i].cells[1].innerText.replace(',',''))
-  
-}
-var canvasP = document.getElementById("pieChart")
-var ctxP = canvasP.getContext('2d')
-var myPieChart = new Chart(ctxP, {
-  type: 'pie',
-  data: {
-    labels: data.labels,
-    datasets: [{
-      data: data.sales,
-      backgroundColor: ["#64B5F6", "#FFD54F", "#2196F3", "#FFC107", "#1976D2", "#FFA000", "#0D47A1"],
-      hoverBackgroundColor: ["#B2EBF2", "#FFCCBC", "#4DD0E1", "#FF8A65", "#00BCD4", "#FF5722", "#0097A7"]
-    }]
-  },
-  options: {
-    legend: {
-      display: true,
-      position: "right"
+  <style>
+    body{
+      background-color: white;
     }
-  }
-})
+    .content{
+      padding-top: 4%;
+    }
+    .sub-header .left-menu li a, .sub-header .right-menu li a, .sub-header .logo a{
+      color: black;
+    }
+  </style>
+  <div class="cats">
+      <h2>Filter by</h2>
+      <ul class="list-group">
+          <a href="@routes.HomeController.stats" class="list-group-item">All Categories</a>
+          @for(c<-Category.findAll) { <a href="@routes.HomeController.catstats(c.getName)"
+              class="list-group-item">@c.getName
+              <span class="badge">@c.getItems.size</span>
+              </a>
+              }
+      </ul>
+  
+  </div>
+<div id="pie-chart"/> 
 
-</script>
-   
---> 
-   <table id="myTable">
-  <thead>
-    <tr>
-      <th scope="col">Category</th>
-      <th scope="col">Sold</th>
-    </tr>
-  </thead>
-  <tbody>
-@for(i <- 0 until names.length){
-    <tr>
-      <tr>
-          <th scope="row"><a href="@routes.HomeController.catstat(names(i))">@names(i)</a></th>
-      <td>@sales(i)</td>
-    </tr>
-    </tr>
-} </tbody>
-</table> 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript">
+            google.charts.load('current', {
+                packages : [ 'corechart' ]
+            });
+            google.charts.setOnLoadCallback(drawChart);
 
+            function drawChart() {
+                var jsonString = "@jsonString";
+                var newJSON = jsonString.replace(/&#x27;/g, '"');
+                // console.log("newJSON: " + newJSON);
 
-<canvas id="pieChart"></canvas>
-<br/>
-<!-- Just so that JSFiddle's Result label doesn't overlap the Chart -->
-<div id="chartContainer" style="height: 360px; width: 100%;"></div>
-<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js" ></script>
+                // Define the chart to be drawn.
+                var data = new google.visualization.DataTable(newJSON);
 
-<script>
-  var myData = new Array(['Sector 1', 2], ['Sector 2', 1], ['Sector 3', 3], ['Sector 4', 6], ['Sector 5', 8.5], ['Sector 6', 10]);
-  var colors = ['#FACC00', '#FB9900', '#FB6600', '#FB4800', '#CB0A0A', '#F8F933'];
-  var myChart = new JSChart('chartid', 'pie');
-  myChart.setDataArray(myData);
-  myChart.colorizePie(colors);
-  myChart.setTitleColor('#857D7D');
-  myChart.setPieUnitsColor('#9B9B9B');
-  myChart.setPieValuesColor('#6A0000');
-  myChart.draw();
-</script>
-
-<!-- <script>
-var dataArray = [];
-
-var dps = [];   //dataPoints. 
-   
-	 var chart = new CanvasJS.Chart("chartContainer",{
-      	title :{
-      		text: "Data Plotted from Array"
-      	},
-      	axisX: {						
-      		title: "Axis X Title"
-      	},
-      	axisY: {						
-      		title: "Units"
-      	},
-      	data: [{
-      		type: "line",
-      		dataPoints : dps
-      	}]
-      });
-
-
-     function parseDataPoints () {
-        for (var i = 0; i <= dataArray.length; i++)
-          dps.push({y: dataArray[i]});     
-     };
-   		
-   	 parseDataPoints();
-     chart.options.data[0].dataPoints = dps;
-     chart.render();
-    </script> -->
-
+                // Instantiate and draw the chart.
+                var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+                var options = {
+                  title: 'Stats'
+                  ,chartArea:{left:0,top:0,width:"100%",height:"100%"}
+                  ,height: 600
+                  ,width: 900
+                };
+                chart.draw(data, options);
+            }
+        </script>
 }

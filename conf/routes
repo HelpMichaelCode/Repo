@@ -27,9 +27,9 @@ GET     /update-item/:id             controllers.ProductController.updateItem(id
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
-GET     /low-stock-products         controllers.ProductController.lowStockProducts(category:Long?=0L)
-GET     /stats                      controllers.HomeController.stats
-GET     /stats-by-category/:catName          controllers.HomeController.catstat(catName: String)
+GET     /low-stock-products                 controllers.ProductController.lowStockProducts(category:Long?=0L)
+GET     /stats                              controllers.HomeController.stats
+GET     /stats-by-category/:catName          controllers.HomeController.catstats(catName: String)
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)

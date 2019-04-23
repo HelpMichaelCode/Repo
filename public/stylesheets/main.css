@@ -605,3 +605,8 @@ footer {
     width: 50%;
     margin: -1em auto;
   }
+
+  #pie-chart{
+    position: relative;
+    margin-left: 20%;
+  }
