@@ -33,9 +33,12 @@
 
     <div class="textbox">
       <span class="glyphicon glyphicon-lock"></span>
-      @inputPassword(loginForm("password"), '_label -> "",
-      'class -> "input", 'placeholder -> "Password")
+      @inputPassword(loginForm("password"), 'type -> "password", '_label -> "",
+      'class -> "input", 'placeholder -> "Password",'id -> "pass")
+     
+
     </div>
+    <input type="checkbox" onclick="myFunction()">Show Password
 
     <input type="submit" value="Sign In" class="btn login-btn">
     <input type="button" value="Register" class="btn login-btn"

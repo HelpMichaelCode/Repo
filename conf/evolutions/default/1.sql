@@ -9,6 +9,24 @@ create table category (
   constraint pk_category primary key (id)
 );
 
+create table comment (
+  id                            bigint auto_increment not null,
+  user_email                    varchar(255),
+  forum_id                      bigint,
+  body                          varchar(255),
+  constraint uq_comment_user_email unique (user_email),
+  constraint pk_comment primary key (id)
+);
+
+create table forum (
+  id                            bigint auto_increment not null,
+  user_email                    varchar(255),
+  title                         varchar(255),
+  body                          varchar(255),
+  constraint uq_forum_user_email unique (user_email),
+  constraint pk_forum primary key (id)
+);
+
 create table graphics_card (
   product_id                    bigint auto_increment not null,
   manufacturer                  varchar(255),
@@ -131,6 +149,13 @@ create table user (
   constraint pk_user primary key (email)
 );
 
+alter table comment add constraint fk_comment_user_email foreign key (user_email) references user (email) on delete restrict on update restrict;
+
+alter table comment add constraint fk_comment_forum_id foreign key (forum_id) references forum (id) on delete restrict on update restrict;
+create index ix_comment_forum_id on comment (forum_id);
+
+alter table forum add constraint fk_forum_user_email foreign key (user_email) references user (email) on delete restrict on update restrict;
+
 alter table graphics_card add constraint fk_graphics_card_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
 create index ix_graphics_card_product_product_id on graphics_card (product_product_id);
 
@@ -190,6 +215,13 @@ create index ix_trending_pc_storage_product_id on trending_pc (storage_product_i
 
 # --- !Downs
 
+alter table comment drop constraint if exists fk_comment_user_email;
+
+alter table comment drop constraint if exists fk_comment_forum_id;
+drop index if exists ix_comment_forum_id;
+
+alter table forum drop constraint if exists fk_forum_user_email;
+
 alter table graphics_card drop constraint if exists fk_graphics_card_product_product_id;
 drop index if exists ix_graphics_card_product_product_id;
 
@@ -247,6 +279,10 @@ alter table trending_pc drop constraint if exists fk_trending_pc_storage_product
 drop index if exists ix_trending_pc_storage_product_id;
 
 drop table if exists category;
+
+drop table if exists comment;
+
+drop table if exists forum;
 
 drop table if exists graphics_card;
 

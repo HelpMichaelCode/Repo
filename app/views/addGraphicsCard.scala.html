@@ -31,7 +31,7 @@
         '_default -> "-- Choose manufacturer --",
         'class -> "form-control"
     )
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
     @select(
         field = productForm("bus"), 
         options = options(
@@ -60,8 +60,8 @@
             '_default -> "-- Choose memory --",
             'class -> "form-control"
     )
-    @inputText(productForm("gpuClock"), '_label -> "", 'placeholder -> "GPU clock frequency - ex. 1500 MHz", 'class -> "form-control", '_showConstraints -> false)
-    @inputText(productForm("memoryClock"), '_label -> "", 'placeholder -> "Memory clock frequency - ex. 800 MHz", 'class -> "form-control", '_showConstraints -> false)
+    @inputText(productForm("gpuClock"), '_label -> "", 'placeholder -> "GPU clock frequency - ex. 1500 MHz", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
+    @inputText(productForm("memoryClock"), '_label -> "", 'placeholder -> "Memory clock frequency - ex. 800 MHz", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
     @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
 
 </div>

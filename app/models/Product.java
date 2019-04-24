@@ -221,4 +221,11 @@ public class Product extends Model {
         }
         return options;
     }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(productName) || ProductSkeleton.checkStringLen(productDescription)){
+            return true;
+        }
+        return false;
+    }
 }

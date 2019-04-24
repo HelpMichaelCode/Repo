@@ -43,15 +43,21 @@
             @inputText(newPassForm("mobileNumber"), '_label -> "Mobile number",
                 'class -> "input", 'placeholder -> "Mobile Number", '_showConstraints -> false)
             
-            @inputPassword(newPassForm("password"), '_label -> "Enter password",
-             'class -> "input", 'placeholder -> "Current password", 'minLength -> "8", '_showConstraints -> false)
+            @inputPassword(newPassForm("password"), 'type -> "password", '_label -> "Enter password",
+             'class -> "input", 'placeholder -> "Current password", 'minLength -> "8", '_showConstraints -> false, 'id -> "pass")
             
-            @inputPassword(newPassForm("password2"), '_label -> "New password (optional)",
-             'class -> "input", 'placeholder -> "New password", 'minLength -> "8", '_showConstraints -> false)
+             <input type="checkbox" onclick="myFunction()">Show Password
 
-            @inputPassword(newPassForm("password3"), '_label -> "Confirm new password",
-             'class -> "input", 'placeholder -> "New password", 'minLength -> "8", '_showConstraints -> false)
+            @inputPassword(newPassForm("password2"),'type -> "password", '_label -> "New password (optional)",
+             'class -> "input", 'placeholder -> "New password", 'minLength -> "8", '_showConstraints -> false,'id -> "pass2")
+
+             <input type="checkbox" onclick="myFunction2()">Show Password
+
+            @inputPassword(newPassForm("password3"),'type -> "password", '_label -> "Confirm new password",
+             'class -> "input", 'placeholder -> "New password", 'minLength -> "8", '_showConstraints -> false,'id -> "pass3")
             
+             <input type="checkbox" onclick="myFunction3()">Show Password
+
             <span class="hide">
                 @inputText(newPassForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
 

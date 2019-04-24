@@ -76,9 +76,9 @@ public abstract class ProductSkeleton extends Model {
 
         /*For descending order*/
         return second-first;
-   }};
+    }};
 
-   public static Comparator<ProductSkeleton> IdComparator = new Comparator<ProductSkeleton>() {
+    public static Comparator<ProductSkeleton> IdComparator = new Comparator<ProductSkeleton>() {
 
         public int compare(ProductSkeleton p1, ProductSkeleton p2) {
 
@@ -90,5 +90,14 @@ public abstract class ProductSkeleton extends Model {
 
         /*For descending order*/
         return second-first;
-   }};
+    }};
+
+    public static boolean checkStringLen(String str){
+        if(str.length()>254){
+            return true;
+        }
+        return false;
+    }
+
+    public abstract boolean checkLengthOfStrings();
 }

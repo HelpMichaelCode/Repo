@@ -8,6 +8,7 @@ delete from review;
 
 insert into user (email,username,password,address,mobile_number,role) values ( 'admin@play.com', 'Admin', '','122 New Lane','0851234567', 'admin' );
 insert into user (email,username,password,address,mobile_number,role) values ( 'customer@play.com', 'James Olsen', '','12 Goodwill Court','0866549873','customer' );
+insert into user (email,username,password,address,mobile_number,role) values ( 'N/A', 'N/A', 'N/A','N/A','N/A','N/A');
 
 insert into shopping_cart (id, user_email) values (1, 'customer@play.com');
 
@@ -276,4 +277,4 @@ gpu_product_id, motherboard_product_id, ram_qty, ram_product_id, storage_product
 (105, 'MSI', 'GF62 8RC 15.6"', 105, 113, 118, 107, 1, 108, 116);
 
 insert into review (id, body, rating, user_email, product_product_id) 
-values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 102);
+values (400, 'Great laptop! Definitely worth buying.', 4, 'customer@play.com', 105);

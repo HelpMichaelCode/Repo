@@ -1,0 +1,47 @@
+@(topics: List[models.Forum], forumForm: Form[models.Forum], user: models.users.User)
+@import helper._
+@main("Forum",user){
+
+    @if(forumForm.hasGlobalErrors) {
+        <p class="alert alert-warning">
+          @for(e
+          <- forumForm.globalErrors) { @e.message<br />
+          }
+        </p>
+        }
+        <h1>BLDPC forum</h1>
+        <div class="add-forum-form">
+            <!-- form to add a new forum -->
+          @helper.form(action = controllers.routes.HomeController.addThread(user.getEmail), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
+
+          @CSRF.formField
+           
+          @inputText(forumForm("title"), '_label -> "",
+          'class -> "input", 'placeholder -> "title")          
+
+          @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+
+        <div class="hide">
+          @inputText(forumForm("id"), '_label -> "", 'hidden -> "hidden"));
+        </div>
+        <div class="actions">
+
+            <input type="submit" value="Start thread" class="btn btn-primary" />
+      
+          </div>
+        }
+        </div> 
+        <!-- end of add-forum-form -->
+        <div class="forum-topics">
+            @if(topics.size > 0){
+                @for(t <- topics){
+                    <a href="@routes.HomeController.displayThread(t.getTitle)"><h3>@t.getTitle</h3></a>
+                    <h4>Replies: @t.getComments.size</h4>
+                    <h4>@t.getUser.getUsername</h4>
+                }
+            } else {
+                <h1>No topics to display</h1>
+            }
+        </div> 
+        <!-- end of forum-topics -->
+}
