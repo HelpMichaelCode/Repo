@@ -75,16 +75,11 @@ public class ShoppingController extends Controller {
                 // i.getProduct().update();
             }
         }
-
         if(flag){
-            flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have."); 
+            flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have in stock."); 
             // executes if item quantity is updated on line 81
             return ok(basket.render(User.getUserById(session().get("email"))));
         }
-
-        // for(OrderLine i: orderLines){
-        //     if(i.get)
-        // }
         // Associate order with customer
         order.setUser(u);
         
@@ -114,6 +109,7 @@ public class ShoppingController extends Controller {
         u.getShoppingCart().update();
         
         // Show order confirmed view
+        u.sendMailOrder(order);
         flash("success", "You order has been confirmed!");
         return redirect(routes.ProductController.productList(0, ""));
     }
@@ -182,23 +178,33 @@ public class ShoppingController extends Controller {
                
         return ok(viewOrders.render(User.getUserById(session().get("email"))));
     }
+
     @Transactional
     public Result cancelOrder(Long orderId){
         ShopOrder order = ShopOrder.find.byId(orderId);
-        Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
-        
-        c1=order.getOrderDate();
-        if(compareDates(c1,c2)){
-           // order.removeAllItems(orderId);
-           order.adjustStock();
-           order.delete();
-           
-            flash("success", "Your order has been cancelled");
-        }else {
-            flash("success", "Sorry, it is too late to cancel this order");
+        if(order != null){
+            if(User.getUserById(session().get("email")).getEmail().equals(order.getUser().getEmail())){
+                Calendar c1 = Calendar.getInstance();
+                Calendar c2 = Calendar.getInstance();
+                
+                c1=order.getOrderDate();
+                if(compareDates(c1,c2)){
+                // order.removeAllItems(orderId);
+                order.adjustStock();
+                order.delete();
+                
+                    flash("success", "Your order has been cancelled");
+                }else {
+                    flash("success", "Sorry, it is too late to cancel this order");
+                }
+                return ok(viewOrders.render(User.getUserById(session().get("email"))));
+            }
+            flash("error", "You do not have permissions to cancel that order!");
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(0), ""));   
+        } else {
+            flash("error", "Order does not exist!");
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(0), ""));   
         }
-        return ok(viewOrders.render(User.getUserById(session().get("email"))));
     }
 
     public boolean compareDates(Calendar c1, Calendar c2){
@@ -209,7 +215,7 @@ public class ShoppingController extends Controller {
         long diffInMilis = miliSecondForDate2 - miliSecondForDate1;
 
         long diffInMinutes = diffInMilis / (60 * 1000);
-        if(diffInMinutes >0.166667){
+        if(diffInMinutes > 5){ //for demostration purposes cancel order is only available in the first 5 minutes after placing it
             allowed=false;
         }
         return allowed;
@@ -246,39 +252,49 @@ public class ShoppingController extends Controller {
         } else {
             TrendingPC pc = newForm.get();
             if(pc.getGpu().getProductId() != null){
-                for(GraphicsCard g: GraphicsCard.findAll()){
-                    if(pc.getGpu().getProductId().equals(g.getProductId())){
-                        user.getShoppingCart().addProductToCart(g.getProduct());
-                        // flash("error", "GPU added!");
+                if(GraphicsCard.findAll() != null){
+                    for(GraphicsCard g: GraphicsCard.findAll()){
+                        if(pc.getGpu().getProductId().equals(g.getProductId())){
+                            user.getShoppingCart().addProductToCart(g.getProduct());
+                            // flash("error", "GPU added!");
+                        }
                     }
                 } 
             }
             if(pc.getMotherboard().getProductId() != null){
-                for(Motherboard g: Motherboard.findAll()){
-                    if(pc.getMotherboard().getProductId().equals(g.getProductId())){
-                        user.getShoppingCart().addProductToCart(g.getProduct());
+                if(Motherboard.findAll() != null){
+                    for(Motherboard g: Motherboard.findAll()){
+                        if(pc.getMotherboard().getProductId().equals(g.getProductId())){
+                            user.getShoppingCart().addProductToCart(g.getProduct());
+                        }
                     }
                 }
             }
-            if(pc.getCpu().getProductId() != null){ 
-                for(Processor g: Processor.findAll()){
-                    if(pc.getCpu().getProductId().equals(g.getProductId())){
-                        user.getShoppingCart().addProductToCart(g.getProduct());
-                    } 
+            if(pc.getCpu().getProductId() != null){
+                if(Processor.findAll() != null){ 
+                    for(Processor g: Processor.findAll()){
+                        if(pc.getCpu().getProductId().equals(g.getProductId())){
+                            user.getShoppingCart().addProductToCart(g.getProduct());
+                        } 
+                    }
                 }
             }
-            if(pc.getRam().getProductId() != null){  
-                for(Ram g: Ram.findAll()){
-                    if(pc.getRam().getProductId().equals(g.getProductId())){
-                        user.getShoppingCart().addProductToCart(g.getProduct());
-                    }  
+            if(pc.getRam().getProductId() != null){
+                if(Ram.findAll() != null){  
+                    for(Ram g: Ram.findAll()){
+                        if(pc.getRam().getProductId().equals(g.getProductId())){
+                            user.getShoppingCart().addProductToCart(g.getProduct());
+                        }  
+                    }
                 }
             }
-            if(pc.getRam().getProductId() != null){  
-                for(Storage g: Storage.findAll()){
-                    if(pc.getStorage().getProductId().equals(g.getProductId())){
-                        user.getShoppingCart().addProductToCart(g.getProduct());
-                    }  
+            if(pc.getStorage().getProductId() != null){
+                if(Storage.findAll() != null){
+                    for(Storage g: Storage.findAll()){
+                        if(pc.getStorage().getProductId().equals(g.getProductId())){
+                            user.getShoppingCart().addProductToCart(g.getProduct());
+                        }  
+                    }
                 }
             } 
             user.update();

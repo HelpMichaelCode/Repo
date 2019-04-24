@@ -163,9 +163,26 @@ public class User extends Model{
         return result;
     }
 
-    public void SendMailSSL(){
+    public void sendMailSSL(){
         //from, Password, To, Subject, Message
         sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"Welcome!","Hello "+ this.username +"! Welcome to BLDPC. We hope you enjoy surfing through our website and find what's best for you! \n Click the link down below and enter in your credentials \nhttp://localhost:9000/login");
+    }
+
+    public void sendMailOrder(ShopOrder so){
+        //from, Password, To, Subject, Message
+        String order = "Order details:\nOrder number: " + so.getId() + "\nPlaced on: " + so.getOrderDateString() + "\n\n";
+        String orderTotal;
+        String end = "\nTo cancel this order, please click this link: http://localhost:9000/cancel-order/" + so.getId();
+        for(OrderLine ol: so.getProducts()){
+            order += ol.getProduct().getProductName();
+            order += " €";
+            order += ol.getPrice();
+            order += " x ";
+            order += ol.getQuantity();
+            order += "\n";
+        }
+        orderTotal = "Order total:\t€" + so.getOrderTotal();
+        sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"BLDPC order confirmed!","Your order has been confirmed!\n" + order + "\n" + orderTotal + "\nThank you for shopping with us!\n" + end);
     }
 
     public boolean numberCheck(){

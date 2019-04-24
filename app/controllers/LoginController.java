@@ -103,7 +103,7 @@ public class LoginController extends Controller{
                 newUser.setShoppingCart(new ShoppingCart());
                 newUser.getShoppingCart().setUser(newUser);
                 newUser.save(); //Add user to DB if email is in the right format and is not already in use.
-                newUser.SendMailSSL();
+                newUser.sendMailSSL();
                 flash("success", "Hello " + newUser.getUsername() +"! We have sent a activation link to your email!");
 
                 return redirect(controllers.routes.LoginController.login());
