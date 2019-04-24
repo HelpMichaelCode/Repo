@@ -8,6 +8,7 @@ import play.data.validation.*;
 
 import models.*;
 import models.users.*;
+import models.products.*;
 
 @Entity
 public class Review extends Model {
@@ -21,8 +22,8 @@ public class Review extends Model {
     @Constraints.Required
     private double rating;
 
-    @ManyToOne
-    private User user; //username of the user who posted the review
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private User user; //user who posted the review THIS CAUSES ERROR WHEN DELETING THE USER
 
     @ManyToOne
     private Product product;
@@ -75,7 +76,7 @@ public class Review extends Model {
     public void setUser(User u){
         this.user = u;
     }
-    
+
     public static Finder<Long, Review> find = new Finder<>(Review.class);
 
     public static final List<Review> findAll() {
@@ -88,5 +89,12 @@ public class Review extends Model {
         } else {
             return find.query().where().eq("id", id).findUnique();
         }
+    }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(body)){
+            return true;
+        }
+        return false;
     }
 }

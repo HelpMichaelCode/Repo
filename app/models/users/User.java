@@ -1,6 +1,7 @@
 package models.users;
 
 import models.shopping.*;
+import models.products.*;
 import models.SendMailSSL;
 
 import java.util.*;
@@ -168,4 +169,23 @@ public class User extends Model{
        
 }
 
+    public boolean numberCheck(){
+        boolean result = false;
+        try{
+            double number = Double.parseDouble(mobileNumber);
+            result = true;
+        } catch(NumberFormatException e){
+            result = false;
+        }
+        return result;
+    }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(email) ||ProductSkeleton.checkStringLen(role) || 
+        ProductSkeleton.checkStringLen(username) || ProductSkeleton.checkStringLen(mobileNumber) || 
+        ProductSkeleton.checkStringLen(address) || ProductSkeleton.checkStringLen(password)){
+            return true;
+        }
+        return false;
+    }
 }

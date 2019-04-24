@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css?family=Abel|Aguafina+Script|Artifika|Athiti|Condiment|Dosis|Droid+Serif|Farsan|Gurajada|Josefin+Sans|Lato|Lora|Merriweather|Noto+Serif|Open+Sans+Condensed:300|Playfair+Display|Rasa|Sahitya|Share+Tech|Text+Me+One|Titillium+Web');
 
 body {
-    /* background: #DFC2F2; */
-    /* background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%); */
-    background-color: rgb(207, 207, 207);
+	/* background: #DFC2F2; */
+	/* background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%); */
+	background-color: rgb(207, 207, 207);
 	background-attachment: fixed;	
 	background-size: cover;
-	}
+}
 
 #container{
   float: left;
@@ -19,7 +19,6 @@ body {
 	margin: 2em 2%;
 	height: 26em;
 	width: 44.5%;
-	
 }
 /*start of slider*/
 
@@ -337,7 +336,6 @@ body {
 	height: 100%;
 	float: left;
 	width: 50%;
-
 }
 
 /* 	Product Name */
@@ -348,7 +346,6 @@ body {
 	font-size: 25px;
 	color: #344055;
 	margin: 0;
-	
 }
 
 
@@ -554,10 +551,6 @@ body {
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
 
-.product-list-index{
-	margin-top: 45%;
-	
-}
 @font-face {
   font-family: myFirstFont;
   src: url(sansation_light.woff);
@@ -574,6 +567,11 @@ body {
 	margin-right: 1%;
 }
 
+.product-list-index h2{
+	text-align: center;
+	font-size: 350%;
+}
+
 .product-list-index hr{
 	width: 50%;
 	display: block;
@@ -584,65 +582,67 @@ body {
 	border-style: inset;
 	
 }
-
+.product-list-index{
+	margin-top: 45%;
+}
 
 @media screen and (max-width: 2100px){
 	.product-list-index{
-		margin-top: 40%;
+		margin-top: 43%;
 		
 	}
 }
 @media screen and (max-width: 1900px){
 	.product-list-index{
-		margin-top: 40%;
+		margin-top: 43%;
 		
 	}
 }
 @media screen and (max-width: 1800px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1600px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1650px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1500px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1400px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1450px){
 	.product-list-index{
-		margin-top:42%;
+		margin-top:45%;
 		
 	}
 }
 @media screen and (max-width: 1300px){
 	.product-list-index{
-		margin-top:44%;
+		margin-top:47%;
 		
 	}
 }
 @media screen and (max-width: 1250px){
 	.product-list-index{
-		margin-top:45%;
+		margin-top:48%;
 		
 	}
 	#container .product-details .information {

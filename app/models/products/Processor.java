@@ -66,4 +66,11 @@ public class Processor extends ProductSkeleton {
             return find.query().where().eq("product_id", id).findUnique();
         }
     }
+
+    public boolean checkLengthOfStrings(){
+        if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(cores) || checkStringLen(clock) || checkStringLen(cache)){
+            return true;
+        }
+        return false;
+    }
 }

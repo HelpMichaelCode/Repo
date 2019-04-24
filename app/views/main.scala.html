@@ -7,6 +7,8 @@
 .header{
   z-index: 99;
 }
+
+
 </style>
 <head>
 
@@ -19,6 +21,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/main.css")"> <meta name="viewport"
     content="width=device-width, initial-scale=1">
+    <script src="/assets/javascripts/main.js"></script>
+    <!-- ICONS -->
+    
 
 </head>
 
@@ -32,12 +37,14 @@
                       <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
                       @if((user != null) && (user.getRole().equals("customer"))) {
                         <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
+                        <li><a href="@routes.ShoppingController.addBuild()">Build PC</a></li>
                       } else if(user != null && user.getRole.equals("admin")){
                         @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                           <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
                         }
+                        <li><a href="@routes.HomeController.stats">Stat</a></li>
                       }
-                      <li><a href="@routes.HomeController.stats">Stat</a></li>
+                      
                   </ul>
                   <div class="logo">
                       <a href="@routes.HomeController.index()">BLDPC</a>
@@ -99,8 +106,13 @@
 
 
 <!-- Nav -->
-<link href="https://fonts.googleapis.com/css?family=Playfair+Display|Roboto|Roboto+Condensed|Roboto+Slab" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- main javascript file -->
-<script src="/assets/javascripts/main.js"></script>
+
+
+<!-- backtotop -->
+<button onclick="topFunction()" id="top" title="Go to top">Top</button>  
+
+
+<!-- footer -->
+
 </html>

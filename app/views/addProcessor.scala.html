@@ -31,7 +31,7 @@
     'class -> "form-control"
     )
     @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints
-    -> false)
+    -> false, 'maxLength -> "254")
     @select(
     field = productForm("cores"),
     options = options(
@@ -49,9 +49,9 @@
     'class -> "form-control"    
     )
     @inputText(productForm("clock"), '_label -> "", 'placeholder -> "Clock speed- ex. 3.2 GHz", 'class -> "form-control",
-    '_showConstraints -> false)
+    '_showConstraints -> false, 'maxLength -> "254")
     @inputText(productForm("cache"), '_label -> "", 'placeholder -> "Cache - ex. 2 MB", 'class -> "form-control",
-    '_showConstraints -> false)
+    '_showConstraints -> false, 'maxLength -> "254")
     <div class="hide">
         @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
     </div>

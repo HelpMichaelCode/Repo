@@ -27,9 +27,9 @@ GET     /update-item/:id            controllers.ProductController.updateItem(id:
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
-GET     /low-stock-products         controllers.ProductController.lowStockProducts(category:Long?=0L)
-GET     /stats                      controllers.HomeController.stats
-GET     /stats-by-category/:catName          controllers.HomeController.catstat(catName: String)
+GET     /low-stock-products                 controllers.ProductController.lowStockProducts(category:Long?=0L)
+GET     /stats                              controllers.HomeController.stats
+GET     /stats-by-category/:catName          controllers.HomeController.catstats(catName: String)
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)
@@ -71,7 +71,13 @@ GET     /add-build-submit             controllers.ShoppingController.addBuildSub
 POST    /post-review/:pid                controllers.ProductController.addReviewSubmit(pid: Long)
 GET     /delete-review/:id/:email   controllers.ProductController.deleteReview(id: Long, email: String)
 GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
-GET     /all-Reviews                controllers.ProductController.allReviews
+GET     /all-reviews                controllers.ProductController.allReviews
+
+GET     /forum                      controllers.HomeController.forum
+POST    /forum/new-thread/:email    controllers.HomeController.addThread(email: String)
+GET     /forum/thread/:title        controllers.HomeController.displayThread(title: String)
+POST    /forum/thread/:threadId     controllers.HomeController.postComment(email: String, threadId: Long)
+
 
 GET     /update-user/:email         controllers.LoginController.updateUser(email: String)
 GET     /delete-user/:email         controllers.LoginController.deleteUser(email: String)

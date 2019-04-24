@@ -79,4 +79,10 @@ public class GraphicsCard extends ProductSkeleton {
         }
     }
 
+    public boolean checkLengthOfStrings(){
+        if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(bus) || checkStringLen(memory) || checkStringLen(gpuClock) || checkStringLen(memoryClock)){
+            return true;
+        }
+        return false;
+    }
 }
