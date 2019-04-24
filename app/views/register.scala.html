@@ -36,12 +36,16 @@
                 @inputText(userForm("username"), '_label -> "",
                 'class -> "input", 'placeholder -> "Username", 'maxLength -> "254", '_showConstraints -> false)
            
-                @inputPassword(userForm("password"), '_label -> "",
-                'class -> "input", 'placeholder -> "Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false)
-           
-                @inputPassword(userForm("password2"), '_label -> "",
-                'class -> "input", 'placeholder -> "Confirm Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false)
-         
+                @inputPassword(userForm("password"), 'type -> "password",
+                'class -> "input", 'placeholder -> "Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false, 'id -> "pass")
+
+                <input type="checkbox" onclick="myFunction()">Show Password
+
+                @inputPassword(userForm("password2"), 'type -> "password",'_label -> "",
+                'class -> "input", 'placeholder -> "Confirm Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false,'id -> "pass2")
+                
+                <input type="checkbox" onclick="myFunction2()">Show Password
+
                 @inputText(userForm("address"), '_label -> "",
                 'class -> "input", 'placeholder -> "Address", 'maxLength -> "254", '_showConstraints -> false)
     
