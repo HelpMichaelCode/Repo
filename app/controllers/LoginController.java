@@ -37,7 +37,7 @@ public class LoginController extends Controller{
         
        }
     public Result activationPage(){
-        return redirect(controllers.routes.LoginController.activationPage());
+        return ok(activationPage.render(User.getUserById(session().get("email"))));
        }
     
     public Result loginSubmit() { //I believe the password is in plain text when the form is sent
@@ -94,8 +94,8 @@ public class LoginController extends Controller{
                     newUser.getShoppingCart().setUser(newUser);
                     newUser.save(); //Add user to DB if email is in the right format and is not already in use.
                     newUser.SendMailSSL();
-                    flash("success", "Hello " + newUser.getUsername() +"! We have sent a activation link to your email!");
-
+                    flash("success", "Hello " + newUser.getUsername() +", Thank you for registering!");
+                    
                     return redirect(controllers.routes.LoginController.activationPage());
                 } else {
                     flash("error", "Wrong email format! Please try again!");

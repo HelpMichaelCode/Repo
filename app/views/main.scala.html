@@ -53,9 +53,11 @@
                     }
                     @if(user != null){
                     <li><a href="@routes.LoginController.logout()">Log out</a></li>
-                    } else {
-                    <li><a href="@routes.LoginController.login()">Log in</a></li>
+                    
+                    }else{
+                      <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-user"></span></a></li>
                     }
+
                     <li class="search">
                       <input type="text" id="search" name="" class="text" placeholder="Search..."/>
                       <button onclick="search()" class="btn btn-default btn-md">GO</button>

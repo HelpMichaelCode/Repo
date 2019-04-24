@@ -23,7 +23,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public/"
 GET     /product-list               controllers.ProductController.productList(category:Long?=0L, keyword: String)
 GET     /product/:productName       controllers.ProductController.displayProduct(productName: String)
 GET     /add-product                controllers.ProductController.addProduct
-GET     /update-item/:id             controllers.ProductController.updateItem(id: Long)
+GET     /update-item/:id            controllers.ProductController.updateItem(id: Long)
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
 
