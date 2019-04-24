@@ -131,7 +131,7 @@ public class ShoppingController extends Controller {
         OrderLine orderLine = OrderLine.find.byId(orderLineId);
         Product p = Product.getProductById(orderLine.getProduct().getProductID());
         
-        if(p.getProductQty() < orderLine.getQuantity()){
+        if(p.getProductQty() <= orderLine.getQuantity()){
             orderLine.setQuantity(p.getProductQty());
             orderLine.update();
             flash("error", "Sorry, we don't have that many of those. We have set the quantity to the amount we have.");
@@ -145,7 +145,7 @@ public class ShoppingController extends Controller {
             // p.decrementStock();
             // p.update();
         } else {
-            flash("error","Oops, it seems we do not have any more of those in stock.");
+            flash("error","It seems we do not have any more of those in stock.");
         } 
         // Show updated basket
         return redirect(routes.ShoppingController.showCart());
@@ -213,6 +213,20 @@ public class ShoppingController extends Controller {
             allowed=false;
         }
         return allowed;
+    }
+
+    public static boolean orderedLessThan30DaysAgo(Calendar c1, Calendar c2){
+        boolean result = true;
+        long miliSecondForDate1 = c1.getTimeInMillis();
+        long miliSecondForDate2 = c2.getTimeInMillis();
+        // Calculate the difference in millisecond between two dates
+        long diffInMilis = miliSecondForDate2 - miliSecondForDate1;
+
+        long diffInMinutes = diffInMilis / (60 * 1000);
+        if(diffInMinutes>43200){
+            result=false;
+        }
+        return result;
     }
     
     @Security.Authenticated(Secured.class)

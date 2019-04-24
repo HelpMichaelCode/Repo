@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import models.*;
 import models.users.*;
 import models.products.*;
+import models.shopping.*;
 
 public class HomeController extends Controller {
     private FormFactory formFactory;
@@ -56,10 +57,8 @@ public class HomeController extends Controller {
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result stats(){
-      
         List<String> names = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
-        
         for(Category c: Category.findAll()){
             names.add(c.getName());
             int sum = 0;
@@ -72,11 +71,64 @@ public class HomeController extends Controller {
         }
         String[] prodNames= names.toArray(new String[names.size()]);
         Integer[] sold= sales.toArray(new Integer[sales.size()]);
-        String exampleValues = "{'c':[{'v': 'Work'}, {'v': 11}]}, {'c':[{'v': 'Eat'}, {'v': 2}]}, {'c':[{'v': 'Commute'}, {'v': 2}]},{'c':[{'v': 'Watch TV'}, {'v':2}]}, {'c':[{'v': 'Sleep'}, {'v':7, 'f':'7'}]}";
-        String values = getValues(prodNames, sold);
-        String jsonString = "{'cols': [{'id': 'name', 'label': 'Names', 'type': 'string'}, {'id': 'sold', 'label': 'Total sold', 'type': 'number'}],'rows': [" + values + "]}";
-        return ok(stats.render(jsonString, prodNames, sold, User.getUserById(session().get("email"))));
+        String jsonString = getJsonString(prodNames, sold);
+
+        //Get best selling product for the last 30 days
+        String[] bestSellerString = getBestSeller30Days().split(",", 2);
+        Long maxSold = Long.valueOf(0);
+        String bestSeller = "N/A";
+        try{
+            maxSold = Long.parseLong(bestSellerString[0], 10);
+            bestSeller = bestSellerString[1];
+        } catch(ArrayIndexOutOfBoundsException e){
+        } catch(NumberFormatException e){
+        }
+        return ok(stats.render(jsonString, prodNames, bestSeller, maxSold, User.getUserById(session().get("email"))));
         // return ok(test.render(jsonString, User.getUserById(session().get("email"))));
+    }
+
+    
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result catstats(String cat){ 
+        List<String> names = new ArrayList<>();
+        List<Integer> sales = new ArrayList<>();
+        List<Product> all = Product.findAll();
+        for(Category c: Category.findAll()){
+            if(c.getName().toLowerCase().equals(cat.toLowerCase())){
+                for(Product p: all){
+                    if(p.getCategory().getId() == c.getId()){
+                        names.add(p.getProductName());
+                        sales.add(p.getTotalSold());
+                    }
+                }
+                String[] prodNames= names.toArray(new String[names.size()]);
+                Integer[] sold= sales.toArray(new Integer[sales.size()]);
+                String jsonString = getJsonString(prodNames, sold);
+
+                //Get best selling product for the last 30 days 
+                // --- we could have made this to get the best selling product of the specified category but there wasn't much time
+                String[] bestSellerString = getBestSeller30Days().split(",", 2);
+                Long maxSold = Long.parseLong(bestSellerString[0], 10);
+                String bestSeller = bestSellerString[1];
+                // try{
+                //     maxSold = Long.parseLong(bestSellerString[0], 10);
+                //     bestSeller = bestSellerString[1];
+                // } catch(ArrayIndexOutOfBoundsException e){  
+                // } catch(NumberFormatException e){  
+                // }
+                return ok(stats.render(jsonString, prodNames, bestSeller, maxSold, User.getUserById(session().get("email"))));
+            }
+        }
+        return redirect(controllers.routes.HomeController.stats());
+    }  
+    
+    private String getJsonString(String[] names, Integer[] sold){
+        // String exampleValues = "{'c':[{'v': 'Work'}, {'v': 11}]}, {'c':[{'v': 'Eat'}, {'v': 2}]}, {'c':[{'v': 'Commute'}, {'v': 2}]},{'c':[{'v': 'Watch TV'}, {'v':2}]}, {'c':[{'v': 'Sleep'}, {'v':7, 'f':'7'}]}";
+        String values = getValues(names, sold);
+        String jsonString = "{'cols': [{'id': 'name', 'label': 'Names', 'type': 'string'}, {'id': 'sold', 'label': 'Total sold', 'type': 'number'}],'rows': [" + values + "]}";
+        return jsonString;
     }
 
     private String getValues(String[] names, Integer[] sold){
@@ -109,30 +161,31 @@ public class HomeController extends Controller {
         return "{'c':[{'v': 'Bad values'}, {'v': 0}]}";
     }
 
-    @Security.Authenticated(Secured.class)
-    @With(Administrator.class)
-    public Result catstats(String cat){ 
-        List<String> names = new ArrayList<>();
-        List<Integer> sales = new ArrayList<>();
-        List<Product> all = Product.findAll();
-        for(Category c: Category.findAll()){
-            if(c.getName().toLowerCase().equals(cat.toLowerCase())){
-                for(Product p: all){
-                    if(p.getCategory().getId() == c.getId()){
-                        names.add(p.getProductName());
-                        sales.add(p.getTotalSold());
+    private String getBestSeller30Days(){
+        Long max = Long.valueOf(0);
+        String prodName = "N/A";
+        for(Product p: Product.findAll()){
+            Long prodTotal = Long.valueOf(0);
+            for(ShopOrder so: ShopOrder.findAll()){
+                Calendar orderDate = Calendar.getInstance();
+                Calendar currentDate = Calendar.getInstance();
+                orderDate = so.getOrderDate();
+                if(ShoppingController.orderedLessThan30DaysAgo(orderDate, currentDate)){
+                    for(OrderLine ol: so.getProducts()){
+                        if(ol.getProduct().getProductID() == p.getProductID()){
+                            prodTotal += ol.getQuantity();
+                        }
                     }
                 }
-                String[] prodNames= names.toArray(new String[names.size()]);
-                Integer[] sold= sales.toArray(new Integer[sales.size()]);
-                String values = getValues(prodNames, sold);
-                String jsonString = "{'cols': [{'id': 'name', 'label': 'Names', 'type': 'string'}, {'id': 'sold', 'label': 'Total sold', 'type': 'number'}],'rows': [" + values + "]}";
-                return ok(stats.render(jsonString, prodNames, sold, User.getUserById(session().get("email"))));
-            }
+                if(prodTotal > max){
+                    max = prodTotal;
+                    prodName = p.getProductName();
+                }
+            }   
         }
-        return redirect(controllers.routes.HomeController.stats());
-    }  
-    
+        return max + "," + prodName;
+    }
+
     // @Security.Authenticated(Secured.class)
     public Result forum(){
         Form<Forum> forumForm = formFactory.form(Forum.class);

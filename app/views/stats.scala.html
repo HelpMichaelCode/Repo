@@ -1,4 +1,4 @@
-@(jsonString: String, names: Array[String], sales: Array[Integer], user: models.users.User)
+@(jsonString: String, names: Array[String], bestSeller: String, bestSellerSold: Long, user: models.users.User)
 @main("Statistics", user){
   <style>
     body{
@@ -23,7 +23,9 @@
       </ul>
   
   </div>
-<div id="pie-chart"/> 
+  <h3 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h3>
+<div id="pie-chart"/>
+
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -46,7 +48,7 @@
                 var options = {
                   title: 'Stats'
                   ,chartArea:{left:0,top:0,width:"100%",height:"100%"}
-                  ,height: 600
+                  ,height: 500
                   ,width: 900
                 };
                 chart.draw(data, options);

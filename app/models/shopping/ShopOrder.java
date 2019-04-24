@@ -30,6 +30,8 @@ public class ShopOrder extends Model {
     // Default constructor
     public  ShopOrder() {
         orderDate = Calendar.getInstance();
+        orderDate.add(Calendar.DATE, -30);
+        orderDate.setTime(orderDate.getTime());
     }
     	
     public static Finder<Long,ShopOrder> find = new Finder<Long,ShopOrder>(ShopOrder.class);

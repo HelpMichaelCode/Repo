@@ -249,9 +249,6 @@ body {
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
 
-.product-list-index{
-	margin-top: 45%;
-}
 @font-face {
   font-family: myFirstFont;
   src: url(sansation_light.woff);
@@ -268,6 +265,11 @@ body {
 	margin-right: 1%;
 }
 
+.product-list-index h2{
+	text-align: center;
+	font-size: 350%;
+}
+
 .product-list-index hr{
 	width: 50%;
 	display: block;
@@ -282,61 +284,61 @@ body {
 
 @media screen and (max-width: 2100px){
 	.product-list-index{
-		margin-top: 40%;
+		margin-top: 43%;
 		
 	}
 }
 @media screen and (max-width: 1900px){
 	.product-list-index{
-		margin-top: 40%;
+		margin-top: 43%;
 		
 	}
 }
 @media screen and (max-width: 1800px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1600px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1650px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1500px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1400px){
 	.product-list-index{
-		margin-top:40%;
+		margin-top:43%;
 		
 	}
 }
 @media screen and (max-width: 1450px){
 	.product-list-index{
-		margin-top:42%;
+		margin-top:45%;
 		
 	}
 }
 @media screen and (max-width: 1300px){
 	.product-list-index{
-		margin-top:44%;
+		margin-top:47%;
 		
 	}
 }
 @media screen and (max-width: 1250px){
 	.product-list-index{
-		margin-top:45%;
+		margin-top:48%;
 		
 	}
 	#container .product-details .information {
