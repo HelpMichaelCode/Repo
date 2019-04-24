@@ -155,11 +155,19 @@ public class LoginController extends Controller{
                 if(!newPass.getPassword2().equals(User.hash("")) && !newPass.getPassword3().equals(User.hash(""))){ 
                     //password will be updated only if both fields are not empty and both contain the same sequence of characters
                     if(newPass.getPassword2().equals(newPass.getPassword3())){
+                        if(newPass.getPassword2().equals(newUser.getPassword())){
+                            flash("error", "New password cannot be old password");
+                            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                        }
                         newUser.setPasswordPlain(newPass.getPassword2()); //updates the password of the user
                     } else { //if the new passwords do not match
                         flash("error", "Passwords do not match");
                         return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
                     }
+                } else if((!newPass.getPassword2().equals(User.hash("")) && newPass.getPassword3().equals(User.hash(""))) ||
+                 (newPass.getPassword2().equals(User.hash(""))&& !newPass.getPassword3().equals(User.hash("")))){
+                    flash("error", "Passwords do not match");
+                    return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
                 }
                 newUser.update(); //updates the user in the database
                 flash("success", "User " + newUser.getUsername() + " was updated.");

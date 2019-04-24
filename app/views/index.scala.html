@@ -13,7 +13,7 @@
   </figure>
 </div> -->
 <!-- Slider Wrapper -->
-<div class="css-slider-wrapper">
+<div class="css-slider-wrapper" style="z-index: -1;">
   <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
   <input type="radio" name="slider" class="slide-radio2" id="slider_2">
   <input type="radio" name="slider" class="slide-radio3" id="slider_3">
@@ -52,6 +52,7 @@
 
 
 <div class="product-list-index">
+  <h2>Best sellers</h2>
   @for(p <- bestSellers) {
     @templateProducts(p, user, env)
   }

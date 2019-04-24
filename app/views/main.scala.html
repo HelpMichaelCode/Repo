@@ -36,8 +36,9 @@
                         @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                           <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
                         }
+                        <li><a href="@routes.HomeController.stats">Stat</a></li>
                       }
-                      <li><a href="@routes.HomeController.stats">Stat</a></li>
+                      
                   </ul>
                   <div class="logo">
                       <a href="@routes.HomeController.index()">BLDPC</a>
