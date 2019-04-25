@@ -34,7 +34,7 @@ public class ShoppingController extends Controller {
 
     @With(CheckIfUser.class)
     @Transactional
-    public Result addToCart(Long id) {
+    public Result addToCart(Long id, String page) {
         
         // Find the item on sale
         Product product = Product.find.byId(id);
@@ -44,7 +44,7 @@ public class ShoppingController extends Controller {
         
         // Check if item in cart
         if (user.getShoppingCart() == null) {
-            // If no cart, create one -- Which should not be the case
+            // If no cart, create one -- Users should have their carts created whenever they register
             user.setShoppingCart(new ShoppingCart());
             user.getShoppingCart().setUser(user);
             user.update();
@@ -54,6 +54,16 @@ public class ShoppingController extends Controller {
         user.update();
         // notify user that item was added to their cart
         flash("success", "Product " + product.getProductName() + " was added to cart.");
+        String[] category = page.split(" ", 2);
+        if(category.length > 1){
+            if(category[0].equalsIgnoreCase("category")){
+                flash("error", "i got here");
+                Long catId = Long.parseLong(category[1]);
+                return redirect(routes.ProductController.productList(catId, ""));
+            }
+        } else if(page.equals("home")){
+            return redirect(controllers.routes.HomeController.index());
+        }
         return redirect(routes.ProductController.productList(0, ""));
     }
 
@@ -200,10 +210,10 @@ public class ShoppingController extends Controller {
                 return ok(viewOrders.render(User.getUserById(session().get("email"))));
             }
             flash("error", "You do not have permissions to cancel that order!");
-            return redirect(controllers.routes.ProductController.productList(Long.valueOf(0), ""));   
+            return redirect(controllers.routes.HomeController.index());   
         } else {
             flash("error", "Order does not exist!");
-            return redirect(controllers.routes.ProductController.productList(Long.valueOf(0), ""));   
+            return redirect(controllers.routes.HomeController.index());
         }
     }
 

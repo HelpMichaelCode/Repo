@@ -29,14 +29,16 @@
    <div class="box">
 
        <h1>@heading</h1>
+                @inputText(userForm("realName"), '_label -> "",
+                'class -> "input", 'placeholder -> "Name", 'maxLength -> "254", '_showConstraints -> false)
 
                 @inputText(userForm("email"), '_label -> "",
                 'class -> "input", 'placeholder -> "Email", 'maxLength -> "254", '_showConstraints -> false)
             
                 @inputText(userForm("username"), '_label -> "",
                 'class -> "input", 'placeholder -> "Username", 'maxLength -> "254", '_showConstraints -> false)
-           
-                @inputPassword(userForm("password"), 'type -> "password",
+
+                @inputPassword(userForm("password"), 'type -> "password", '_label -> "",
                 'class -> "input", 'placeholder -> "Password", 'maxLength -> "254", 'minLength -> "8", '_showConstraints -> false, 'id -> "pass")
 
                 <input type="checkbox" onclick="myFunction()">Show Password

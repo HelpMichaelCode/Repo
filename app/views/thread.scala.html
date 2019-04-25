@@ -10,6 +10,7 @@
         </p>
         }
         <h1>Thread: @thread.getTitle</h1>
+        <button onclick="window.location.href='@routes.HomeController.forum()'">Back</button>
          <div class="thread-body">
             <p>@thread.getBody</p>
          </div>
@@ -36,6 +37,7 @@
                 @for(r <- thread.getComments){
                     <h4>@r.getBody</h4>
                     <h4>@r.getUser.getUsername</h4>
+                    <button onclick="window.location.href='@routes.HomeController.deleteComment(thread.getTitle, r.getId)'">Delete comment</button>
                 }
             } else {
                 <h1>This thread has no replies</h1>

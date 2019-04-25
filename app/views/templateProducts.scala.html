@@ -1,5 +1,5 @@
 
-@(p: models.products.ProductSkeleton, user: models.users.User, env: play.api.Environment)
+@(p: models.products.ProductSkeleton, user: models.users.User, env: play.api.Environment, page: String)
     <div id="container">
 
         <!-- Start	Product details -->
@@ -23,7 +23,7 @@
             @if(p.getProduct.getProductQty > 0){
             <!-- Start buy button -->
                 <button class="btn1"
-                        onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId)'">
+                        onclick="window.location.href='@routes.ShoppingController.addToCart(p.getProductId, page)'">
                     <!--the price -->
                     <span class="price">&euro;@p.getProduct.getProductPrice</span>
                     <!--shopping cart icon-->

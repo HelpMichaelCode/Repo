@@ -143,6 +143,7 @@ create table user (
   email                         varchar(255) not null,
   role                          varchar(255),
   username                      varchar(255),
+  real_name                     varchar(255),
   password                      varchar(255),
   address                       varchar(255),
   mobile_number                 varchar(255),

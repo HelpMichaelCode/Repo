@@ -66,11 +66,11 @@ public class Comment extends Model {
         return Comment.find.all();
     }
 
-    // public Comment getCommentbyId(Long id){
-    //     if(id == null){
-    //         return null;
-    //     } else {
-    //         return find.query().where().eq("id", id).findUnique();
-    //     }
+    public static Comment getCommentById(Long id){
+        if(id == null){
+            return null;
+        } else {
+            return find.query().where().eq("id", id).findUnique();
+        }
     }
-
+}

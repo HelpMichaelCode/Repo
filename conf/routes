@@ -25,7 +25,7 @@ GET     /product/:productName       controllers.ProductController.displayProduct
 GET     /add-product                controllers.ProductController.addProduct
 GET     /update-item/:id             controllers.ProductController.updateItem(id: Long)
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
-GET     /delete-item/:ProductID     controllers.ProductController.deleteItem(ProductID: Long)
+GET     /delete-item/:productID     controllers.ProductController.deleteItem(productID: Long)
 
 GET     /low-stock-products                 controllers.ProductController.lowStockProducts(category:Long?=0L)
 GET     /stats                              controllers.HomeController.stats
@@ -55,9 +55,11 @@ GET     /add-storage/:pid            controllers.ProductController.addStorage(pi
 POST    /add-storage-submit/:pid     controllers.ProductController.addStorageSubmit(pid: Long)
 GET     /update-storage/:pid        controllers.ProductController.updateStorage(pid: Long)
 
+#ERROR CHECKING DONE UP TO HERE TEST TO DOUBLE CHECK ----------------------------------------------------------
+
 # Shopping
 GET     /show-cart                  controllers.ShoppingController.showCart()
-GET     /add-to-cart/:id            controllers.ShoppingController.addToCart(id: Long)
+GET     /add-to-cart/:id            controllers.ShoppingController.addToCart(id: Long, page: String)
 GET     /add-one/:itemId            controllers.ShoppingController.addOne(itemId: Long)
 GET     /remove-one/:itemId         controllers.ShoppingController.removeOne(itemId: Long)
 GET     /empty-cart                 controllers.ShoppingController.emptyCart()
@@ -68,15 +70,17 @@ GET     /add-build                   controllers.ShoppingController.addBuild()
 GET     /add-build-submit             controllers.ShoppingController.addBuildSubmit()
 
 
-POST    /post-review/:pid                controllers.ProductController.addReviewSubmit(pid: Long)
-GET     /delete-review/:id/:email   controllers.ProductController.deleteReview(id: Long, email: String)
-GET     /user-reviews/:email        controllers.ProductController.userReviews(email: String)
-GET     /all-reviews                controllers.ProductController.allReviews
+POST    /post-review/:pid                   controllers.ProductController.addReviewSubmit(pid: Long)
+GET     /delete-review/:id/:email           controllers.ProductController.deleteReview(id: Long, email: String, page: String)
+GET     /user-reviews/:email                controllers.ProductController.userReviews(email: String)
+GET     /all-reviews                        controllers.ProductController.allReviews
 
-GET     /forum                      controllers.HomeController.forum
-POST    /forum/new-thread/:email    controllers.HomeController.addThread(email: String)
-GET     /forum/thread/:title        controllers.HomeController.displayThread(title: String)
-POST    /forum/thread/:threadId     controllers.HomeController.postComment(email: String, threadId: Long)
+GET     /forum                              controllers.HomeController.forum
+POST    /forum/new-thread/:email            controllers.HomeController.addThread(email: String)
+GET     /forum/thread/:title                controllers.HomeController.displayThread(title: String)
+POST    /forum/thread/comment/:threadId     controllers.HomeController.postComment(email: String, threadId: Long)
+GET     /forum/delete-thread/:id            controllers.HomeController.deleteThread(id: Long)
+GET     /forum/thread/delete-comment/:id        controllers.HomeController.deleteComment(thread: String, id: Long)
 
 
 GET     /update-user/:email         controllers.LoginController.updateUser(email: String)

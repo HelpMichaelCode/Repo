@@ -1,4 +1,4 @@
-@(topics: List[models.Forum], forumForm: Form[models.Forum], user: models.users.User)
+@(threads: List[models.Forum], forumForm: Form[models.Forum], user: models.users.User)
 @import helper._
 @main("Forum",user){
 
@@ -32,16 +32,19 @@
         }
         </div> 
         <!-- end of add-forum-form -->
-        <div class="forum-topics">
-            @if(topics.size > 0){
-                @for(t <- topics){
+        <div class="forum-threads">
+            @if(threads.size > 0){
+                @for(t <- threads){
                     <a href="@routes.HomeController.displayThread(t.getTitle)"><h3>@t.getTitle</h3></a>
                     <h4>Replies: @t.getComments.size</h4>
                     <h4>@t.getUser.getUsername</h4>
+                    @if(user != null && user.getRole == "admin"){
+                      <button onclick="window.location.href='@routes.HomeController.deleteThread(t.getId)'">Delete thread</button>
+                    }
                 }
             } else {
-                <h1>No topics to display</h1>
+                <h1>No threads to display</h1>
             }
         </div> 
-        <!-- end of forum-topics -->
+        <!-- end of forum-threads -->
 }
