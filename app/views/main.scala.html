@@ -37,6 +37,7 @@
                       <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
                       @if((user != null) && (user.getRole().equals("customer"))) {
                         <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
+                        <li><a href="@routes.ShoppingController.addBuild()">Build PC</a></li>
                       } else if(user != null && user.getRole.equals("admin")){
                         @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                           <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
@@ -59,9 +60,11 @@
                     }
                     @if(user != null){
                     <li><a href="@routes.LoginController.logout()">Log out</a></li>
-                    } else {
-                    <li><a href="@routes.LoginController.login()">Log in</a></li>
+                    
+                    }else{
+                      <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-user"></span></a></li>
                     }
+
                     <li class="search">
                       <input type="text" id="search" name="" class="text" placeholder="Search..."/>
                       <button onclick="search()" class="btn btn-default btn-md">GO</button>

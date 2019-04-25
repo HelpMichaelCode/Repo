@@ -1,5 +1,4 @@
-@(loginForm: Form[models.users.Login], user: models.users.User)
-@import helper._
+@(user: models.users.User)
 
 @main("Activation Page", user) {
   <style>
@@ -9,11 +8,9 @@
   }  
    
 </style>
-  
-  <h1></h1>
+<h1>Please check your email for a link to our login page in order to approve your email address!</h1>
 
-
-  } @* End of form *@
+} @* End of form *@
 
 
 

@@ -37,8 +37,8 @@ public class LoginController extends Controller{
     }
 
     public Result activationPage(){
-        return redirect(controllers.routes.LoginController.activationPage());
-    }
+        return ok(activationPage.render(User.getUserById(session().get("email"))));
+       }
     
     public Result loginSubmit() {
         Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
@@ -67,7 +67,6 @@ public class LoginController extends Controller{
             return redirect(controllers.routes.HomeController.index());
         }
     }
-
     public Result registerSubmit() {
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
         Form<PasswordCheck> passwordForm = formFactory.form(PasswordCheck.class).bindFromRequest();
@@ -79,7 +78,7 @@ public class LoginController extends Controller{
         } else {
             User newUser = userForm.get();
             PasswordCheck pc = passwordForm.get();
-            
+
             if(!(pc.getPassword2().equals(newUser.getPassword()))){
                 flash("error", "Passwords do not match.");
 
@@ -93,7 +92,8 @@ public class LoginController extends Controller{
                 if(!newUser.numberCheck()){ //check if mobile number contains digits only
                     flash("error", "Mobile number cannot contain characters other than digits! Please remove any CHARACTERS or SPACES and try again!");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
-                } //user is registered only if email is in the right format
+                }
+//user is registered only if email is in the right format
                 if(newUser.checkLengthOfStrings()){
                     flash("error", "Please, try using less than 255 characters");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
@@ -104,7 +104,7 @@ public class LoginController extends Controller{
                 newUser.sendMailSSL();
                 flash("success", "Hello " + newUser.getUsername() +"! We have sent a activation link to your email!");
 
-                return redirect(controllers.routes.LoginController.login());
+                return redirect(controllers.routes.LoginController.activationPage());
             } else {
                 flash("error", "Email already in use! Please try again!");
                 //if the email the user has entered is already in the database
@@ -112,7 +112,9 @@ public class LoginController extends Controller{
             }
         }
     } //end of registerSubmit
-
+  
+            
+        
 
     @Security.Authenticated(Secured.class)
     public Result updateUser(String email){

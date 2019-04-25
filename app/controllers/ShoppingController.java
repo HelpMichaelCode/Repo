@@ -309,7 +309,7 @@ public class ShoppingController extends Controller {
             } 
             user.update();
         flash("success", "Components added to cart");
-        return redirect(controllers.routes.HomeController.index());
+        return redirect(controllers.routes.ShoppingController.showCart());
         }
     }
 

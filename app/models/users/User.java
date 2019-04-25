@@ -175,8 +175,9 @@ public class User extends Model{
 
     public void sendMailSSL(){
         //from, Password, To, Subject, Message
-        sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"Welcome!","Hello "+ this.username +"! Welcome to BLDPC. We hope you enjoy surfing through our website and find what's best for you! \n Click the link down below and enter in your credentials \nhttp://localhost:9000/login");
-    }
+        sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"Welcome!","Hello "+ this.username +"! Welcome to BLDPC. Your email has been activated, please click the link down below and enter in your credentials: \nhttp://localhost:9000/login");
+       
+}
 
     public void sendMailOrder(ShopOrder so){
         //from, Password, To, Subject, Message
