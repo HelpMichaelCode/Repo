@@ -21,12 +21,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/main.css")"> <meta name="viewport"
     content="width=device-width, initial-scale=1">
-    <script src="/assets/javascripts/main.js"></script>
-    <!-- ICONS -->
-    
-
+    <script src="@routes.Assets.versioned("/javascripts/main.js")"></script>
+    <script src="@routes.Assets.versioned("/javascripts/backToTop.js")"></script>
 </head>
-
 
 <header class="bg-image">
   <div class="bw-gradient"></div>
@@ -66,7 +63,7 @@
                     }
 
                     <li class="search">
-                      <input type="text" id="search" name="" class="text" placeholder="Search..."/>
+                      <input type="text" id="search" name="" class="text" placeholder="Search..." onkeypress="search()"/>
                       <button onclick="search()" class="btn btn-default btn-md">GO</button>
                     </li>
                   </ul>
