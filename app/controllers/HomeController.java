@@ -54,6 +54,10 @@ public class HomeController extends Controller {
         return ok(index.render(bestSellers, recentlyAdded, User.getUserById(session().get("email")), env));
     }
 
+    public Result contactUs(){
+        return ok(contactUs.render(User.getUserById(session().get("email"))));
+    }
+
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result stats(){

@@ -127,10 +127,7 @@ public class ProductController extends Controller{
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
     public Result updateItem(Long id) {
-
         flashLowStock();
-
-
         Product p;
         Form<Product> productForm;
             // Find the item by id
@@ -149,8 +146,52 @@ public class ProductController extends Controller{
         return ok(addProduct.render(productForm,(User.getUserById(session().get("email"))), "Update product "+p.getProductName()));
     }
 
-    // this method gets all the products from the database and passes them into the productList view, which displays them
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result restock(Long id){
+        Restock p;
+        Form<Restock> productForm;
+            // Find the item by id
+        p = new Restock(Product.getProductById(id));
+        // Populate the form object with data from the item found in the database
+        if(p != null) {
+            productForm = formFactory.form(Restock.class).fill(p);
+        } else {
+            prodNotFound();
+            return redirect(controllers.routes.ProductController.lowStockProducts(Long.valueOf(0)));
+        }
+        return ok(restock.render(id, productForm,(User.getUserById(session().get("email"))), "Restock product " + p.getProductName()));
+    }
 
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result restockSubmit(Long id){
+       Form<Restock> form = formFactory.form(Restock.class).bindFromRequest();
+       if(form.hasErrors()){
+            flash("error", "Fill in all the fields.");
+            return badRequest(restock.render(id, form, User.getUserById(session().get("email")), "Restock product"));
+        } else {
+            Restock r = form.get();
+            Product p = Product.getProductById(id);
+            if(p.getProductID() != null){
+                if(r.getProductID() == p.getProductID()){
+                    if(r.getRestock()>100){
+                        flash("error", "You cannot add more than 100 items of one type!");
+                    } else {
+                        p.restock(r.getRestock());
+                        p.update();
+                        flash("success", "Restocking successful");
+                    }
+                }
+                return redirect(controllers.routes.ProductController.lowStockProducts(Long.valueOf(0)));
+            } else {
+                prodNotFound();
+                return badRequest(restock.render(id, form, User.getUserById(session().get("email")), "Restock product"));
+            }
+        }
+    }
+
+    // this method gets all the products from the database and passes them into the productList view, which displays them
     public Result productList(Long cat, String keyword) {
         flashLowStock();
 
@@ -290,7 +331,6 @@ public class ProductController extends Controller{
                     } catch (IOException e) {
                         return "/ file uploaded";
                     }
-
                 } else {
                     return "/ file upload failed.";
                 }
@@ -299,14 +339,11 @@ public class ProductController extends Controller{
             return "/ no image file.";
         }
         return "/ this should not be returned";
-}
+    }
 
     public Result displayProduct(String productName){
         Form<Review> reviewForm = formFactory.form(Review.class);
-        
-        Form<Product> prodForm = formFactory.form(Product.class);
         List<Review> filtered = new ArrayList<>();
-
 
         for(Product e: Product.findAll()){
             if(e.getProductName().equals(productName)){
@@ -315,12 +352,41 @@ public class ProductController extends Controller{
                         filtered.add(r);
                     }
                 }
-                return ok(product.render(e, filtered, reviewForm, User.getUserById(session().get("email")), env));
+                ProductSkeleton ps;
+                switch(e.getCategory().getId().intValue()){
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                        ps = TrendingPC.getTrendingPCById(e.getProductID());
+                        break;
+                    case 7:
+                        ps = Processor.getProcessorById(e.getProductID());
+                        break;
+                    case 8:
+                        ps = Motherboard.getMotherboardById(e.getProductID());
+                        break;
+                    case 9:
+                        ps = Ram.getRamById(e.getProductID());
+                        break;
+                    case 11:
+                        ps = Storage.getStorageById(e.getProductID());
+                        break;
+                    case 10:
+                        ps = GraphicsCard.getGraphicsCardById(e.getProductID());
+                        break;
+                    default:
+                        ps = TrendingPC.getTrendingPCById(Long.valueOf(1000));
+                }
+                return ok(product.render(e, ps, filtered, reviewForm, User.getUserById(session().get("email")), env));
             }
         }
         prodNotFound();
         return redirect(controllers.routes.ProductController.productList(0, ""));
     }
+
 
     // @Transactional
     @Security.Authenticated(Secured.class)
@@ -339,7 +405,7 @@ public class ProductController extends Controller{
             }
             if(reviewForm.hasErrors()){
                 flash("error", "Please fill in all the fields!");
-                return badRequest(product.render(productObj, filtered, reviewForm, User.getUserById(session().get("email")), env));
+                return redirect(controllers.routes.ProductController.displayProduct(productObj.getProductName()));
             } else {
                 Review newReview = reviewForm.get();
                 newReview.setUser(User.getUserById(session().get("email")));
@@ -384,11 +450,11 @@ public class ProductController extends Controller{
                         return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
                     } else {
                         flash("error", "We ran into a problem processing your review, please try again later.");
-                        return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
+                        return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
                     }
                 } else {
                     flash("error", "You need to purchase the product before reviewing it!");
-                    return badRequest(product.render(newReview.getProduct(), filtered, reviewForm, User.getUserById(session().get("email")), env));
+                    return redirect(controllers.routes.ProductController.displayProduct(newReview.getProduct().getProductName()));
                 }
             }
         }

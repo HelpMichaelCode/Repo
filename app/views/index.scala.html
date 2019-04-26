@@ -2,7 +2,6 @@
 @main("Home page", user){
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/slider.css")">
-<script src="/assets/javascripts/slider.js"></script>
 <!-- <div id="slider"> old slider
   <figure>
     <img src="/assets/images/productImages/127slider.jpg" alt>
@@ -12,6 +11,7 @@
     <img src="/assets/images/slider/woah.png" alt>
   </figure>
 </div> -->
+
 <!-- Slider Wrapper -->
 <div class="css-slider-wrapper">
   <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
@@ -28,9 +28,7 @@
   </div>
  
   <!-- Slider #1 -->
-  @for(p<-recentlyAdded){
-    <p>@p.getProductId</p>
-  }
+  <!--  -->
   @for((p, count) <- recentlyAdded.zipWithIndex) {
     <div class="slider slide-@(count+1)">
       @if(env.resource("public/images/productImages/" + p.getProductId + ".jpg").isDefined) {
@@ -58,4 +56,5 @@
   }
 </div>
 
+<script src="@routes.Assets.versioned("/javascripts/slider.js")"></script>
 }

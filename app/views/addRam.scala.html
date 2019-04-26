@@ -28,10 +28,10 @@
         ),
         '_label -> "",
         '_default -> "-- Choose manufacturer --",
-        'class -> "form-control"
+        'class -> "form-control",
+        '_showConstraints -> false
     )
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints
-    -> false)
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", '_showConstraints -> false)
     @select(
         field = productForm("capacity"),
         options = options(
@@ -44,7 +44,8 @@
         ),
         '_label -> "",
         '_default -> "-- What size? --",
-        'class -> "form-control"    
+        'class -> "form-control",
+        '_showConstraints -> false  
     )
     <div class="hide">
         @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
@@ -54,14 +55,12 @@
 <div class="actions">
 
     @if(heading=="Add RAM info to BLDPC"){
-    <input type="submit" value="Add product" class="btn btn-primary" />
+        <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
-    <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="button" value="Cancel" class="btn btn-danger"
+            onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
     }
-
-    <!-- <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';"> -->
-
 </div>
 }
 }

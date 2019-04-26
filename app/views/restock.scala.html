@@ -1,0 +1,33 @@
+@(id: Long, productForm: Form[models.Restock], user: models.users.User, heading: String)
+@import helper._
+@main("Restock", user) {
+@if(productForm.hasGlobalErrors) {
+<p class="alert alert-warning  ">
+    @for(e <- productForm.globalErrors) {
+        @e.message<br />
+    }
+</p>
+}
+<div class="add-product-form">
+    <h3>@heading</h3>
+    @helper.form(action=controllers.routes.ProductController.restockSubmit(id), 'class -> "form-horizontal",
+    'role -> "form", 'method -> "POST") {
+    @* CSRF attack prevention *@
+    @CSRF.formField
+    
+    @inputText(productForm("restock"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control", '_showConstraints -> false)
+    <div class="hide">
+        @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control", '_showConstraints -> false)
+        @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "", 'class -> "form-control", '_showConstraints -> false, 'hidden -> "hidden")
+        @inputText(productForm("productQty"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control", '_showConstraints -> false, 'hidden -> "hidden")
+        @inputText(productForm("productPrice"), '_label -> "", 'placeholder -> "Price", 'class -> "form-control", '_showConstraints -> false, 'hidden -> "hidden")
+        @inputText(productForm("productID"), '_label -> "", 'hidden -> "hidden")
+    </div>
+</div>
+<div class="actions">
+    <input type="submit" value="Restock" class="btn btn-primary" />
+    <input type="button" value="Cancel" class="btn btn-danger"
+        onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
+</div>
+}
+}

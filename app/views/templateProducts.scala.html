@@ -68,47 +68,13 @@
         <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">
             <div class="info">
                 <h3>@p.getName Specs</h3>
-                <ul>
-                    <li><strong>Manufacturer: </strong>@p.getManufacturer</li>
-
-                    @if(p.isInstanceOf[models.products.Processor]){
-                        <li><strong>Number of cores: </strong>@p.asInstanceOf[models.products.Processor].getCores</li>
-                        <li><strong>Clock frequency: </strong>@p.asInstanceOf[models.products.Processor].getClock</li>
-                        <li><strong>L3 cache: </strong>@p.asInstanceOf[models.products.Processor].getCache</li>
-                            <!-- end of processor -->
-                    } else if(p.isInstanceOf[models.products.Ram]){
-                        <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Ram].getCapacity</li>
-                            <!-- end of ram -->
-                    } else if(p.isInstanceOf[models.products.GraphicsCard]){
-                        <li><strong>Bus type: </strong>@p.asInstanceOf[models.products.GraphicsCard].getBus</li>
-                        <li><strong>Memory: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemory</li>
-                        <li><strong>GPU clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getGpuClock</li>
-                        <li><strong>Memory clock: </strong>@p.asInstanceOf[models.products.GraphicsCard].getMemoryClock</li>
-                            <!-- end of graphics card -->
-                    } else if(p.isInstanceOf[models.products.Motherboard]){
-                        <li><strong>RAM slots: </strong>@p.asInstanceOf[models.products.Motherboard].getRamSlots</li>
-                        <li><strong>Max RAM: </strong>@p.asInstanceOf[models.products.Motherboard].getMaxRam</li>
-                            <!-- end of motherboard -->
-                    } else if(p.isInstanceOf[models.products.Storage]){
-                        <li><strong>Capacity: </strong>@p.asInstanceOf[models.products.Storage].getCapacity</li>
-                            <!-- end of storage -->
-                    } else if(p.isInstanceOf[models.products.TrendingPC]){
-
-                        <li><strong>CPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getCpu.getName</li>
-                        <li><strong>GPU: </strong>@p.asInstanceOf[models.products.TrendingPC].getGpu.getName</li>
-                        <li><strong>RAM: </strong>@p.asInstanceOf[models.products.TrendingPC].getRamQty x @p.asInstanceOf[models.products.TrendingPC].getRam.getName</li>
-                        <li><strong>Motherboard: </strong>@p.asInstanceOf[models.products.TrendingPC].getMotherboard.getName</li>
-                        <li><strong>Storage: </strong>@p.asInstanceOf[models.products.TrendingPC].getStorage.getName</li>
-                            <!-- end of pc -->
-                    }
-
+                @templateSpecs(p)
                     @if((user != null) && (user.getRole().equals("admin"))) {
                         <input type="button" value="Delete" class="btn btn-danger btn-lg"
                              onclick="window.location.href = '@routes.ProductController.deleteItem(p.getProduct.getProductID)';event.preventDefault();">
                          <input type="button" value="Update" class="btn btn-primary btn-lg"
                          onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
                     }
-                </ul>
             </div>
         </a>
         </div>

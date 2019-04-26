@@ -33,14 +33,14 @@
         </div>
       }
       <div class="forum-topics">
-          @if(topics.size > 0){
-              @for(t <- topics){
+          @if(threads.size > 0){
+              @for(t <- threads){
                   <h3><a href="@routes.HomeController.displayThread(t.getTitle)">@t.getTitle</a></h3>
                   <h4>Replies: @t.getComments.size</h4>
                   <h4>@t.getUser.getUsername</h4>
               }
           } else {
-              <h1>No topics to display</h1>
+              <h1>No threads to display</h1>
           }
       </div> 
       </div> 

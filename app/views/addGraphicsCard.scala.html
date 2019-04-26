@@ -29,9 +29,10 @@
             ),
         '_label -> "",
         '_default -> "-- Choose manufacturer --",
-        'class -> "form-control"
+        'class -> "form-control",
+        '_showConstraints -> false
     )
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
     @select(
         field = productForm("bus"), 
         options = options(
@@ -44,7 +45,8 @@
             ),
             '_label -> "",
             '_default -> "-- Choose bus --",
-            'class -> "form-control"
+            'class -> "form-control",
+            '_showConstraints -> false
     )
     @select(
         field = productForm("memory"),
@@ -58,7 +60,8 @@
             ),
             '_label -> "",
             '_default -> "-- Choose memory --",
-            'class -> "form-control"
+            'class -> "form-control",
+            '_showConstraints -> false
     )
     @inputText(productForm("gpuClock"), '_label -> "", 'placeholder -> "GPU clock frequency - ex. 1500 MHz", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
     @inputText(productForm("memoryClock"), '_label -> "", 'placeholder -> "Memory clock frequency - ex. 800 MHz", 'class -> "form-control", 'maxLength -> "254", '_showConstraints -> false)
@@ -72,11 +75,9 @@
         <input type="submit" value="Add GPU" class="btn btn-primary" />
     } else {
         <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="button" value="Cancel" class="btn btn-danger"
+            onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
     }
-
-    <!-- <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';"> -->
-
 </div>
 }
 }

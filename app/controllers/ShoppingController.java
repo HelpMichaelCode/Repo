@@ -192,18 +192,28 @@ public class ShoppingController extends Controller {
     @Transactional
     public Result cancelOrder(Long orderId){
         ShopOrder order = ShopOrder.find.byId(orderId);
-        Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
-        
-        c1=order.getOrderDate();
-        if(compareDates(c1,c2)){
-           // order.removeAllItems(orderId);
-           order.adjustStock();
-           order.delete();
-           
-            flash("success", "Your order has been cancelled");
-        }else {
-            flash("error", "Sorry, it is too late to cancel this order");
+        if(order != null){
+            if(User.getUserById(session().get("email")).getEmail().equals(order.getUser().getEmail())){
+                Calendar c1 = Calendar.getInstance();
+                Calendar c2 = Calendar.getInstance();
+                
+                c1=order.getOrderDate();
+                if(compareDates(c1,c2)){
+                // order.removeAllItems(orderId);
+                order.adjustStock();
+                order.delete();
+                
+                    flash("success", "Your order has been cancelled");
+                }else {
+                    flash("success", "Sorry, it is too late to cancel this order");
+                }
+                return ok(viewOrders.render(User.getUserById(session().get("email"))));
+            }
+            flash("error", "You do not have permissions to cancel that order!");
+            return redirect(controllers.routes.HomeController.index());   
+        } else {
+            flash("error", "Order does not exist!");
+            return redirect(controllers.routes.HomeController.index());
         }
     }
 

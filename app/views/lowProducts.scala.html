@@ -18,7 +18,7 @@
     <div class="col-sm-9">
         <h4>Products in need of restock: @products.size</h4>
         <table class="table table-bordered table-hover table-condensed">
-            <thead>
+            <thead class="thead-dark">
         <!-- The header row-->
         <tr>
             <th>ID</th>
@@ -44,8 +44,8 @@
                   <!-- Update button -->
                         <!-- restock button? that would require one new page -->
 						<td>
-							<a href="@routes.ProductController.updateItem(i.getProductID)" class="btn btn-warning btn-sm">
-								EDIT
+							<a href="@routes.ProductController.restock(i.getProductID)" class="btn btn-warning btn-sm">
+								RESTOCK
 							</a>
                         </td>
                   <!-- Delete button -->

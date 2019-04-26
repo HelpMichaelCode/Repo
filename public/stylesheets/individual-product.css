@@ -88,6 +88,14 @@ html, body {
   background-color: #64af3d;
 }
 
+.specs{
+  display: inline-block;
+  margin-top: 4%;
+  margin-left: 4%;
+  font-size: 120%;
+}
+
+
 .star-cb-group {
   /* remove inline-block whitespace */
 	font-size: 0;

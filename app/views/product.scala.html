@@ -1,4 +1,4 @@
-@(product: models.Product, filtered: List[models.Review], reviewForm:
+@(product: models.Product, p: models.products.ProductSkeleton, filtered: List[models.Review], reviewForm:
 Form[models.Review], user: models.users.User, env: play.api.Environment)
 @import helper._
 
@@ -50,6 +50,9 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
       }
     }
   </div>
+</div>
+<div class="specs">
+  @templateSpecs(p)
 </div>
 
 <style>

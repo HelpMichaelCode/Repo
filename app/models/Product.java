@@ -166,14 +166,7 @@ public class Product extends Model {
     }
 
     public void restock(int quantity){
-        if(quantity>100){
-            //Display error message
-            // flash("error", "You cannot add more than 100 items of one type!");
-        } else {
-            productQty += quantity;
-            //Display message to inform the user that action is completed successful
-            // flash("success", "Update was successful!");
-        }
+        productQty += quantity;
     }
 
     public void purchase(int quantity){

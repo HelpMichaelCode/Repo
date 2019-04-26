@@ -532,7 +532,8 @@ body {
     height: 100%;
     width: 100%;
     left: 0;
-    top: 0;
+		top: 0;
+		padding-left: 0.5em;
 }
 
 #container .product-details .information {

@@ -28,9 +28,10 @@
     ),
     '_label -> "",
     '_default -> "-- Choose manufacturer --",
-    'class -> "form-control"
+    'class -> "form-control",
+    '_showConstraints -> false
     )
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Name", 'class -> "form-control", '_showConstraints
+    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control", '_showConstraints
     -> false, 'maxLength -> "254")
     @select(
     field = productForm("cores"),
@@ -46,7 +47,8 @@
     ),
     '_label -> "",
     '_default -> "-- How many cores? --",
-    'class -> "form-control"    
+    'class -> "form-control",
+    '_showConstraints -> false 
     )
     @inputText(productForm("clock"), '_label -> "", 'placeholder -> "Clock speed- ex. 3.2 GHz", 'class -> "form-control",
     '_showConstraints -> false, 'maxLength -> "254")
@@ -60,13 +62,12 @@
 <div class="actions">
 
     @if(heading=="Add processor info to BLDPC"){
-    <input type="submit" value="Add product" class="btn btn-primary" />
+        <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
-    <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="button" value="Cancel" class="btn btn-danger"
+            onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
     }
-
-    <!-- <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';"> -->
 
 </div>
 }

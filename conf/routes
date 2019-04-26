@@ -6,6 +6,7 @@ GET     /                           controllers.HomeController.index
 GET     /index                      controllers.HomeController.index
 GET     /home                       controllers.HomeController.index
 
+GET     /contact-us                 controllers.HomeController.contactUs
 
 # Map static resources from the /public folder to the /assets URL path
 
@@ -26,6 +27,8 @@ GET     /add-product                controllers.ProductController.addProduct
 GET     /update-item/:id            controllers.ProductController.updateItem(id: Long)
 POST    /add-product-submit         controllers.ProductController.addProductSubmit
 GET     /delete-item/:productID     controllers.ProductController.deleteItem(productID: Long)
+GET     /restock/:id                controllers.ProductController.restock(id: Long)
+POST    /restock-submit/:id         controllers.ProductController.restockSubmit(id: Long)
 
 GET     /low-stock-products                 controllers.ProductController.lowStockProducts(category:Long?=0L)
 GET     /stats                              controllers.HomeController.stats

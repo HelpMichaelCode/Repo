@@ -56,3 +56,7 @@ $('body').append(log);
       x.type = "password";
     }
   };
+
+  function notifyTimeLimit() {
+    alert("You may cancel an order within the next 5 minutes!");
+  }

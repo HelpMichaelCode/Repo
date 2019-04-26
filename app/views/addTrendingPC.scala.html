@@ -26,7 +26,6 @@
         '_showConstraints -> false, 'class -> "form-control"
     )
 
-    <!-- @inputText(productForm("cpu"), '_label -> "", 'placeholder -> "What's the processor?", 'class -> "form-control", '_showConstraints -> false) -->
     @select(
         productForm("gpu.productId"), options(Product.options("graphics")), '_label -> "", '_default -> "-- What's the GPU? --",
         '_showConstraints -> false, 'class -> "form-control"
@@ -67,11 +66,9 @@
         <input type="submit" value="Add product" class="btn btn-primary" />
     } else {
         <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="button" value="Cancel" class="btn btn-danger"
+            onclick="window.location.href = '@routes.ProductController.productList(0, "")';">
     }
-
-    <!-- <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';"> -->
-
 </div>
 }
 }
