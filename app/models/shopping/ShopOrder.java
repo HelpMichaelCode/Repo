@@ -95,6 +95,7 @@ public class ShopOrder extends Model {
             if (i.getProduct().getProductID() == p.getProductID()) {
                 int quantity = i.getQuantity();
                 p.restock(quantity);
+                p.setTotalSold(p.getTotalSold()-quantity);
                 p.update();
             }
         }

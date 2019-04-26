@@ -26,6 +26,8 @@
   </ul>
 
 </div>
+<h1 style="margin-left: 20%;">Sales statistics</h1>
+<hr>
 <h3 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h3>
 <div id="pie-chart"></div>
 
@@ -51,10 +53,36 @@
     var options = {
       title: 'Stats'
       , chartArea: { left: 0, top: 0, width: "100%", height: "100%" }
-      , height: 500
+      , height: 450
       , width: 900
     };
     chart.draw(data, options);
+
+    var selectHandler = function(e) {
+      var flag = false;
+      switch(data.getValue(chart.getSelection()[0]['row'], 0 )){
+        case "CPUs":
+        case "Gaming PCs":
+        case "Gaming laptops":
+        case "Graphics cards":
+        case "Home PCs":
+        case "Home laptops":
+        case "Motherboards":
+        case "RAM":
+        case "Storage":
+        case "Top spec PCs":
+        case "Workstations":
+          flag= true;
+          break;
+        default:
+          flag = false;
+      }
+      if(flag)
+      window.location.href = "http://localhost:9000/stats-by-category/" + data.getValue(chart.getSelection()[0]['row'], 0 );
+    }
+
+        // Add our selection handler.
+    google.visualization.events.addListener(chart, 'select', selectHandler);
   }
 </script>
 }
