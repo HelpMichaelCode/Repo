@@ -19,9 +19,9 @@
         @CSRF.formField
          
         @inputText(forumForm("title"), '_label -> "",
-        'class -> "input", 'placeholder -> "title", 'class -> "form-control", '_showConstraints -> false)          
+        'class -> "input", 'placeholder -> "title", 'maxLength -> "254", 'class -> "form-control", '_showConstraints -> false)          
 
-        @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+        @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", 'maxLength -> "254", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
 
       <div class="hide">
         @inputText(forumForm("id"), '_label -> "", 'hidden -> "hidden"));
@@ -38,6 +38,11 @@
                   <h3><a href="@routes.HomeController.displayThread(t.getTitle)">@t.getTitle</a></h3>
                   <h4>Replies: @t.getComments.size</h4>
                   <h4>@t.getUser.getUsername</h4>
+
+                  @if(user != null && user.getRole == "admin"){
+                    <a href="@routes.HomeController.deleteThread(t.getId)" class="btn btn-danger btn-sm"
+                            onclick="confirmDel()"> DELETE </a>
+                  }
               }
           } else {
               <h1>No threads to display</h1>

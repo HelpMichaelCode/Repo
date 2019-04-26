@@ -8,6 +8,7 @@ import play.data.validation.*;
 
 import models.*;
 import models.users.*;
+import models.products.ProductSkeleton;
 
 @Entity
 public class Comment extends Model {
@@ -72,5 +73,12 @@ public class Comment extends Model {
         } else {
             return find.query().where().eq("id", id).findUnique();
         }
+    }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(body)){
+            return true;
+        }
+        return false;
     }
 }

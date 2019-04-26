@@ -8,6 +8,7 @@ import play.data.validation.*;
 
 import models.*;
 import models.users.*;
+import models.products.ProductSkeleton;
 
 @Entity
 public class Forum extends Model {
@@ -85,6 +86,13 @@ public class Forum extends Model {
         } else {
             return find.query().where().eq("id", id).findUnique();
         }
+    }
+
+    public boolean checkLengthOfStrings(){
+        if(ProductSkeleton.checkStringLen(title) || ProductSkeleton.checkStringLen(body)){
+            return true;
+        }
+        return false;
     }
 
 }

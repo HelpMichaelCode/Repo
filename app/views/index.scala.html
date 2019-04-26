@@ -39,7 +39,7 @@
       <div class="slider-content">
         <h4>New Product</h4>
         <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)"><h2>@p.getProduct.getProductName</h2></a>
-        <button type="button" class="buy-now-btn" name="button">&euro;@p.getProduct.getProductPrice</button>
+        <button type="button" class="buy-now-btn" name="button" onclick="window.location.href = '@routes.ShoppingController.addToCart(p.getProductId, "home")';">&euro;@p.getProduct.getProductPrice</button>
       </div>
       <div class="number-pagination">
         <span>@(count+1)</span>

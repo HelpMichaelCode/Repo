@@ -17,13 +17,17 @@
                 <h1>Thread: @thread.getTitle</h1>
                 <div class="thread-body">
                     <h3>@thread.getBody</h3>
+                    @if(user != null && user.getRole == "admin"){
+                        <a href="@routes.HomeController.deleteThread(thread.getId)" class="btn btn-danger btn-md"
+                                onclick="confirmDel()"> Delete thread </a>
+                      }
                  </div>
                 <!-- form to add a new reply to the thread -->
                 @helper.form(action = controllers.routes.HomeController.postComment(user.getEmail, thread.getId), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
         
                 @CSRF.formField       
         
-                @textarea(field = replyForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Post a reply", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+                @textarea(field = replyForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Post a reply", '_label -> "", 'class -> "form-control", '_showConstraints -> false, 'maxLength -> "254")
     
                 <div class="hide">
                 @inputText(replyForm("id"), '_label -> "", 'hidden -> "hidden"));
@@ -31,7 +35,7 @@
                 <div class="actions">
         
                     <input type="submit" value="Post reply" class="btn btn-primary" />
-                    <input type="button" value="Forum" class="btn btn-danger"
+                    <input type="button" value="Back to Forum" class="btn btn-warning"
                         onclick="window.location.href = '@routes.HomeController.forum()';">
                     
                 </div>
@@ -42,8 +46,12 @@
                         <h3>Replies</h3>
                         @for(r <- thread.getComments){
                             <h4 style="font-weight: bold;">@r.getUser.getUsername</h4>
-                            <h4>@r.getBody</h4>
+                            <h4>@r.getBody</h4> @if(user != null && user.getRole == "admin"){
+                                <a href="@routes.HomeController.deleteComment(thread.getTitle, r.getId)" class="btn btn-danger btn-md"
+                                onclick="confirmDel()"> Delete reply </a>
+                              }
                             <hr>
+                            
                             
                         }
                     } else {

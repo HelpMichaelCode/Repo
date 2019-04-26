@@ -205,10 +205,10 @@ public class HomeController extends Controller {
          } else {
                 Forum newPost = form.get();
                 if (newPost.getId() == null) {
-                    // if(ProductController.checkStringLen(newPost.getTitle()) || ProductController.checkStringLen(newPost.getBody())){
-                    //     flash("error", "Please do no use more than 255 characters");
-                    //     return redirect(controllers.routes.HomeController.forum());
-                    // }
+                    if(newPost.checkLengthOfStrings()){
+                        flash("error", "Please try using less than 255 characters.");
+                        return redirect(controllers.routes.HomeController.forum());
+                    }
                     newPost.setUser(User.getUserById(userEmail)); //the email that is passed in the form
                     newPost.save();
                     flash("success", "You have successfully started a new thread");
@@ -283,10 +283,10 @@ public class HomeController extends Controller {
         } else {
             Comment newComment = form.get();
             if (newComment.getId() == null) {
-                // if(ProductController.checkStringLen(newComment.getBody())){
-                //     flash("error", "Please do no use more than 255 characters");
-                //     return redirect(controllers.routes.HomeController.displayThread(Forum.getForumById(postId).getTitle()));
-                // }
+                if(newComment.checkLengthOfStrings()){
+                    flash("error", "Please do no use more than 255 characters");
+                    return redirect(controllers.routes.HomeController.displayThread(Forum.getForumById(postId).getTitle()));
+                }
                 newComment.setUser(User.getUserById(userEmail)); //the email that is passed in the form
                 newComment.setForum(Forum.getForumById(postId));
                 newComment.save();

@@ -1,57 +1,60 @@
 @(jsonString: String, names: Array[String], bestSeller: String, bestSellerSold: Long, user: models.users.User)
 @main("Statistics", user){
-  <style>
-    body{
-      background-color: white;
-    }
-    .content{
-      padding-top: 4%;
-    }
-    .sub-header .left-menu li a, .sub-header .right-menu li a, .sub-header .logo a{
-      color: black;
-    }
-  </style>
-  <div class="cats">
-      <h2>Filter by</h2>
-      <ul class="list-group">
-          <a href="@routes.HomeController.stats" class="list-group-item">All Categories</a>
-          @for(c<-Category.findAll) { <a href="@routes.HomeController.catstats(c.getName)"
-              class="list-group-item">@c.getName
-              <span class="badge">@c.getItems.size</span>
-              </a>
-              }
-      </ul>
-  
-  </div>
-  <h3 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h3>
-<div id="pie-chart"/>
+<style>
+  body {
+    background-color: white;
+  }
+
+  .content {
+    padding-top: 4%;
+  }
+
+  .sub-header .left-menu li a,
+  .sub-header .right-menu li a,
+  .sub-header .logo a {
+    color: black;
+  }
+</style>
+<div class="cats">
+  <h2>Filter by</h2>
+  <ul class="list-group">
+    <a href="@routes.HomeController.stats" class="list-group-item">All Categories</a>
+    @for(c<-Category.findAll) { <a href="@routes.HomeController.catstats(c.getName)" class="list-group-item">@c.getName
+      <span class="badge">@c.getItems.size</span>
+      </a>
+      }
+  </ul>
+
+</div>
+<h3 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h3>
+<div id="pie-chart"></div>
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script type="text/javascript">
-            google.charts.load('current', {
-                packages : [ 'corechart' ]
-            });
-            google.charts.setOnLoadCallback(drawChart);
+<!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+<script type="text/javascript">
+    google.charts.load('current', {
+      packages: ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
 
-            function drawChart() {
-                var jsonString = "@jsonString";
-                var newJSON = jsonString.replace(/&#x27;/g, '"');
-                // console.log("newJSON: " + newJSON);
+  function drawChart() {
+    var jsonString = "@jsonString";
+    var newJSON = jsonString.replace(/&#x27;/g, '"');
+    // console.log("newJSON: " + newJSON);
 
-                // Define the chart to be drawn.
-                var data = new google.visualization.DataTable(newJSON);
+    // Define the chart to be drawn.
+    var data = new google.visualization.DataTable(newJSON);
 
-                // Instantiate and draw the chart.
-                var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
-                var options = {
-                  title: 'Stats'
-                  ,chartArea:{left:0,top:0,width:"100%",height:"100%"}
-                  ,height: 500
-                  ,width: 900
-                };
-                chart.draw(data, options);
-            }
-        </script>
+    // Instantiate and draw the chart.
+    var chart = new google.visualization.PieChart(document.getElementById('pie-chart'));
+    var options = {
+      title: 'Stats'
+      , chartArea: { left: 0, top: 0, width: "100%", height: "100%" }
+      , height: 500
+      , width: 900
+    };
+    chart.draw(data, options);
+  }
+</script>
 }
