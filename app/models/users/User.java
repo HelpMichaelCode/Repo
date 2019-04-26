@@ -148,7 +148,8 @@ public class User extends Model{
             String passwordCheckSum = new String(b);
             return passwordCheckSum; //returns the hash signature of the entered password if successful
         } catch (NoSuchAlgorithmException e) {
-        } catch (UnsupportedEncodingException e) {
+        } 
+        catch (UnsupportedEncodingException e) {
         }
         return " "; //should never get to this statement
     }

@@ -198,22 +198,23 @@ public class HomeController extends Controller {
         if(form.hasErrors()){
             flash("error", "Please fill in all the fields if you wish to start a new thread!");
             return redirect(controllers.routes.HomeController.forum());
-        } else {
-            Forum newPost = form.get();
-            if (newPost.getId() == null) {
-                // if(ProductController.checkStringLen(newPost.getTitle()) || ProductController.checkStringLen(newPost.getBody())){
-                //     flash("error", "Please do no use more than 255 characters");
-                //     return redirect(controllers.routes.HomeController.forum());
-                // }
-                newPost.setUser(User.getUserById(userEmail)); //the email that is passed in the form
-                newPost.save();
-                flash("success", "You have successfully started a new thread");
-            } else {
-                flash("error", "There was a problem processing your post, please try again.");
+         } else {
+                Forum newPost = form.get();
+                if (newPost.getId() == null) {
+                    // if(ProductController.checkStringLen(newPost.getTitle()) || ProductController.checkStringLen(newPost.getBody())){
+                    //     flash("error", "Please do no use more than 255 characters");
+                    //     return redirect(controllers.routes.HomeController.forum());
+                    // }
+                    newPost.setUser(User.getUserById(userEmail)); //the email that is passed in the form
+                    newPost.save();
+                    flash("success", "You have successfully started a new thread");
+                } else {
+                    flash("error", "There was a problem processing your post, please try again.");
+                }
+                return redirect(controllers.routes.HomeController.forum());
             }
-            return redirect(controllers.routes.HomeController.forum());
         }
-    }
+    
 
     public Result displayThread(String title){
         Forum post = null;

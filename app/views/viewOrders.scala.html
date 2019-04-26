@@ -9,12 +9,11 @@
 @main("View order history", user) {
 
     @if(user.getOrders().isEmpty){
-        <h3>You haven't placed any orders</h3>
+        <h3 style="text-align: center;">Hi @user.getUsername! You haven't placed any orders</h3>
         
     } else {
 	<div class="col-md-12">
-        <p><h2>@user.getUsername's orders
-        </h2> (you can cancel an order within 10 seconds after placing it)</p>    
+        <p><h2 style="text-align: center;">@user.getUsername's orders</h2></p>    
     </div>
 		 
 
@@ -23,8 +22,8 @@
                     <!-- Start of For loop - For each p in products add a row -->
                     @for(o <- user.getOrders()) {
 
-                        <p>Order Number: @o.getId()</p>
-                        <p>Order Date: @o.getOrderDateString()</p>
+                        <p style="text-align: center;">Order Number: @o.getId()</p>
+                        <p style="text-align: center;">Order Date: @o.getOrderDateString()</p>
                         <table class="table table-bordered table-hover table-condensed">
                         
                             <thead>
@@ -54,17 +53,17 @@
         </table>
         <div class="row">
             <div class="col-md-12">
-                <p class="text-right"><strong>Order Total: &euro; @("%.2f".format(o.getOrderTotal))</strong></p>
+                <p style="margin-right: 2.5em;"class="text-right"><strong>Order Total: &euro; @("%.2f".format(o.getOrderTotal))</strong></p>
             </div>  
         </div>
         <p>
             <a href="@routes.ShoppingController.cancelOrder(o.getId())">
-                <button class="btn btn-primary cancel-order-btn">Cancel Order</button>
+                <button style="margin-left: 2.5em;"class="btn btn-primary cancel-order-btn">Cancel Order</button>
             </a>
         </p>
          }<!-- End of For loop -->
        
-        </div>
+       
 
 
     }

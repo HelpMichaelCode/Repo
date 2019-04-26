@@ -633,4 +633,21 @@ body {
 /* footer */
 
 
+/*forum css*/
+
+.add-forum-form{
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+
+}
+.reply-to-thread{
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+}
+
+
+
+
 

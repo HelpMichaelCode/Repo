@@ -58,14 +58,15 @@
         @inputText(productForm("productQty").copy(value=Some("1")), '_label -> "", 'hidden -> "hidden")
         @inputText(productForm("productId"), '_label -> "", 'hidden -> "hidden")
     </div>
+    <div class="actions">
+
+            <input type="submit" value="Add to cart" class="btn btn-primary" />
+            <input type="button" value="Cancel" class="btn btn-danger"
+                onclick="window.location.href = '@routes.HomeController.index()';">
+        
+        </div>
 </div>
 
-<div class="actions">
 
-    <input type="submit" value="Add to cart" class="btn btn-primary" />
-    <input type="button" value="Cancel" class="btn btn-danger"
-        onclick="window.location.href = '@routes.HomeController.index()';">
-
-</div>
 }
 }

@@ -14,7 +14,7 @@ public class Forum extends Model {
 
     @Id
     private Long id;
-    @OneToOne
+    @ManyToOne
     private User user; //user who posted the topic
     @Constraints.Required
     private String title;

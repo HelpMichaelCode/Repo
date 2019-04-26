@@ -7,7 +7,7 @@
 
 
     @if(user.getShoppingCart.getCartItems.isEmpty){
-        <h2>Your cart is empty.</h2>
+        <h2 style="text-align: center;">Hi @user.getUsername! Your cart seems to be empty.</h2>
     } else {
     <div class="col-md-12">
         <h2>@user.getUsername
@@ -95,7 +95,7 @@
         <div class="col-md-3">
             <p class="text-right">
                 <a href="@routes.ProductController.productList(0, "")" class="btn btn-primary btn-lg">
-                Back</a>
+                Back To Shopping</a>
             </p>
         </div>
     }

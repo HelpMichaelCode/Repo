@@ -14,7 +14,6 @@ create table comment (
   user_email                    varchar(255),
   forum_id                      bigint,
   body                          varchar(255),
-  constraint uq_comment_user_email unique (user_email),
   constraint pk_comment primary key (id)
 );
 
@@ -23,7 +22,6 @@ create table forum (
   user_email                    varchar(255),
   title                         varchar(255),
   body                          varchar(255),
-  constraint uq_forum_user_email unique (user_email),
   constraint pk_forum primary key (id)
 );
 
@@ -150,11 +148,13 @@ create table user (
 );
 
 alter table comment add constraint fk_comment_user_email foreign key (user_email) references user (email) on delete restrict on update restrict;
+create index ix_comment_user_email on comment (user_email);
 
 alter table comment add constraint fk_comment_forum_id foreign key (forum_id) references forum (id) on delete restrict on update restrict;
 create index ix_comment_forum_id on comment (forum_id);
 
 alter table forum add constraint fk_forum_user_email foreign key (user_email) references user (email) on delete restrict on update restrict;
+create index ix_forum_user_email on forum (user_email);
 
 alter table graphics_card add constraint fk_graphics_card_product_product_id foreign key (product_product_id) references product (product_id) on delete restrict on update restrict;
 create index ix_graphics_card_product_product_id on graphics_card (product_product_id);
@@ -216,11 +216,13 @@ create index ix_trending_pc_storage_product_id on trending_pc (storage_product_i
 # --- !Downs
 
 alter table comment drop constraint if exists fk_comment_user_email;
+drop index if exists ix_comment_user_email;
 
 alter table comment drop constraint if exists fk_comment_forum_id;
 drop index if exists ix_comment_forum_id;
 
 alter table forum drop constraint if exists fk_forum_user_email;
+drop index if exists ix_forum_user_email;
 
 alter table graphics_card drop constraint if exists fk_graphics_card_product_product_id;
 drop index if exists ix_graphics_card_product_product_id;

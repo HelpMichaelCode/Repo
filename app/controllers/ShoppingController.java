@@ -196,7 +196,7 @@ public class ShoppingController extends Controller {
            
             flash("success", "Your order has been cancelled");
         }else {
-            flash("success", "Sorry, it is too late to cancel this order");
+            flash("error", "Sorry, it is too late to cancel this order");
         }
         return ok(viewOrders.render(User.getUserById(session().get("email"))));
     }

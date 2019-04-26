@@ -13,7 +13,7 @@ import models.users.*;
 public class Comment extends Model {
     @Id
     private Long id;
-    @OneToOne
+    @ManyToOne
     private User user; //ser who posted the comment
     @ManyToOne
     private Forum forum;
