@@ -74,9 +74,7 @@ public class LoginController extends Controller{
         if(userForm.hasErrors()) {
             flash("error", "Please fill in all the fields!");
             //this message is sent only if the user has not filled in all the fields in the registration form
-
             return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register"));
-
         } else {
             User newUser = userForm.get();
             PasswordCheck pc = passwordForm.get();
@@ -92,7 +90,7 @@ public class LoginController extends Controller{
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 } 
                 if(!newUser.numberCheck()){ //check if mobile number contains digits only
-                    flash("error", "Mobile number cannot contain characters other than digits! Please try again!");
+                    flash("error", "Mobile number cannot contain characters other than digits! Please remove any CHARACTERS or SPACES and try again!");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 }
 //user is registered only if email is in the right format
@@ -103,7 +101,7 @@ public class LoginController extends Controller{
                 newUser.setShoppingCart(new ShoppingCart());
                 newUser.getShoppingCart().setUser(newUser);
                 newUser.save(); //Add user to DB if email is in the right format and is not already in use.
-                newUser.SendMailSSL();
+                newUser.sendMailSSL();
                 flash("success", "Hello " + newUser.getUsername() +"! We have sent a activation link to your email!");
 
                 return redirect(controllers.routes.LoginController.activationPage());
@@ -133,7 +131,7 @@ public class LoginController extends Controller{
         }
         newPass = formFactory.form(PasswordCheck.class).fill(new PasswordCheck(user));
         if((session().get("email")).equals(email) || User.getUserById(session().get("email")).getRole().equals("admin")){
-            return ok(updateUser.render(newPass, user, User.getUserById(session().get("email")), "Update user " + user.getUsername()));
+            return ok(updateUser.render(newPass, user, User.getUserById(session().get("email")), "Update profile " + user.getUsername()));
         } else {
             flash("error", "You cannot update that user");
             return redirect(controllers.routes.HomeController.index());
@@ -142,14 +140,19 @@ public class LoginController extends Controller{
 
     @Security.Authenticated(Secured.class)
     public Result updateUserSubmit(String email){
+        
         User update = User.getUserById(email);
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
         Form<PasswordCheck> newPassForm = formFactory.form(PasswordCheck.class).bindFromRequest();
-
+        if(update == null){
+            flash("error", "User does not exist!");
+            return redirect(controllers.routes.HomeController.index());
+        }
+        String updateHeading = "Update profile " + update.getUsername();
         if(userForm.hasErrors()) {
             flash("error", "Please fill in all the fields!");
             //this message is sent only if the user has not filled in all the fields in the registration form
-            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), updateHeading));
         } else {
             User newUser = userForm.get();
             PasswordCheck newPass = newPassForm.get();
@@ -159,15 +162,15 @@ public class LoginController extends Controller{
                     if(newPass.getPassword2().equals(newPass.getPassword3())){
                         if(newPass.getPassword2().equals(newUser.getPassword())){
                             flash("error", "New password cannot be old password");
-                            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                            return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), updateHeading));
                         }
                         newUser.setPasswordPlain(newPass.getPassword2()); //updates the password of the user
                     } else { //if the new passwords do not match
                         flash("error", "Passwords do not match");
-                        return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                        return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), updateHeading));
                     }
                 } else if((!newPass.getPassword2().equals(User.hash("")) && newPass.getPassword3().equals(User.hash(""))) ||
-                 (newPass.getPassword2().equals(User.hash(""))&& !newPass.getPassword3().equals(User.hash("")))){
+                (newPass.getPassword2().equals(User.hash(""))&& !newPass.getPassword3().equals(User.hash("")))){
                     flash("error", "Passwords do not match");
                     return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
                 }
@@ -176,7 +179,7 @@ public class LoginController extends Controller{
                 return redirect(controllers.routes.HomeController.index());
             } else {
                 flash("error", "Wrong password");
-                return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), "Update user " + update.getUsername()));
+                return badRequest(updateUser.render(newPassForm, update, User.getUserById(session().get("email")), updateHeading));
             }
         }
     }

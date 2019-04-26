@@ -1,4 +1,5 @@
-@(specs: List[models.products.ProductSkeleton], categories: List[models.Category], user: models.users.User, env: play.api.Environment)
+@(specs: List[models.products.ProductSkeleton], categories: List[models.Category],
+ user: models.users.User, env: play.api.Environment, currentCat: String)
 @main("Product List", user){
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 
@@ -26,7 +27,7 @@
 <div class="product-list">
     <h3>Displaying @specs.size products</h3>
     @for(p<-specs) {
-        @templateProducts(p, user, env)
+        @templateProducts(p, user, env, currentCat)
     }
     </div>
     }

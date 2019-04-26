@@ -11,12 +11,6 @@
 </p>
 }
 
-@if(flash.containsKey("error")) {
-<div class="alert alert-danger  ">
-    @flash.get("error")
-</div>
-}
-
 <div class="add-product-form">
     <h3>@heading</h3>
     @helper.form(action=controllers.routes.ShoppingController.addBuildSubmit(), 'class -> "form-horizontal",
@@ -24,10 +18,8 @@
 
     @CSRF.formField
 
-    @inputText(productForm("manufacturer"), '_label -> "", 'placeholder -> "Manufacturer", 'class -> "form-control",
-    '_showConstraints -> false)
-    @inputText(productForm("name"), '_label -> "", 'placeholder -> "Short product name", 'class -> "form-control",
-    '_showConstraints -> false)
+    @inputText(productForm("manufacturer").copy(value=Some("N/A")), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
+    @inputText(productForm("name").copy(value=Some("N/A")), '_label -> "", 'hidden -> "hidden", '_showConstraints -> false)
 
     @select(
     productForm("cpu.productId"), options(Product.options("cpu")), '_label -> "", '_default -> "-- What's the processor? --",
@@ -48,7 +40,6 @@
     productForm("storage.productId"), options(Product.options("storage")), '_label -> "", '_default -> "-- What's the hard drive? --",
     '_showConstraints -> false, 'class -> "form-control"
     )
-
 
     @select(
     productForm("ram.productId"), options(Product.options("ram")), '_label -> "", '_default -> "-- What's the RAM? --",

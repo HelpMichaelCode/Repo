@@ -83,7 +83,7 @@ public class Review extends Model {
         return Review.find.all();
     }
 
-    public  Review getReviewbyId(Long id){
+    public static Review getReviewById(Long id){
         if(id == null){
             return null;
         } else {

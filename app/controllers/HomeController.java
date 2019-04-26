@@ -233,6 +233,44 @@ public class HomeController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result deleteThread(Long threadId){
+        Forum thread = Forum.getForumById(threadId);
+        User currentUser = User.getUserById(session().get("email"));
+        if(!currentUser.getRole().equals("admin")){ //if not admin - secondary check just to be sure
+            flash("error", "You do not have the permissions to delete a thread!");
+        } else {
+            if(thread != null){
+                for(Comment e: thread.getComments()){
+                    e.delete();
+                }
+                thread.delete();
+                flash("success", "Thread deleted successfully");
+            } else {
+                flash("error", "Thread not found");
+            }
+        }
+        return redirect(controllers.routes.HomeController.forum());
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result deleteComment(String threadTitle, Long commentId){
+        Comment comment = Comment.getCommentById(commentId);
+        User currentUser = User.getUserById(session().get("email"));
+        if(comment != null){
+            if(!currentUser.getRole().equals("admin") && !currentUser.getEmail().equals(comment.getUser().getEmail())){ //if not admin or user who posted the comment
+                flash("error", "You do not have the permissions to delete this comment!");
+            } else {
+                comment.delete();
+                flash("success", "Comment deleted successfully");
+            }
+        } else {
+            flash("error", "Comment not found");
+        }
+        return redirect(controllers.routes.HomeController.displayThread(threadTitle));
+    }
+
+    @Security.Authenticated(Secured.class)
     public Result postComment(String userEmail, Long postId){
         Form<Comment> form = formFactory.form(Comment.class).bindFromRequest();
         if(form.hasErrors()){

@@ -1,7 +1,7 @@
 @(newPassForm: Form[models.users.PasswordCheck], updateUser: models.users.User, user: models.users.User, heading: String)
 @import helper._
 
-@main("Update user", user) {
+@main("Update account", user) {
     <style>
         body{
             margin: 0;
@@ -30,6 +30,9 @@
    <div class="box">
 
        <h1>@heading</h1>
+
+            @inputText(newPassForm("realName"), '_label -> "",
+            'class -> "input", 'placeholder -> "Name", 'maxLength -> "254", '_showConstraints -> false)
 
             @inputText(newPassForm("email").copy(value=Some(updateUser.getEmail())),
              '_label -> "Email", 'readonly -> "readonly", '_showConstraints -> false)

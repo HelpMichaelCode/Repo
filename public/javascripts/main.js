@@ -5,12 +5,10 @@ function search(){
   window.location.href = "http://localhost:9000/product-list?keyword=" + keyword;
 }
 
-$('#search').keypress(function(event){
-	var keycode = (event.keyCode ? event.keyCode : event.which);
-  if(keycode == '13'){  //Enter is equal to 13 in ASCII so this function is executed whenever user presses Enter
-                        // with the cursor positioned inside the search textbox
-		search();	
-	}
+$('#search').addEventListener('keydown', (e) => {
+  if($e.key == "Enter"){
+    search();
+  }
 });
 
 function showCart() {
@@ -23,15 +21,6 @@ function confirmDel() {
   }
 }
 
-$(document).ready(function(){
-  $(window).on('scroll',function(){
-      if($(window).scrollTop()){
-          $(".sub-header").addClass('active');
-      }else{
-          $(".sub-header").removeClass('active');
-      }
-  });
-});
 
 var logID = 'log',
   log = $('<div id="'+logID+'"></div>');
@@ -67,19 +56,3 @@ $('body').append(log);
       x.type = "password";
     }
   };
-
-  // Backtotop
-     
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-   if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-       document.getElementById("top").style.display = "block";
-   } else {
-       document.getElementById("top").style.display = "none";
-   }
-}
-function topFunction() {
-   document.body.scrollTop = 0; 
-   document.documentElement.scrollTop = 0; 
-}

@@ -80,9 +80,7 @@ public class ShopOrder extends Model {
     }
 
     public double getOrderTotal() {
-        
         double total = 0;
-        
         for (OrderLine i: products) {
             total += i.getLineTotal();
         }
