@@ -29,45 +29,45 @@
   <div class="bw-gradient"></div>
   <div class="header">
       <div class="sub-header">
-              <ul class="left-menu">
-                      <li><a href="@routes.HomeController.index">Home</a></li>
-                      <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
-                      @if((user != null) && (user.getRole().equals("customer"))) {
-                        <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
-                        <li><a href="@routes.ShoppingController.addBuild()">Build PC</a></li>
-                      }
-                      @if(user != null && user.getRole.equals("admin")){
-                        @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
-                          <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
-                        }
-                        <li><a href="@routes.HomeController.stats">Stat</a></li>
-                      }
-                      <li><a href="@routes.HomeController.forum">Forum</a></li>
-                  </ul>
-                  <div class="logo">
-                      <a href="@routes.HomeController.index()">BLDPC</a>
-                  </div>
-                  <ul class="right-menu">
-                    @if((user != null) && (user.getRole().equals("admin"))) {
-                      <li><a href="@routes.ProductController.allReviews()">Reviews</a></li>
-                      <li><a href="@routes.LoginController.userList()">Users</a></li>
-                    }
-                    @if((user != null) && (user.getRole().equals("customer"))) {
-                      <li><a href="@routes.ShoppingController.viewOrders"  onclick="notifyTimeLimit()">my orders</a></li>
-                      <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
-                    }
-                    @if(user != null){
-                    <li><a href="@routes.LoginController.logout()">Log out</a></li>
-                    
-                    }else{
-                      <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-user"></span></a></li>
-                    }
+        <ul class="left-menu">
+            <li><a href="@routes.HomeController.index">Home</a></li>
+            <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
+            @if((user != null) && (user.getRole().equals("customer"))) {
+              <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
+              <li><a href="@routes.ShoppingController.addBuild()">Build PC</a></li>
+            }
+            @if(user != null && user.getRole.equals("admin")){
+              @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
+                <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
+              }
+              <li><a href="@routes.HomeController.stats">Stat</a></li>
+            }
+            <li><a href="@routes.HomeController.forum">Forum</a></li>
+        </ul>
+        <div class="logo">
+            <a href="@routes.HomeController.index()">BLDPC</a>
+        </div>
+        <ul class="right-menu">
+          @if((user != null) && (user.getRole().equals("admin"))) {
+            <li><a href="@routes.ProductController.allReviews()">Reviews</a></li>
+            <li><a href="@routes.LoginController.userList()">Users</a></li>
+          }
+          @if((user != null) && (user.getRole().equals("customer"))) {
+            <li><a href="@routes.ShoppingController.viewOrders"  onclick="notifyTimeLimit()">my orders</a></li>
+            <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
+          }
+          @if(user != null){
+          <li><a href="@routes.LoginController.logout()">Log out</a></li>
+          
+          }else{
+            <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-user"></span></a></li>
+          }
 
-                    <li class="search">
-                      <input type="text" id="search" name="" class="text" placeholder="Search products..." onkeypress="search()"/>
-                      <button onclick="search()" class="btn btn-default btn-md">Go</button>
-                    </li>
-                  </ul>
+          <li class="search">
+            <input type="text" id="search" name="" class="text" placeholder="Search products..." onkeypress="search()"/>
+            <button onclick="search()" class="btn btn-default btn-md">Go</button>
+          </li>
+        </ul>
       </div>
 
   </div>

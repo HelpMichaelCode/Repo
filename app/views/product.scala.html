@@ -39,10 +39,10 @@ Form[models.Review], user: models.users.User, env: play.api.Environment)
       </div>
     <span class="price">&euro; @("%.2f".format(product.getProductPrice))</span>
     @if((user != null) && (user.getRole().equals("admin"))){
-    <a href="@routes.ProductController.updateItem(product.getProductID)" class="cart-btn">Update</a>
+      <a href="@routes.ProductController.updateItem(product.getProductID)" class="cart-btn">Update</a>
     } else {
       @if(product.getProductQty() > 0){
-      <a href="@routes.ShoppingController.addToCart(product.getProductID, "productList")" class="cart-btn">Add to cart</a>
+        <a href="@routes.ShoppingController.addToCart(product.getProductID, "productList")" class="cart-btn">Add to cart</a>
       }else{
       <div class="buttons">
         <a href=""><button type="button" id="clickMeNotBtn" class="btn btn-warning" disabled>OUT OF STOCK</button></a>
