@@ -87,7 +87,8 @@ public class HomeController extends Controller {
         } catch(ArrayIndexOutOfBoundsException e){
         } catch(NumberFormatException e){
         }
-        return ok(stats.render(jsonString, bestSeller, maxSold, User.getUserById(session().get("email")), "sales"));
+        double revenue = totalRevenue();
+        return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "sales"));
         // return ok(test.render(jsonString, User.getUserById(session().get("email"))));
     }
 
@@ -120,7 +121,8 @@ public class HomeController extends Controller {
                 // } catch(ArrayIndexOutOfBoundsException e){  
                 // } catch(NumberFormatException e){  
                 // }
-                return ok(stats.render(jsonString, bestSeller, maxSold, User.getUserById(session().get("email")), "sales"));
+                double revenue = revenueCategory(cat);
+                return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "sales"));
             }
         }
         return redirect(controllers.routes.HomeController.stats());
@@ -155,8 +157,8 @@ public class HomeController extends Controller {
         } catch(ArrayIndexOutOfBoundsException e){
         } catch(NumberFormatException e){
         }
-        return ok(stats.render(jsonString, bestSeller, maxSold, User.getUserById(session().get("email")), "stock"));
-        // return ok(test.render(jsonString, User.getUserById(session().get("email"))));
+        double revenue = totalRevenue();
+        return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "stock"));
     }
 
     @Security.Authenticated(Secured.class)
@@ -182,7 +184,8 @@ public class HomeController extends Controller {
                 String[] bestSellerString = getBestSeller30Days().split(",", 2);
                 Long maxSold = Long.parseLong(bestSellerString[0], 10);
                 String bestSeller = bestSellerString[1];
-                return ok(stats.render(jsonString, bestSeller, maxSold, User.getUserById(session().get("email")), "stock"));
+                double revenue = revenueCategory(cat);
+                return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "stock"));
             }
         }
         return redirect(controllers.routes.HomeController.stats());
@@ -248,6 +251,28 @@ public class HomeController extends Controller {
             }   
         }
         return max + "," + prodName;
+    }
+
+    private double totalRevenue(){
+        double sum = 0;
+        for(Product p: Product.findAll()){
+            sum += (p.getTotalSold() * p.getProductPrice());
+        }
+        return sum;
+    }
+    private double revenueCategory(String cat){
+        double sum = 0;
+        for(Category c: Category.findAll()){ 
+            if(c.getName().toLowerCase().equals(
+                cat.toLowerCase())){
+                for(Product p: Product.findAll()){
+                    if(p.getCategory().getId() == c.getId()){
+                        sum += (p.getTotalSold() * p.getProductPrice());
+                    } 
+                }
+            }
+        }
+        return sum;
     }
 
     // @Security.Authenticated(Secured.class)
