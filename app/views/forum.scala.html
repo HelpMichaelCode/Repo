@@ -14,24 +14,26 @@
           <div class="add-forum-form">
               <h1>BLDPC forum</h1>
           <!-- form to add a new forum -->
-        @helper.form(action = controllers.routes.HomeController.addThread(user.getEmail), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
+          @if(user != null){
+            @helper.form(action = controllers.routes.HomeController.addThread(user.getEmail), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
 
-        @CSRF.formField
-         
-        @inputText(forumForm("title"), '_label -> "",
-        'class -> "input", 'placeholder -> "title", 'maxLength -> "254", 'class -> "form-control", '_showConstraints -> false)          
+            @CSRF.formField
+            
+            @inputText(forumForm("title"), '_label -> "",
+            'class -> "input", 'placeholder -> "title", 'maxLength -> "254", 'class -> "form-control", '_showConstraints -> false)          
 
-        @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", 'maxLength -> "254", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+            @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", 'maxLength -> "254", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
 
-      <div class="hide">
-        @inputText(forumForm("id"), '_label -> "", 'hidden -> "hidden"));
-      </div>
-      <div class="actions">
+          <div class="hide">
+            @inputText(forumForm("id"), '_label -> "", 'hidden -> "hidden"));
+          </div>
+          <div class="actions">
 
-          <input type="submit" value="Start thread" class="btn btn-primary" />
-    
-        </div>
-      }
+              <input type="submit" value="Start thread" class="btn btn-primary" />
+        
+            </div>
+          }
+        }
       <div class="forum-topics">
           @if(threads.size > 0){
               @for(t <- threads){
