@@ -17,7 +17,7 @@ public class CheckIfUser extends Action.Simple {
                 return delegate.call(context); //this is returned if user is an Administrator
             } //end of if statement
         } //end of if statement
-        context.flash().put("error", "Login required");
+        context.flash().put("error", "User login required");
 
         return CompletableFuture.completedFuture(redirect(controllers.routes.LoginController.login()));
     }

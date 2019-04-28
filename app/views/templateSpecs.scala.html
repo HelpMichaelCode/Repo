@@ -1,5 +1,5 @@
 @(p: models.products.ProductSkeleton)
-<ul>
+<ul onclick="window.location.href = '@routes.ProductController.displayProduct(p.getProduct.getProductName)'">
     <li><strong>Manufacturer: </strong>@p.getManufacturer</li>
     @if(p.isInstanceOf[models.products.Processor]){
     <li><strong>Number of cores: </strong>@p.asInstanceOf[models.products.Processor].getCores</li>

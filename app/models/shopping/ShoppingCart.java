@@ -78,8 +78,12 @@ public class ShoppingCart extends Model {
             // if found increment quantity
             for (OrderLine oi : cartItems) {
                 if (oi.getProduct().getProductID() == product.getProductID()) {
-                    oi.increaseQty();
                     productFound = true;
+                    if(!((oi.getQuantity()+1) > product.getProductQty())){
+                        oi.increaseQty();
+                    } else {
+                        return false;
+                    }
                     break;
                 }
             }

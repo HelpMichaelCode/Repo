@@ -220,6 +220,21 @@ public class ProductController extends Controller{
             prodNotFound();
             return redirect(controllers.routes.ProductController.productList(Long.valueOf(0), ""));
         } else {
+            //First replace the orderlines (shopping carts and previous orders with N/A)
+            for(OrderLine ol: OrderLine.findAll()){
+                if(ol.getProduct().getProductID() == productID){
+                    try{
+                        Long cartId = ol.getCart().getId(); //this line will throw a null pointer exception 
+                                                                // if the order line is part of a shopping cart
+                        ol.delete(); //deletes the order line from the cart                        
+                    } catch (NullPointerException ex) { //if the order line is from a previously placed order, we would like to keep that order for various reasons
+                        ol.setProduct(Product.getProductById(Long.valueOf(1))); 
+                        //replace the product that will be deleted with a "Unknown N/A" product that we have in the DB
+                        ol.update();
+                    }
+                }
+            }
+
             List<ProductSkeleton> all = getSpecs(Product.getProductById(productID).getCategory().getId(), "");
             for(ProductSkeleton e: all){
                 switch(e.getProduct().getCategory().getName().toLowerCase()){
@@ -301,6 +316,7 @@ public class ProductController extends Controller{
                         break;
                 }
             }
+            
             flash("success", deleted + " has been deleted");
             return redirect(controllers.routes.ProductController.productList(0, ""));
         }
@@ -565,12 +581,11 @@ public class ProductController extends Controller{
                 pc.setProductId(pid);
                 pc.save();
                 flash("success", "PC " + pc.getName() + " was added");
-                return redirect(controllers.routes.HomeController.index());
             } else {
                 pc.update();
                 flash("success", "PC " + pc.getName() + " was updated");
-                return redirect(controllers.routes.HomeController.index());
             }
+            return redirect(controllers.routes.ProductController.productList(Product.getProductById(pid).getCategory().getId(), ""));
         }
     }
 
@@ -641,7 +656,7 @@ public class ProductController extends Controller{
                 r.update();
                 flash("success", r.getName() + " was updated");
             }
-            return redirect(controllers.routes.HomeController.index());
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(9), ""));
         }
     }
 
@@ -711,7 +726,7 @@ public class ProductController extends Controller{
                 s.update();
                 flash("success", s.getName() + " was updated");
             }
-            return redirect(controllers.routes.HomeController.index());
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(11), ""));
         }
     }
 
@@ -784,7 +799,7 @@ public class ProductController extends Controller{
                 newCpu.update();
                 flash("success", "Processor " + newCpu.getName() + " was updated");
             }
-            return redirect(controllers.routes.HomeController.index());
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(7), ""));
         }
     }
 
@@ -858,7 +873,7 @@ public class ProductController extends Controller{
                 gpu.update();
                 flash("success", "GPU " + gpu.getName() + " was updated");
             }
-            return redirect(controllers.routes.HomeController.index());
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(10), ""));
         }
     }
 
@@ -930,7 +945,7 @@ public class ProductController extends Controller{
                 mb.update();
                 flash("success", "Motherboard " + mb.getName() + " was updated");
             }
-            return redirect(controllers.routes.HomeController.index());
+            return redirect(controllers.routes.ProductController.productList(Long.valueOf(8), ""));
         }
     }
 

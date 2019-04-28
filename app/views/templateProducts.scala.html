@@ -65,18 +65,16 @@
             }
 
         <!-- 	product Information-->
-        <a href="@routes.ProductController.displayProduct(p.getProduct.getProductName)">
-            <div class="info">
-                <h3>@p.getName Specs</h3>
-                @templateSpecs(p)
-                    @if((user != null) && (user.getRole().equals("admin"))) {
-                        <input type="button" value="Delete" class="btn btn-danger btn-lg"
-                             onclick="window.location.href = '@routes.ProductController.deleteItem(p.getProduct.getProductID)';event.preventDefault();">
-                         <input type="button" value="Update" class="btn btn-primary btn-lg"
-                         onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
-                    }
-            </div>
-        </a>
+        <div class="info">
+            <h3>@p.getName Specs</h3>
+            @templateSpecs(p)
+                @if((user != null) && (user.getRole().equals("admin"))) {
+                    <input type="button" value="Delete" class="btn btn-danger btn-lg"
+                            onclick="window.location.href = '@routes.ProductController.deleteItem(p.getProduct.getProductID)';event.preventDefault();">
+                        <input type="button" value="Update" class="btn btn-primary btn-lg"
+                        onclick="window.location.href = '@routes.ProductController.updateItem(p.getProduct.getProductID)';event.preventDefault();">
+                }
+        </div>
         </div>
         <!--  End product image  -->
 

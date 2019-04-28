@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth;
+}
+
 body textarea{
   color: rgb(20, 20, 20);
 }

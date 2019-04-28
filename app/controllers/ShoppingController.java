@@ -32,6 +32,7 @@ public class ShoppingController extends Controller {
         this.formFactory = f;
     }
 
+    @Security.Authenticated(Secured.class)
     @With(CheckIfUser.class)
     @Transactional
     public Result addToCart(Long id, String page) {
@@ -55,7 +56,7 @@ public class ShoppingController extends Controller {
             // notify user that item was added to their cart
             flash("success", "Product " + product.getProductName() + " was added to cart.");
         } else {
-            flash("error", product.getProductName() + " is out of stock.");
+            flash("error", "We do not have more of " + product.getProductName() + ".");
         }
         
         

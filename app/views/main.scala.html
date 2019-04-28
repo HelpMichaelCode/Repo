@@ -242,7 +242,7 @@ z-index: 100;
                 @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                   <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
                 }
-                <li><a href="@routes.HomeController.stats">Stat</a></li>
+                <li><a href="@routes.HomeController.stats">Stats</a></li>
               }
               <li><a href="@routes.HomeController.forum">Forum</a></li>
          
@@ -252,14 +252,14 @@ z-index: 100;
               <li><a href="@routes.LoginController.userList()">Users</a></li>
             }
             @if((user != null) && (user.getRole().equals("customer"))) {
-              <li><a href="@routes.ShoppingController.viewOrders"  onclick="notifyTimeLimit()">my orders</a></li>
+              <li><a href="@routes.ShoppingController.viewOrders"  onclick="notifyTimeLimit()">My orders</a></li>
               <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
             }
             @if(user != null){
-            <li><a href="@routes.LoginController.logout()">Log out</a></li>
+            <li><a href="@routes.LoginController.logout()"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
             
             }else{
-              <li><a href="@routes.LoginController.login()">Log in</a></li>
+              <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
             }
           </ul>
         </div>
