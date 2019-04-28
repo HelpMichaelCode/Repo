@@ -93,7 +93,7 @@ public class LoginController extends Controller{
                     flash("error", "Wrong email format! Please try again!");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 } 
-                if(!newUser.numberCheck()){ //check if mobile number contains digits only
+                if(!newUser.numberCheck(newUser.getMobileNumber())){ //check if mobile number contains digits only
                     flash("error", "Mobile number cannot contain characters other than digits! Please remove any CHARACTERS or SPACES and try again!");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 }

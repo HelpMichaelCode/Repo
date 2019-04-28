@@ -17,7 +17,7 @@ img{
     display: block;
     background: #FFF;
     overflow: hidden;
-    position: absolute;
+    position: static;
     left: 0;
     right: 0;
     top: 0;

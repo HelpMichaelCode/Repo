@@ -29,12 +29,8 @@ body select{
 /* NAVIGATION AND MAIN PAGE */
 
 .bg-image{
-  /* background: url('/assets/images/productImages/logo.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; */
   height: 10vh;
-  /* background-attachment: fixed; */
+  
 }
 .bw-gradient{
   width: 100%;
@@ -43,7 +39,7 @@ body select{
   position: absolute;
           background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.65) 11%, rgba(0,0,0,0) 100%);
   background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 11%,rgba(0,0,0,0) 100%); 
-  background: linear-gradient(to bottom, rgb(0, 0, 0) 0%,rgba(0,0,0,0.65) 11%,rgba(167, 255, 66, 0) 100%); 
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%,rgba(0, 0, 0, 0) 11%,rgba(0, 0, 0, 0) 100%); 
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
 }
 .header{
@@ -138,85 +134,7 @@ body select{
   .sub-header{
       width: 100%;
   }
-}
-
-
-/* 
-@media screen and (max-width:768px){
-  .sub-header ul{
-      position: relative;
-      top: 30px;
-      float: none;
-      display: block;
-  }
- 
-  .sub-header .logo a{
-      font-size: 30px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 8px;
-      display: block;
-  }
-  
-  .sub-header.active ul{
-      height: auto;
-      width :100%;
-      float: none;
-      overflow: hidden;
-      background: #fff;
-      position: relative;
-      top: 50px;
-  }
-  .sub-header.active ul li{
-      width: 100%;
-      display: block;
-
-  }
- 
-} */
-
-/* @media screen and (max-width:605px){
-  .sub-header .right-menu{
-      float: left;
-  }
-} */
-
-/* @media screen and (max-width:480px){
-  .sub-header ul{
-      width: 100%;
-      background: #fff;
-      color:#333;
-      top:50px;
-  }
-  .sub-header ul li{
-      list-style: none;
-      width:100%;
-      font-size: 16px;
-      float: none;
-      display: block;
-      text-align: center;
-      height: 30px;
-      line-height: 30px;
-      transition:0.5s;
-      color:#333;
-  }
-  .sub-header ul li a{
-      color: #333;
-  }
-  .sub-header .right-menu{
-      border-top :1px dashed #333;
-  }
-  .sub-header.active ul{
-      height: 0;
-      overflow: hidden;
-      transition: 0.5s;
-      border: none;
-  } */
-  
-  
-  
-
+}  
 #search{
 border-radius: 3em;
 padding-left: 2em;
@@ -231,12 +149,13 @@ font-family: 'Roboto Slab', sans-serif;
 
 /* REGISTER */
 .box{
-  width: 40%;
-  top: 10%;
-  left: 30%;
+  width: 99%;
+  
+margin: auto;
   /* transform: translate(-50%,-50%); */
-  position: absolute;
-  float: left;
+  position: static;
+  overflow:hidden; 
+  /* float: left; */
   background-color: none;
   text-align: center;
   color:white;
@@ -292,11 +211,15 @@ font-family: 'Roboto Slab', sans-serif;
 /* LOGIN */
 .login-box {
   width: 280px;
-  position: absolute;
+  position: static;
+  overflow: hidden;
+  /* border:12px solid red; */
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
+    /* transform: translate(-30%, -30%); */
   color:white;
+  margin-bottom: 1em;
+  
 }
 
 .login-box h1 {
@@ -505,35 +428,43 @@ body {
 }
 
 
-.low-stock{
-  width: 100%;
-  height: 6em;
-}
-
-.no-stock{
-  width: 100%;
-  height: 8em;
-}
-
 .cats{
-  position: absolute;
-  left: 0;
+  position: static;
+  
   margin-left: 1%;
-  width: 10%;
+  width: 15%;
+  margin-bottom: 1em;
   float: left;
+  overflow: hidden;
 }
 
 .product-list{
   position: relative;
-  margin-right: 3%;
+	overflow: hidden;
+ 
   width: 80%;
   float: right;
+  margin-left: 4%;
+}
+.product-list h1{
+  text-align: center;
+  font-weight: 500;
+  font-size:2em;
+
 }
 
 .product-list h2{
   margin-left: 4%;
 }
-
+/* product-list media */
+@media screen and (max-width: 1600px){
+	.product-list{
+		/* position: absolute; */
+		position:static;
+		/* position:relative; */
+		
+	}
+}
 
 /*user list table*/
 .table{
@@ -555,50 +486,12 @@ body {
   margin-right: 5%;
 }
 
-/* Slider */
-@keyframes slidy {
-  0% { left: 0%; }
-  14% { left: 0%; }
-  18% { left: -100%; }
-  32% { left: -100%; }
-  36% { left: -200%; }
-  50% { left: -200%; }
-  54% { left: -300%; }
-  68% { left: -300%; }
-  72% { left: -400%; }
-  86% {left: -400%; }
-  }
-  
-  div#slider {
-    overflow-x: hidden;
-    display: block;
-    float:left;
-  }
-  div#slider figure img { 
-    width: 20%;
-    float: left; 
-    height: 90%;
-  }
-  div#slider figure {
-    height: 90%;
-    top:10%;
-    position: absolute;
-    width: 500%;
-    display: block;
-    float:left;
-    margin: 0;
-    left: 0;
-    text-align: left;
-    font-size: 0;
-    animation: 30s slidy infinite; 
-    z-index: -1;
-  }
-  /* End of slider */
 
   /* ADD PRODUCT FORMS */
   .add-product-form {
     width: 50%;
     margin: -1em auto;
+    
   }
 
   #pie-chart{
@@ -636,18 +529,135 @@ body {
 /*forum css*/
 
 .add-forum-form{
-  margin-left: auto;
-  margin-right: auto;
+
+  margin:Auto;
   width: 35%;
 
 }
 .reply-to-thread{
   margin-left: auto;
   margin-right: auto;
-  width: 35%;
+  width: 40%;
+}
+.thread{
+  position: static;
+  overflow: hidden;
+  width: 100%;
+}
+#forum{
+  position: static;
+  overflow: hidden;
+  margin-bottom: 1em;
+  width: 100%;
+ 
+}
+/* LowStock */
+.lowstock{
+
+  overflow: hidden;
+  position: static;
+  width: 100%;
+  /* float:right; */
+}
+.lowstock h1 {
+  text-align: center;
+text-transform: uppercase;
+}
+/* STATS */
+.stats{
+  
+  overflow: hidden;
+  position: static;
+  width: 100%;
+  margin-bottom: 1em;
+}
+.stats h1{
+  text-align: center;
+  text-transform: uppercase;
+}
+.allreview{
+  
+  overflow: hidden;
+  position: static;
+  width: 100%;
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+.allreview{
+  text-align: center;
+  text-transform: uppercase;
+}
+.buildpc {
+  width: 50%;
+  margin: 1em auto;
+  position: static;
+  overflow: hidden;
+}
+.buildpc h1{
+  text-align: center;
+  text-transform: uppercase;
+}
+.vieworders{
+  margin-bottom: 3.6em;
+  margin-top: 3em;
+  position: static;
+  overflow: hidden;
+}
+.basket{
+  margin-bottom: 3em;
+  margin-top: 3em;
+  position: static;
+  overflow: hidden;
+}
+.basket h1{
+  text-align: center;
+  text-transform: uppercase;
+}
+.text-right{
+  margin-top: 1em;
+  display: flex; 
+  justify-content: center;
+  
+}
+.actions{
+  display:flex;
+  justify-content: center;
+  margin-top:2em;
+  
+}
+.actions input{
+  margin-left: 1em;
+}
+.restock{
+  width:100%;
+  position: static;
+  overflow: hidden;
+  
+  /* display: flex;  */
+  justify-content: center;
+}
+.restock h1{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: 500;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.restock .box input{
+ 
+  width:50%;
+  color:black;
+  
 }
 
+.content{
+  position: static;
+  overflow: hidden;
+}
 
-
-
-
+/*
+#test{
+ position: static;
+ overflow: hidden; 
+} */
+/* footer */

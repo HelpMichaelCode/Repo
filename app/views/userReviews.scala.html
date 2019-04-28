@@ -1,10 +1,15 @@
 @(reviews: List[models.Review], email: String, user: models.users.User)
 @main("Reviews", user){
+    <style>
+        #site-footer{
+            bottom:0;
+        margin-top:11em;}
+    </style>
     @if((user != null) && (user.getRole().equals("admin"))) {
         @if(reviews.isEmpty){
             <h1>User hasn't reviewed any products</h1>
         } else {
-        <div class="col-sm-10">
+        <div class="col-sm-10 restock">
             <h2>List of all reviews from
                     @for(r<-reviews) {
                         @if(r.getUser.getEmail == email){

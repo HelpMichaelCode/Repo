@@ -7,6 +7,7 @@ import play.data.format.*;
 import play.data.validation.*;
 
 import models.*;
+import models.users.User;
 
 @Entity
 public class Processor extends ProductSkeleton {
@@ -70,6 +71,20 @@ public class Processor extends ProductSkeleton {
     public boolean checkLengthOfStrings(){
         if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(cores) || checkStringLen(clock) || checkStringLen(cache)){
             return true;
+        }
+        return false;
+    }
+
+    public boolean checkStringValuesCorrect(){
+        String[] clockStr = clock.split(" ", 2);
+        String[] cacheStr = cache.split(" ", 2);
+        try{
+            if(User.numberCheck(clockStr[0]) && clockStr[1].equals("GHz") &&
+            User.numberCheck(cacheStr[0]) && cacheStr[1].equals("MB")){
+                return true;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
         }
         return false;
     }

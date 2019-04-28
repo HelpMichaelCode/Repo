@@ -768,14 +768,16 @@ public class ProductController extends Controller{
         } else {
             Processor newCpu = newProcessorForm.get();
             if(newCpu.checkLengthOfStrings()){
-            // if(checkStringLen(newCpu.getCores()) || checkStringLen(newCpu.getClock()) ||
-            // checkStringLen(newCpu.getCache()) || checkStringLen(newCpu.getName()) 
-            // || checkStringLen(newCpu.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), addCpuString));
             }
+            if(!newCpu.checkStringValuesCorrect()){
+                flash("error", "Incorrect values! Please use the format provided as examples.");
+                return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), "Update processor info"));
+            }
             newCpu.setProduct(Product.getProductById(pid));
             if(newCpu.getProductId() == null){
+                newCpu.setProductId(pid);
                 newCpu.save();
                 flash("success", "Processor " + newCpu.getName() + " was added");
             } else {
@@ -785,6 +787,7 @@ public class ProductController extends Controller{
             return redirect(controllers.routes.HomeController.index());
         }
     }
+
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
@@ -839,11 +842,12 @@ public class ProductController extends Controller{
         } else {
             GraphicsCard gpu = gpuForm.get();
             if(gpu.checkLengthOfStrings()){
-            // if(checkStringLen(gpu.getBus()) || checkStringLen(gpu.getMemory()) ||
-            // checkStringLen(gpu.getGpuClock()) || checkStringLen(gpu.getMemoryClock()) ||
-            // checkStringLen(gpu.getName()) || checkStringLen(gpu.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), addGpuString));
+            }
+            if(!gpu.checkStringValuesCorrect()){
+                flash("error", "Incorrect values! Please use the format provided as examples.");
+                return badRequest(addGraphicsCard.render(gpuForm, pid, User.getUserById(session().get("email")), "Update GPU info"));
             }
             gpu.setProduct(Product.getProductById(pid));
             if(gpu.getProductId() == null){

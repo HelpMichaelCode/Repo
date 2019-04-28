@@ -197,10 +197,10 @@ public class User extends Model{
         sendEmail.send("bldpcproject@gmail.com","2nd_year_project", this.email ,"BLDPC order confirmed!","Your order has been confirmed!\n" + order + "\n" + orderTotal + "\nThank you for shopping with us!\n" + end);
     }
 
-    public boolean numberCheck(){
+    public static boolean numberCheck(String num){
         boolean result = false;
         try{
-            double number = Double.parseDouble(mobileNumber);
+            double number = Double.parseDouble(num);
             result = true;
         } catch(NumberFormatException e){
             result = false;

@@ -7,6 +7,7 @@ import play.data.format.*;
 import play.data.validation.*;
 
 import models.*;
+import models.users.User;
 
 @Entity
 public class GraphicsCard extends ProductSkeleton {
@@ -82,6 +83,20 @@ public class GraphicsCard extends ProductSkeleton {
     public boolean checkLengthOfStrings(){
         if(checkStringLen(getManufacturer()) || checkStringLen(getName()) || checkStringLen(bus) || checkStringLen(memory) || checkStringLen(gpuClock) || checkStringLen(memoryClock)){
             return true;
+        }
+        return false;
+    }
+
+    public boolean checkStringValuesCorrect(){
+        String[] mem = memoryClock.split(" ", 2);
+        String[] gpu = gpuClock.split(" ", 2);
+        try{
+            if(User.numberCheck(mem[0]) && mem[1].equals("MHz") &&
+            User.numberCheck(gpu[0]) && gpu[1].equals("MHz")){
+                return true;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
         }
         return false;
     }
