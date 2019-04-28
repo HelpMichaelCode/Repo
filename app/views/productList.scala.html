@@ -3,6 +3,9 @@
 @main("Product List", user){
 <link rel="stylesheet" href="@routes.Assets.versioned("/stylesheets/product-list.css")">
 
+
+<div class="test">
+
 <div class="cats">
     <h2>Filter by</h2>
     <ul class="list-group">
@@ -24,10 +27,21 @@
     }
 </div>
 
+
 <div class="product-list">
     <h3>Displaying @specs.size products</h3>
     @for(p<-specs) {
         @templateProducts(p, user, env, currentCat)
-    }
-    </div>
+    } 
+        
+        </div>
+</div>
+<Style>
+.test{
+    position: static;
+    overflow: hidden;
+    width : 100%;
+}
+
+</Style>
     }

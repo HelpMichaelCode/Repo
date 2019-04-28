@@ -1,5 +1,10 @@
 @(reviews: List[models.Review], user: models.users.User)
 @main("All reviews", user){
+<style>
+    #site-footer{
+    padding:7em 0 2.8em;}
+</style>
+    <div class="allreview">
     @if((user != null) && (user.getRole().equals("admin"))) {
         @if(reviews.isEmpty){
             <h1>No reviews available to display</h1>
@@ -43,6 +48,7 @@
                 </div>
             </table>
         </div>
+    </div>
         }
     }
 }

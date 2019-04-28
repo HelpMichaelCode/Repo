@@ -1,7 +1,9 @@
 @(products: List[models.Product], categories: List[models.Category], user: models.users.User)
 @main("Low stock",user){
+    
+    <div class="lowstock">
     <h1>Low quantity products</h1>
-
+    
     <!-- filter the low stock list by categories -->
     <div class="col-sm-2">
         <h2>Filter by</h2>
@@ -14,6 +16,8 @@
         }
     </ul>
     </div>
+
+   
 
     <div class="col-sm-9">
         <h4>Products in need of restock: @products.size</h4>
@@ -61,5 +65,6 @@
             }
         </tbody>
     </table>
+</div>
 </div>
  }

@@ -1,6 +1,10 @@
 @(id: Long, productForm: Form[models.Restock], user: models.users.User, heading: String)
 @import helper._
 @main("Restock", user) {
+    <style>
+            #site-footer{
+            padding:4.4em 0 3em;}
+        </style>
 @if(productForm.hasGlobalErrors) {
 <p class="alert alert-warning  ">
     @for(e <- productForm.globalErrors) {
@@ -8,14 +12,16 @@
     }
 </p>
 }
-<div class="add-product-form">
-    <h3>@heading</h3>
+
+<div class="restock">
+    <h1>@heading</h1>
     @helper.form(action=controllers.routes.ProductController.restockSubmit(id), 'class -> "form-horizontal",
     'role -> "form", 'method -> "POST") {
     @* CSRF attack prevention *@
     @CSRF.formField
-    
+    <div class="box">
     @inputText(productForm("restock"), '_label -> "", 'placeholder -> "In Stock", 'class -> "form-control", '_showConstraints -> false)
+</div>
     <div class="hide">
         @inputText(productForm("productName"), '_label -> "", 'placeholder -> "Product Name", 'class -> "form-control", '_showConstraints -> false)
         @textarea(field = productForm("productDescription"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Description", '_label -> "", 'class -> "form-control", '_showConstraints -> false, 'hidden -> "hidden")

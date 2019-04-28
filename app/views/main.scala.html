@@ -7,9 +7,96 @@
 .header{
   z-index: 99;
 }
+#site-footer
+{
+  background-color:#26272b;
+  padding:45px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+  position: static;
+  margin-top: 1em;
+  
+}
+#site-footer hr
+{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+#site-footer hr.small
+{
+  margin:20px 0
+}
+#site-footer h6
+{
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+#site-footer a
+{
+  color:#737373;
+}
+#site-footer a:hover
+{
+  color:#3366cc;
+  text-decoration:none;
+}
+.footer-links
+{
+  padding-left:0;
+  list-style:none
+}
+.footer-links li
+{
+  display:block
+}
+.footer-links a
+{
+  color:#737373
+}
+.footer-links a:active,.footer-links a:focus,.footer-links a:hover
+{
+  color:lime;
+  text-decoration:none;
+}
+.footer-links.inline li
+{
+  display:inline-block
+}
+
+.copyright-text
+{
+  margin-left:50%;
+  /* text-align: center; */
+  /* padding-left:8em; */
+
+}
+
+@@media (max-width:991px)
+{
+  .site-footer [class^=col-]
+  {
+    margin-bottom:30px
+  }
+}
+@@media (max-width:767px)
+{
+  .site-footer
+  {
+    padding-bottom:0
+  }
+  .site-footer .copyright-text,.site-footer
+  {
+    text-align:center
+  }
+}
 
 
 </style>
+
 <head>
 
 
@@ -24,6 +111,7 @@
     
 
 </head>
+<div id="test">
 
 <header class="bg-image">
   <div class="bw-gradient"></div>
@@ -95,7 +183,7 @@
     @content
   </div>
 </body>
-
+</div>
 <!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -112,5 +200,79 @@
 
 
 <!-- footer -->
+
+  <!-- Site footer -->
+  <footer>
+
+  <div id="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <h6>About</h6>
+          <p class="text-justify"> <i>Welcome to BLDPC!</i> Here we offer amazing products for our users of all ages. We tend not to offer to a specified group of people but to everyone. This allows us to be flexible for our users such as college students, grandparents, parents, kids & teens, as we can provide them with the right products that they need in their technical life. We value each of our customers and try our best to keep them happy and to provide the best quality products that they deserve!.</p>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+          <h6>Categories</h6>
+          <ul class="footer-links">
+              @for(c<-Category.findAll) { <li><a href="@routes.ProductController.productList(c.getId(), "")"
+              class="">@c.getName
+              
+              </a></li>
+              }
+           
+          </ul>
+        </div>
+
+        <div class="col-xs-6 col-md-3">
+          <h6>Quick Links</h6>
+          <ul class="footer-links">
+              <li><a href="@routes.HomeController.index">Home</a></li>
+              <li><a href="@routes.ProductController.productList(0,"")">Products</a></li>
+              @if((user != null) && (user.getRole().equals("customer"))) {
+                <li><a href="@routes.LoginController.updateUser(user.getEmail)">Update account</a></li>
+                <li><a href="@routes.ShoppingController.addBuild()">Build PC</a></li>
+              }
+              @if(user != null && user.getRole.equals("admin")){
+                @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
+                  <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
+                }
+                <li><a href="@routes.HomeController.stats">Stat</a></li>
+              }
+              <li><a href="@routes.HomeController.forum">Forum</a></li>
+         
+          
+            @if((user != null) && (user.getRole().equals("admin"))) {
+              <li><a href="@routes.ProductController.allReviews()">Reviews</a></li>
+              <li><a href="@routes.LoginController.userList()">Users</a></li>
+            }
+            @if((user != null) && (user.getRole().equals("customer"))) {
+              <li><a href="@routes.ShoppingController.viewOrders"  onclick="notifyTimeLimit()">my orders</a></li>
+              <li><a href="@routes.ShoppingController.showCart">My cart</a></li>
+            }
+            @if(user != null){
+            <li><a href="@routes.LoginController.logout()">Log out</a></li>
+            
+            }else{
+              <li><a href="@routes.LoginController.login()">Log in</a></li>
+            }
+          </ul>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-6 col-xs-12">
+          <div class="copyright-text">Copyright &copy; 2019 All Rights Reserved by 
+       <a href="#">BLDPC</a>.
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+</footer>
+
 
 </html>
