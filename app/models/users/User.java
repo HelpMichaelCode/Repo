@@ -208,6 +208,13 @@ public class User extends Model{
         return result;
     }
 
+    public boolean numberLength(){
+        if(mobileNumber.length() == 10){
+            return true;
+        }
+        return false;
+    }
+
     public boolean checkLengthOfStrings(){
         if(ProductSkeleton.checkStringLen(email) ||ProductSkeleton.checkStringLen(role) || 
         ProductSkeleton.checkStringLen(username) || ProductSkeleton.checkStringLen(mobileNumber) || 

@@ -765,14 +765,15 @@ public class ProductController extends Controller{
         } else {
             Processor newCpu = newProcessorForm.get();
             if(newCpu.checkLengthOfStrings()){
-            // if(checkStringLen(newCpu.getCores()) || checkStringLen(newCpu.getClock()) ||
-            // checkStringLen(newCpu.getCache()) || checkStringLen(newCpu.getName()) 
-            // || checkStringLen(newCpu.getManufacturer())){
+            // if(checkStringLen(newCpu.getCores())  checkStringLen(newCpu.getClock()) 
+            // checkStringLen(newCpu.getCache())  checkStringLen(newCpu.getName()) 
+            //  checkStringLen(newCpu.getManufacturer())){
                 flash("error", "Text is too long please try using less than 255 characters.");
                 return badRequest(addProcessor.render(newProcessorForm, pid, User.getUserById(session().get("email")), addCpuString));
             }
             newCpu.setProduct(Product.getProductById(pid));
             if(newCpu.getProductId() == null){
+                newCpu.setProductId(pid);
                 newCpu.save();
                 flash("success", "Processor " + newCpu.getName() + " was added");
             } else {
@@ -782,6 +783,7 @@ public class ProductController extends Controller{
             return redirect(controllers.routes.HomeController.index());
         }
     }
+
 
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)

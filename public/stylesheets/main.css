@@ -432,7 +432,7 @@ body {
   position: static;
   
   margin-left: 1%;
-  width: 10%;
+  width: 15%;
   margin-bottom: 1em;
   float: left;
   overflow: hidden;
@@ -442,9 +442,15 @@ body {
   position: relative;
 	overflow: hidden;
  
-  width: 85%;
+  width: 80%;
   float: right;
   margin-left: 4%;
+}
+.product-list h1{
+  text-align: center;
+  font-weight: 500;
+  font-size:2em;
+
 }
 
 .product-list h2{
@@ -454,7 +460,7 @@ body {
 @media screen and (max-width: 1600px){
 	.product-list{
 		/* position: absolute; */
-		border : 12px solid rgb(0, 255, 98);
+		position:static;
 		/* position:relative; */
 		
 	}
@@ -531,9 +537,13 @@ body {
 .reply-to-thread{
   margin-left: auto;
   margin-right: auto;
-  width: 35%;
+  width: 40%;
 }
-
+.thread{
+  position: static;
+  overflow: hidden;
+  width: 100%;
+}
 #forum{
   position: static;
   overflow: hidden;
@@ -555,7 +565,7 @@ text-transform: uppercase;
 }
 /* STATS */
 .stats{
-  border: 12px solid lime;
+  
   overflow: hidden;
   position: static;
   width: 100%;
@@ -622,7 +632,7 @@ text-transform: uppercase;
   width:100%;
   position: static;
   overflow: hidden;
-  /* border:12px solid lime; */
+  
   /* display: flex;  */
   justify-content: center;
 }
@@ -639,6 +649,7 @@ text-transform: uppercase;
   color:black;
   
 }
+
 /*
 #test{
  position: static;

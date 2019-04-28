@@ -586,36 +586,36 @@ body {
 .product-list-index{
 	position: static;
 	overflow: hidden;
-	border:12px solid #e67e22; 
+ 
 	margin-top:45%;
 }
 
 @media screen and (max-width: 2100px){
 	.product-list-index{
 		position: absolute;
-		border : 12px solid green;
+	
 		margin-top: 50%;
 	}
 }
 @media screen and (max-width: 1900px){
 	.product-list-index{
+	margin-top:50%;	
 		
-		border : 12px solid purple;
 	}
 }
 @media screen and (max-width: 1800px){
 	.product-list-index{
 		
-		border : 12px solid black;
-		position: absolute;
+	
+position:Static;
 		margin-top: 50%;
 		
 	}
 }
 @media screen and (max-width: 1600px){
 	.product-list-index{
-		position: absolute;
-		border : 12px solid rgb(0, 255, 98);
+		/* position: absolute; */
+		
 		position:static;
 		
 	}

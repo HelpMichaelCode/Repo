@@ -1,4 +1,4 @@
-@(jsonString: String, names: Array[String], bestSeller: String, bestSellerSold: Long, user: models.users.User)
+@(jsonString: String, bestSeller: String, bestSellerSold: Long, revenue: Double, user: models.users.User, heading: String)
 @main("Statistics", user){
 <style>
   body {
@@ -6,7 +6,7 @@
   }
 
   .content {
-    padding-top: 4%;
+    padding-top: 0%;
   }
 
   .sub-header .left-menu li a,
@@ -19,17 +19,31 @@
 <div class="cats">
   <h2>Filter by</h2>
   <ul class="list-group">
-    <a href="@routes.HomeController.stats" class="list-group-item">All Categories</a>
-    @for(c<-Category.findAll) { <a href="@routes.HomeController.catstats(c.getName)" class="list-group-item">@c.getName
-      <span class="badge">@c.getItems.size</span>
-      </a>
+    <a @if(heading == "sales"){
+      href="@routes.HomeController.stats()"
+    } else {
+      href="@routes.HomeController.inStock()"
+    } class="list-group-item">All Categories</a>
+    @for(c<-Category.findAll) { 
+      <a @if(heading == "sales"){
+        href="@routes.HomeController.salesStatsCategory(c.getName)"
+      } else {
+        href="@routes.HomeController.inStockCategory(c.getName)"
+      } class="list-group-item">
+        @c.getName</a>
       }
   </ul>
 
 </div>
-<h1>Sales statistics</h1>
+
+<h1 style="margin-left: 20%;">
+  <a href="@routes.HomeController.stats" @if(heading == "sales"){style="background-color: #39f60a; color: black;"}>Sales statistics</a>
+  &emsp;&emsp;<a href="@routes.HomeController.inStock" @if(heading == "stock"){style="background-color: #39f60a;color: black;"}>Stock statistics</a>
+</h1>
 <hr>
-<h3 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h3>
+<h4 style="margin-left: 12%;">Best selling product for the past 30 days: @bestSeller - @bestSellerSold sold</h4>
+<h3 style="margin-left: 12%;">All time revenue: &euro;@("%.2f".format(revenue))</h3>
+<h4 style="margin-left: 12%;">(If you have filtered by category, then the displayed value will only inlude the products in that category)</h4>
 <div id="pie-chart"></div>
 </div>
 
@@ -78,8 +92,13 @@
         default:
           flag = false;
       }
-      if(flag)
-      window.location.href = "http://localhost:9000/stats-by-category/" + data.getValue(chart.getSelection()[0]['row'], 0 );
+      if(flag){
+        if("@heading"=="sales"){
+          window.location.href = "http://localhost:9000/stats/sales/" + data.getValue(chart.getSelection()[0]['row'], 0 );
+        } else {
+          window.location.href = "http://localhost:9000/stats/in-stock/" + data.getValue(chart.getSelection()[0]['row'], 0 );
+        }
+      }
     }
 
         // Add our selection handler.

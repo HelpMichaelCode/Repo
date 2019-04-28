@@ -30,9 +30,12 @@ GET     /delete-item/:productID     controllers.ProductController.deleteItem(pro
 GET     /restock/:id                controllers.ProductController.restock(id: Long)
 POST    /restock-submit/:id         controllers.ProductController.restockSubmit(id: Long)
 
-GET     /low-stock-products                 controllers.ProductController.lowStockProducts(category:Long?=0L)
-GET     /stats                              controllers.HomeController.stats
-GET     /stats-by-category/:catName          controllers.HomeController.catstats(catName: String)
+GET     /low-stock-products         controllers.ProductController.lowStockProducts(category:Long?=0L)
+GET     /stats                      controllers.HomeController.stats    
+GET     /stats/sales                controllers.HomeController.stats
+GET     /stats/sales/:catName       controllers.HomeController.salesStatsCategory(catName: String)
+GET     /stats/in-stock             controllers.HomeController.inStock
+GET     /stats/in-stock/:catName    controllers.HomeController.inStockCategory(catName: String)
 
 GET     /add-pc/:pid                controllers.ProductController.addTrendingPC(pid: Long)
 POST    /add-pc-submit/:pid         controllers.ProductController.addTrendingPCSubmit(pid: Long)

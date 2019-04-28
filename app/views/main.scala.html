@@ -7,6 +7,9 @@
 .header{
   z-index: 99;
 }
+.alerts{
+z-index: 100;
+}
 #site-footer
 {
   background-color:#26272b;
@@ -111,6 +114,7 @@
     
 
 </head>
+
 <div id="test">
 
 <header class="bg-image">
@@ -162,23 +166,24 @@
 
 </header>
 
-<body>
-  @if(flash.containsKey("success")){
-    <div class="alert alert-success">
-      @flash.get("success")
-    </div>
-  }
-  @if(user != null && flash.containsKey("warning") && user.getRole.equals("admin")){
-    <div class="alert alert-warning">
-      @flash.get("warning")
-    </div>
-  }
 
-  @if(flash.containsKey("error")){
-    <div class="alert alert-danger">
-      @flash.get("error")
-    </div>
-  }
+<body>
+    @if(flash.containsKey("success")){
+      <div class="alert alert-success alerts">
+        @flash.get("success")
+      </div>
+    }
+    @if(user != null && flash.containsKey("warning") && user.getRole.equals("admin")){
+      <div class="alert alert-warning alerts">
+        @flash.get("warning")
+      </div>
+    }
+  
+    @if(flash.containsKey("error")){
+      <div class="alert alert-danger alerts">
+        @flash.get("error")
+      </div>
+    }
   <div class="content">
     @content
   </div>

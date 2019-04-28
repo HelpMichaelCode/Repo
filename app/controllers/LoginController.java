@@ -93,6 +93,10 @@ public class LoginController extends Controller{
                     flash("error", "Mobile number cannot contain characters other than digits! Please remove any CHARACTERS or SPACES and try again!");
                     return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
                 }
+                if(!newUser.numberLength()){ //check if mobile number is 10 digits
+                    flash("error", "Mobile number must be 10 digits long!");
+                    return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register")); //bad format
+                }
 //user is registered only if email is in the right format
                 if(newUser.checkLengthOfStrings()){
                     flash("error", "Please, try using less than 255 characters");

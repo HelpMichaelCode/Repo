@@ -11,7 +11,7 @@
         }
         
         
-
+        <div class="thread">
          <div class="col-sm-12">
             <div class="reply-to-thread">
                 <h1>Thread: @thread.getTitle</h1>
@@ -23,24 +23,25 @@
                       }
                  </div>
                 <!-- form to add a new reply to the thread -->
-                @helper.form(action = controllers.routes.HomeController.postComment(user.getEmail, thread.getId), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
+                @if(user != null){
+                    @helper.form(action = controllers.routes.HomeController.postComment(user.getEmail, thread.getId), 'class -> "form-horizontal", 'role -> "form", 'method -> "POST"){
+            
+                    @CSRF.formField       
+            
+                    @textarea(field = replyForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Post a reply", '_label -> "", 'class -> "form-control", '_showConstraints -> false, 'maxLength -> "254")
         
-                @CSRF.formField       
-        
-                @textarea(field = replyForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Post a reply", '_label -> "", 'class -> "form-control", '_showConstraints -> false, 'maxLength -> "254")
-    
-                <div class="hide">
-                @inputText(replyForm("id"), '_label -> "", 'hidden -> "hidden"));
-                </div>
-                <div class="actions">
-        
-                    <input type="submit" value="Post reply" class="btn btn-primary" />
-                    <input type="button" value="Back to Forum" class="btn btn-warning"
-                        onclick="window.location.href = '@routes.HomeController.forum()';">
-                    
-                </div>
+                    <div class="hide">
+                    @inputText(replyForm("id"), '_label -> "", 'hidden -> "hidden"));
+                    </div>
+                    <div class="actions">
+            
+                        <input type="submit" value="Post reply" class="btn btn-primary" />
+                        <input type="button" value="Back to Forum" class="btn btn-warning"
+                            onclick="window.location.href = '@routes.HomeController.forum()';">
+                        
+                    </div>
+                    }
                 }
-
                 <div class="thread-replies">
                     @if(thread.getComments.size > 0){
                         <h3>Replies</h3>
@@ -58,6 +59,6 @@
                 </div> 
             </div>
          </div>
-         
+        </div>
         <!-- end of forum-threads -->
 }

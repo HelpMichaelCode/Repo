@@ -87,15 +87,14 @@ public class HomeController extends Controller {
         } catch(ArrayIndexOutOfBoundsException e){
         } catch(NumberFormatException e){
         }
-        return ok(stats.render(jsonString, prodNames, bestSeller, maxSold, User.getUserById(session().get("email"))));
+        double revenue = totalRevenue();
+        return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "sales"));
         // return ok(test.render(jsonString, User.getUserById(session().get("email"))));
     }
 
-    
-
     @Security.Authenticated(Secured.class)
     @With(Administrator.class)
-    public Result catstats(String cat){ 
+    public Result salesStatsCategory(String cat){ 
         List<String> names = new ArrayList<>();
         List<Integer> sales = new ArrayList<>();
         List<Product> all = Product.findAll();
@@ -122,11 +121,75 @@ public class HomeController extends Controller {
                 // } catch(ArrayIndexOutOfBoundsException e){  
                 // } catch(NumberFormatException e){  
                 // }
-                return ok(stats.render(jsonString, prodNames, bestSeller, maxSold, User.getUserById(session().get("email"))));
+                double revenue = revenueCategory(cat);
+                return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "sales"));
             }
         }
         return redirect(controllers.routes.HomeController.stats());
-    }  
+    } 
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result inStock(){
+        List<String> names = new ArrayList<>();
+        List<Integer> quantity = new ArrayList<>();
+        for(Category c: Category.findAll()){
+            names.add(c.getName());
+            int sum = 0;
+            for(Product p: Product.findAll()){
+                if(p.getCategory().getName().equals(c.getName())){
+                    sum += p.getProductQty();
+                }
+            }
+            quantity.add(sum);
+        }
+        String[] prodNames= names.toArray(new String[names.size()]);
+        Integer[] qty= quantity.toArray(new Integer[quantity.size()]);
+        String jsonString = getJsonString(prodNames, qty);
+
+        //Get best selling product for the last 30 days
+        String[] bestSellerString = getBestSeller30Days().split(",", 2);
+        Long maxSold = Long.valueOf(0);
+        String bestSeller = "N/A";
+        try{
+            maxSold = Long.parseLong(bestSellerString[0], 10);
+            bestSeller = bestSellerString[1];
+        } catch(ArrayIndexOutOfBoundsException e){
+        } catch(NumberFormatException e){
+        }
+        double revenue = totalRevenue();
+        return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "stock"));
+    }
+
+    @Security.Authenticated(Secured.class)
+    @With(Administrator.class)
+    public Result inStockCategory(String cat){ 
+        List<String> names = new ArrayList<>();
+        List<Integer> quantity = new ArrayList<>();
+        List<Product> all = Product.findAll();
+        for(Category c: Category.findAll()){
+            if(c.getName().toLowerCase().equals(cat.toLowerCase())){
+                for(Product p: all){
+                    if(p.getCategory().getId() == c.getId()){
+                        names.add(p.getProductName());
+                        quantity.add(p.getProductQty());
+                    }
+                }
+                String[] prodNames= names.toArray(new String[names.size()]);
+                Integer[] qty= quantity.toArray(new Integer[quantity.size()]);
+                String jsonString = getJsonString(prodNames, qty);
+
+                //Get best selling product for the last 30 days 
+                // --- we could have made this to get the best selling product of the specified category but there wasn't much time
+                String[] bestSellerString = getBestSeller30Days().split(",", 2);
+                Long maxSold = Long.parseLong(bestSellerString[0], 10);
+                String bestSeller = bestSellerString[1];
+                double revenue = revenueCategory(cat);
+                return ok(stats.render(jsonString, bestSeller, maxSold, revenue, User.getUserById(session().get("email")), "stock"));
+            }
+        }
+        return redirect(controllers.routes.HomeController.stats());
+    }   
     
     private String getJsonString(String[] names, Integer[] sold){
         // String exampleValues = "{'c':[{'v': 'Work'}, {'v': 11}]}, {'c':[{'v': 'Eat'}, {'v': 2}]}, {'c':[{'v': 'Commute'}, {'v': 2}]},{'c':[{'v': 'Watch TV'}, {'v':2}]}, {'c':[{'v': 'Sleep'}, {'v':7, 'f':'7'}]}";
@@ -188,6 +251,28 @@ public class HomeController extends Controller {
             }   
         }
         return max + "," + prodName;
+    }
+
+    private double totalRevenue(){
+        double sum = 0;
+        for(Product p: Product.findAll()){
+            sum += (p.getTotalSold() * p.getProductPrice());
+        }
+        return sum;
+    }
+    private double revenueCategory(String cat){
+        double sum = 0;
+        for(Category c: Category.findAll()){ 
+            if(c.getName().toLowerCase().equals(
+                cat.toLowerCase())){
+                for(Product p: Product.findAll()){
+                    if(p.getCategory().getId() == c.getId()){
+                        sum += (p.getTotalSold() * p.getProductPrice());
+                    } 
+                }
+            }
+        }
+        return sum;
     }
 
     // @Security.Authenticated(Secured.class)
