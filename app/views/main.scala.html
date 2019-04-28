@@ -40,7 +40,7 @@
               @if(flash.containsKey("warning") && flash.get("warning").contains("Restock needed!") || title.equals("Low stock") || title.equals("Statistics")){
                 <li><a href="@routes.ProductController.lowStockProducts()">Low stock</a></li>
               }
-              <li><a href="@routes.HomeController.stats">Stat</a></li>
+              <li><a href="@routes.HomeController.stats">Stats</a></li>
             }
             <li><a href="@routes.HomeController.forum">Forum</a></li>
         </ul>
@@ -64,7 +64,7 @@
           }
 
           <li class="search">
-            <input type="text" id="search" name="" class="text" placeholder="Search products..." onkeypress="search()"/>
+            <input type="text" id="search" name="" class="text" placeholder="Search products..."/>
             <button onclick="search()" class="btn btn-default btn-md">Go</button>
           </li>
         </ul>

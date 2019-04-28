@@ -20,7 +20,7 @@
             @CSRF.formField
             
             @inputText(forumForm("title"), '_label -> "",
-            'class -> "input", 'placeholder -> "title", 'maxLength -> "254", 'class -> "form-control", '_showConstraints -> false)          
+            'class -> "input", 'placeholder -> "Thread title", 'maxLength -> "254", 'class -> "form-control", '_showConstraints -> false)          
 
             @textarea(field = forumForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Start a new thread", 'maxLength -> "254", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
 

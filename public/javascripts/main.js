@@ -5,10 +5,12 @@ function search(){
   window.location.href = "http://localhost:9000/product-list?keyword=" + keyword;
 }
 
-$('#search').addEventListener('keydown', (e) => {
-  if($e.key == "Enter"){
-    search();
-  }
+$('#search').keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+  if(keycode == '13'){  //Enter is equal to 13 in ASCII so this function is executed whenever user presses Enter
+                        // with the cursor positioned inside the search textbox
+		search();	
+	}
 });
 
 function showCart() {

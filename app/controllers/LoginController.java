@@ -79,9 +79,13 @@ public class LoginController extends Controller{
             User newUser = userForm.get();
             PasswordCheck pc = passwordForm.get();
 
+            if(pc.getPassword2().equals(User.hash("")) && pc.getPassword().equals(User.hash(""))){
+                flash("error", "Please enter a password.");
+                return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register"));
+            } 
+
             if(!(pc.getPassword2().equals(newUser.getPassword()))){
                 flash("error", "Passwords do not match.");
-
                 return badRequest(register.render(passwordForm, User.getUserById(session().get("email")), "Register"));
             }
             if(User.getUserById(newUser.getEmail()) == null) {
@@ -208,6 +212,10 @@ public class LoginController extends Controller{
     @With(Administrator.class)
     public Result deleteUser(String email){
         User u = User.getUserById(email);
+        if(u.getEmail().equals(User.getUserById(session().get("email")).getEmail())){
+            flash("error", "You cannot delete your own account");
+            return redirect(controllers.routes.LoginController.userList());
+        }
         if(u.getOrders() != null){
             for(ShopOrder s: u.getOrders()){
                 s.setUser(User.getUserById("N/A")); //removes the user from all order records but keeps the records

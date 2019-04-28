@@ -175,8 +175,12 @@ public class ProductController extends Controller{
             Product p = Product.getProductById(id);
             if(p.getProductID() != null){
                 if(r.getProductID() == p.getProductID()){
-                    if(r.getRestock()>100){
+                    if(r.getRestock() > 100){
                         flash("error", "You cannot add more than 100 items of one type!");
+                        return badRequest(restock.render(id, form,(User.getUserById(session().get("email"))), "Restock product " + p.getProductName()));
+                    } else if(r.getRestock() <= 0){
+                        flash("error", "Negative value detected! Please try again!");
+                        return badRequest(restock.render(id, form,(User.getUserById(session().get("email"))), "Restock product " + p.getProductName()));
                     } else {
                         p.restock(r.getRestock());
                         p.update();
@@ -210,7 +214,6 @@ public class ProductController extends Controller{
     @With(Administrator.class)
     @Transactional
     public Result deleteItem(Long productID){
-        flashLowStock();
         
         String deleted = "";
         if(Product.getProductById(productID) == null){
