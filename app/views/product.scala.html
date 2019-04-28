@@ -80,7 +80,7 @@ button[type="button"]:disabled {
 
     @CSRF.formField
 
-    @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
+    @textarea(field = reviewForm("body"), args='rows -> 4, 'cols -> 50, 'placeholder -> "Rate this item and leave feedback..", 'maxLength -> "254", '_label -> "", 'class -> "form-control", '_showConstraints -> false)
     <!-- @inputRadioGroup(reviewForm("rating"), options = options("1"->"1","2"->"2","3"->"3","4"->"4","5"->"5"), '_label -> "Ratings", '_showConstraints -> false) -->
     <fieldset>
         <span class="star-cb-group">

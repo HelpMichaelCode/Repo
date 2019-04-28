@@ -50,14 +50,18 @@ public class ShoppingController extends Controller {
             user.update();
         }
         // Add product to the cart and save
-        user.getShoppingCart().addProductToCart(product);
-        user.update();
-        // notify user that item was added to their cart
-        flash("success", "Product " + product.getProductName() + " was added to cart.");
+        if(user.getShoppingCart().addProductToCart(product)){
+            user.update();
+            // notify user that item was added to their cart
+            flash("success", "Product " + product.getProductName() + " was added to cart.");
+        } else {
+            flash("error", product.getProductName() + " is out of stock.");
+        }
+        
+        
         String[] category = page.split(" ", 2);
         if(category.length > 1){
             if(category[0].equalsIgnoreCase("category")){
-                flash("error", "i got here");
                 Long catId = Long.parseLong(category[1]);
                 return redirect(routes.ProductController.productList(catId, ""));
             }
@@ -157,6 +161,8 @@ public class ShoppingController extends Controller {
         return redirect(routes.ShoppingController.showCart());
     }
 
+    @Security.Authenticated(Secured.class)
+    @With(CheckIfUser.class)
     @Transactional
     public Result removeOne(Long orderLineId) {
         
@@ -171,6 +177,14 @@ public class ShoppingController extends Controller {
         u.getShoppingCart().update();
         // p.incrementStock();
         // p.update();
+        return redirect(routes.ShoppingController.showCart());
+    }
+
+    public Result deleteFromCart(Long orderLineId){
+        OrderLine orderLine = OrderLine.find.byId(orderLineId);
+        if(orderLine != null){
+            User.getUserById(session().get("email")).getShoppingCart().deleteItem(orderLine);
+        }
         return redirect(routes.ShoppingController.showCart());
     }
 

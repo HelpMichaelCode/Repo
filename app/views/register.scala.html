@@ -59,7 +59,7 @@
                 'class -> "input", 'placeholder -> "Address", 'maxLength -> "254", '_showConstraints -> false)
     
                 @inputText(userForm("mobileNumber"), '_label -> "",
-                'class -> "input", 'placeholder -> "Mobile Number", 'maxLength -> "10", '_showConstraints -> false)
+                'class -> "input", 'placeholder -> "Mobile Number", 'minLength -> "10", 'maxLength -> "10", '_showConstraints -> false)
             
                 @inputText(userForm("role").copy(value=Some("customer")), '_label -> "", 'hidden -> "hidden")
        

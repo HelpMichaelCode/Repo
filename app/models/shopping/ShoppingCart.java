@@ -69,26 +69,29 @@ public class ShoppingCart extends Model {
 
     // Add item for sale to basket
     // Either update existing order item or ad a new one.
-    public void addProductToCart(Product product) {
+    public boolean addProductToCart(Product product) {
         
-        boolean productFound = false;
-        // Check if product already in this basket
-        // Check if item in basket
-        // Find OrderLine with this product
-        // if found increment quantity
-        for (OrderLine oi : cartItems) {
-            if (oi.getProduct().getProductID() == product.getProductID()) {
-                oi.increaseQty();
-                productFound = true;
-                break;
+        if(product.getProductQty() > 1){
+            boolean productFound = false;
+            // Check if product already in this basket
+            // Find OrderLine with this product
+            // if found increment quantity
+            for (OrderLine oi : cartItems) {
+                if (oi.getProduct().getProductID() == product.getProductID()) {
+                    oi.increaseQty();
+                    productFound = true;
+                    break;
+                }
             }
+            if (productFound == false) {
+                // Add OrderLine to list
+                OrderLine newItem = new OrderLine(product);
+                // Add to items
+                cartItems.add(newItem);
+            }
+            return true; //if product quantity is greater than 0
         }
-        if (productFound == false) {
-            // Add OrderLine to list
-            OrderLine newItem = new OrderLine(product);
-            // Add to items
-            cartItems.add(newItem);
-        }
+        return false; //if product qty is 0 or less?
     }
 
     public double getCartTotal(){
@@ -99,8 +102,6 @@ public class ShoppingCart extends Model {
         }
         return total;
     }
-
-   
 
     public void removeItem(OrderLine orderLine) {
 
@@ -129,6 +130,13 @@ public class ShoppingCart extends Model {
             }
        }
     }
+
+    public void deleteItem(OrderLine orderLine){
+        if(orderLine != null){
+             orderLine.delete();
+        }
+    }
+
     public void removeAllProducts() {
         for(OrderLine i: this.cartItems) {
             Product p = Product.getProductById(i.getProduct().getProductID());

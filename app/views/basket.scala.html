@@ -3,7 +3,7 @@
 @import models.shopping._
 @import models._
 
-@main("Shopping Basket", user) {
+@main("Shopping cart", user) {
     <style>
             #site-footer{
             padding:3.5em 0 3.2em;}
@@ -24,30 +24,34 @@
                     <th>Price</th>
                     <th>Total</th>
                     <th>Quantity</th>
-                    <th>dec.</th>
-                    <th>inc.</th>
+                    <th colspan="3">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @if(user.getShoppingCart() != null) {
                 <!-- Start of For loop - For each p in products add a row -->
-                @for(i <- user.getShoppingCart().getCartItems()) { 
-                    @if(i.getProduct.getProductQty == 0){
-                        <td colspan="7">@i.getProduct.getProductName
-                            has been sold out</td>
-                    } else {
-                    <tr data-href="http://localhost:9000/product/@i.getProduct.getProductName">
-                        <td>@i.getProduct.getProductName</td>
-                        <td>@i.getProduct.getProductDescription()</td>
-                        <td>&euro; @("%.2f".format(i.getPrice))</td>
-                        <td>&euro; @("%.2f".format(i.getLineTotal))</td>
-                        <td>@i.getQuantity()</td>
-                        <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span
-                                    class="glyphicon glyphicon-minus-sign"></span></a></td>
-                        <td><a href="@routes.ShoppingController.addOne(i.getId)"><span
-                                    class="glyphicon glyphicon-plus-sign"></span></a></td>
+                @for(i <- user.getShoppingCart().getCartItems()) {
+                    <tr> 
+                        @if(i.getProduct.getProductQty == 0){
+                            <td colspan="7">@i.getProduct.getProductName
+                                has been sold out</td>
+                        } else {
+                        
+                            <td><a href="@routes.ProductController.displayProduct(i.getProduct.getProductName)">@i.getProduct.getProductName</a></td>
+                            <td>@i.getProduct.getProductDescription()</td>
+                            <td>&euro; @("%.2f".format(i.getPrice))</td>
+                            <td>&euro; @("%.2f".format(i.getLineTotal))</td>
+                            <td>@i.getQuantity()</td>
+                            <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span
+                                        class="glyphicon glyphicon-minus-sign"></span></a></td>
+                            <td><a href="@routes.ShoppingController.addOne(i.getId)"><span
+                                        class="glyphicon glyphicon-plus-sign"></span></a></td>      
+                        
+                        }
+                        <td><a href="@routes.ShoppingController.deleteFromCart(i.getId)"><span
+                            class="glyphicon glyphicon-trash"></span></a></td>
                     </tr>
-                    }
+                     
                 }
                     <!-- End of For loop -->
                 }
